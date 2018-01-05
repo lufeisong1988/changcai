@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:state_activated="true">
+
+        <shape android:shape="rectangle">
+
+            <size android:height="@dimen/dim100" />
+            <solid android:color="@color/white" />
+            <stroke android:width="@dimen/dim1" android:color="@color/black" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true">
+
+        <shape android:shape="rectangle">
+
+            <size android:height="@dimen/dim100" />
+            <solid android:color="@color/white" />
+            <stroke android:width="@dimen/dim1" android:color="@color/black" />
+        </shape>
+    </item>
+
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+
+            <size android:height="@dimen/dim100" />
+            <solid android:color="@color/white" />
+            <stroke android:width="@dimen/dim1" android:color="@color/black" />
+        </shape>
+    </item>
+
+
+    <!-- 默认样式-->
+    <item>
+        <shape android:shape="rectangle">
+
+            <size android:height="@dimen/dim100" />
+            <solid android:color="@color/alabaster" />
+            <stroke android:width="@dimen/dim1" android:color="@color/global_text_gray3" />
+        </shape>
+    </item>
+
+
+</selector>

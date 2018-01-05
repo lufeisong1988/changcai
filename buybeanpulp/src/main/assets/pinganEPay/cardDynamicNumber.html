@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <title>绑定银行卡@bindingBank.html</title>
+    <link rel="stylesheet" href="css/pingan-changcai.css">
+    <script src="../common/js/jquery-1.8.3.min.js"></script>
+    <script src="../common/js/config.js"></script>
+</head>
+
+<body>
+    <div class="CradDynamicNumber">
+        <p>动态码已发送至 <span id="mobilePhone"></span>，请填写动态码</p>
+        <input type="number" name="dynamicNumber" id="dyNamicNumber" placeholder="输入动态码" maxlength="7" pattern="[0-9]*" />
+        <button class="btn1Disable" id="sendBtn" disabled="disabled"></button>
+        <button class="" id="sureBtn">完成</button>
+        <p class="serviceTel">客服热线：021-54180258</p>
+    </div>
+    <section class="mask">
+        <div class="errorBox">
+            <p class="errorContent"></p>
+            <a class="sureBtn">确定</a>
+        </div>
+    </section>
+    <section class="loading">
+        <div class="iconLoding"></div>
+    </section>
+</body>
+    <script>
+
+        var time = 5;
+        var timer = null;
+        var strSendTxt = "可再试: ";
+        var bool = true;
+        var nativeJson = JSON.parse(localStorage.getItem("nativeJson"));
+
+        $(function(){
+            $("body").css("backgroundColor","#f3f3f3");
+            $("#dyNamicNumber").focus();
+            $("#sendBtn").text(strSendTxt + time + "次");
+
+            var baseInfo = JSON.parse(localStorage.getItem("baseInfo"));
+            $("#mobilePhone").html(baseInfo.mobilePhone);
+
+            var dyNamicNumber = $("#dyNamicNumber").val();
+            var txt = $("#sendBtn").text();
+            if(dyNamicNumber && txt !== "重新发送"){
+                $("#sureBtn").addClass("btn2Able");
+            }else{
+                $("#sureBtn").addClass("btn2Disable");
+            }
+
+            //验证码输入监控
+            $("#dyNamicNumber").on("keyup",function(){
+                var value = $(this).val();
+                $(this).val(value.replace(/[^\d]/g,''));
+                var txt = $("#sendBtn").text();
+                if($(this).val()  && txt !== "重新发送"){
+                    $("#sureBtn").addClass("btn2Able").removeClass("btn2Disable");
+                }else{
+                    $("#sureBtn").addClass("btn2Disable").removeClass("btn2Able");
+                }
+            })
+
+            //完成按钮
+            $("body").on("touchend",".btn2Able",function(){
+                if(time === 1){
+                    //$("#sendBtn").text("重新发送").addClass("btn1Able").removeClass("btn1Disable");
+                    $("#sureBtn").addClass("btn2Disable").removeClass("btn2Able");
+                }
+                secondPhaseRegist();
+            })
+
+
+
+            //重新发送
+            $("body").on("touchend",".btn1Able",function(){
+                if(bool){
+                    bool = false;
+                    $("#sendBtn").text(strSendTxt + time + "次").addClass("btn1Disable").removeClass("btn1Able");
+                    repeatSendFn();
+                }
+
+            })
+
+
+            //遮罩层阻止滑动
+            $(".mask").on("touchmove",function(e){
+                e.preventDefault();
+            })
+            $(".sureBtn").on("touchend",function(e){
+                e.preventDefault();
+                $(".mask").removeClass("maskShow");
+
+                if(time === 0){//用完5次机会
+                   window.location = "bindingBank.html";
+                }
+            })
+
+        })
+
+        //重新发送
+       /* function repeatSend(){
+            time--;
+            $("#sendBtn").html(strSendTxt+time).addClass("btn1Disable").removeClass("btn1Able").attr("disabled","disabled");
+            if(time === 0){
+                clearInterval(timer);
+                $("#sendBtn").html(strSendTxt+time).addClass("btn1Able").removeClass("btn1Disable").removeAttr("disabled").text(strSendTxt);
+                bool = true;
+            }
+        }*/
+
+        //校验
+        function secondPhaseRegist(){
+            $(".loading").addClass("maskShow");
+            var baseInfo = JSON.parse(localStorage.getItem("baseInfo"));
+            var serialNo = JSON.parse(localStorage.getItem("serialNo"));
+
+            var params = {
+                "nativeJson": nativeJson,
+                "serialNo": serialNo,
+                "smsCode": $.trim($("#dyNamicNumber").val())
+            }
+            $.ajax({
+                url: config.url + "/h5/pingan/pingAnSecondPhaseRegist.do",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "requestJSON": JSON.stringify(params)
+                },
+                success: function(data, xhr) {
+                    if(data.errorCode === "0"){
+                        $(".loading").removeClass("maskShow");
+                        window.location = "cardSuccess.html";
+                    }else{//errorDesc
+                        $(".loading").removeClass("maskShow");
+                        $(".errorContent").text(data.errorDesc);
+                        var vh = document.body.scrollHeight;
+                        setTimeout(function(){
+                            $(".mask").height(vh).addClass("maskShow");
+                        },10)
+
+                        time--;
+                        $("#sendBtn").text(strSendTxt + time + "次").addClass("btn1Disable").removeClass("btn1Able");
+//                        if(time > 0){
+//                            $("#sendBtn").text(strSendTxt + time + "次").addClass("btn1Disable").removeClass("btn1Able");
+//                        }else{
+//                            //time = 5;
+//                        }
+
+                    }
+                },
+                error: function(data){
+                    $(".loading").removeClass("maskShow");
+
+                    $(".errorContent").text(data.errorDesc);
+                    var vh = document.body.scrollHeight;
+                    setTimeout(function(){
+                        $(".mask").height(vh).addClass("maskShow");
+                    },10)
+                }
+            })
+        }
+
+
+        //重新发送
+        function repeatSendFn(){
+            var baseInfo = JSON.parse(localStorage.getItem("baseInfo"));
+            var params = {
+                "nativeJson": nativeJson,
+               // "userId":"367",
+                "bankClsCode": baseInfo.bankClsCode,
+                "bankCardNo": baseInfo.bankCardNo,
+                "bankName": baseInfo.bankNameDetail,
+                "bankCode": baseInfo.bankCode,
+                "mobilePhone": baseInfo.mobilePhone
+            }
+            $.ajax({
+                url: config.url + "/h5/pingan/pingAnFirstPhaseRegist.do",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "requestJSON": JSON.stringify(params)
+                },
+                success: function(data, xhr) {
+                    if(data.errorCode === "0"){
+                        bool = true;
+                    }else{//errorDesc
+                        bool = false;
+                        $(".errorContent").text(data.errorDesc);
+                        var vh = document.body.scrollHeight;
+                        setTimeout(function(){
+                            $(".mask").height(vh).addClass("maskShow");
+                        },10)
+                    }
+                },
+                error: function(data){
+
+                }
+            })
+        }
+
+    </script>
+
+</html>

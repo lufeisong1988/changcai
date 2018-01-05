@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_item">
+        <item>首页</item>
+        <item>头寸管理</item>
+        <item>资源报价</item>
+        <item>我的</item>
+    </string-array>
+
+    <string-array name="price_pattern">
+        <item>一口价</item>
+        <item>基差</item>
+    </string-array>
+
+    <string-array name="strategy_item">
+        <item>现货策略</item>
+        <item>套利图景</item>
+        <item>头寸报表</item>
+    </string-array>
+
+    <string-array name="order_type">
+        <item>全部</item>
+        <item>待签署合同</item>
+        <item>待买家支付</item>
+        <item>待提货</item>
+    </string-array>
+
+    <string-array name="pick_up_type">
+        <item>全部</item>
+        <item>待支付货款</item>
+        <item>待确认收货</item>
+        <item>已失效</item>
+    </string-array>
+
+    <string-array name="resource">
+        <item>报价地图</item>
+        <item>报价趋势</item>
+        <item>景气指数</item>
+    </string-array>
+
+    <string-array name="cash_report">
+        <item>月度分析</item>
+        <item>销售明细</item>
+        <item>头寸分析</item>
+    </string-array>
+    <string-array name="share">
+        <item>大咖</item>
+        <item>话题</item>
+        <item>我问</item>
+    </string-array>
+
+
+
+</resources>

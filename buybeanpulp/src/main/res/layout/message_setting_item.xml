@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+
+    <View
+        android:id="@+id/v_top"
+        style="@style/divide_line_all"
+        android:layout_marginBottom="@dimen/common_dimen_10"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/ll_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_dimen_10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="周期报告"
+                android:textColor="@color/black"
+                android:textSize="@dimen/mediumTextSize"/>
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="总要报告解读1-3次/天"
+                android:textColor="@color/global_text_gray"
+                android:textSize="@dimen/SmallerTextSize"/>
+        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/tg_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:button="@drawable/ios7_btn"
+            android:checked="false"
+            android:gravity="center"
+            android:text=""
+            android:textOff=""
+            android:textOn=""/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dimen_20"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/ll_info"
+        android:background="@color/my_gray"
+        />
+
+    <View
+        android:id="@+id/v_bottom"
+        style="@style/divide_line_all"
+        android:layout_below="@id/ll_info"
+        />
+</RelativeLayout>

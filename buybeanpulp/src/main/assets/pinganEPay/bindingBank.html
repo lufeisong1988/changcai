@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>绑定银行卡@none</title>
+    <link rel="stylesheet" href="css/pingan-changcai.css">
+    <link rel="stylesheet" href="../common/css/mobiscroll.custom-3.0.0-beta2.min.css">
+    <script src="../common/js/jquery-1.8.3.min.js"></script>
+    <script src="../common/js/config.js"></script>
+    <script src="../common/js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <script src="js/city2.js"></script>
+
+</head>
+<body>
+    <div class="bWrap">
+        <p class="bindTitle">绑定银行卡，就可以开通平安易宝账户，在网上买豆粕了</p>
+        <!--个人信息-->
+        <section class="bindSection">
+            <h2>个人信息</h2>
+            <div class="baseInfo">姓名：<span id="signName"></span></div>
+            <div class="baseInfo">身份证号：<span id="signIdCard"></span></div>
+        </section>
+
+        <!--开户行-->
+        <section class="bindSection">
+            <h2>请选择您的银行卡开户行</h2>
+            <div class="otherInfo">
+                <!--<input type="text" class="ipt iptBank focusIngIpt" placeholder="选择银行"  readonly id="chooseBankIpt"> -->
+                <i class="tri"></i>
+                <ul id="cityList" style="display: none"></ul>
+            </div>
+            <div class="otherInfo otherBank">
+                <input type="text" class="ipt iptBank" placeholder="选择开户行" readonly id="depositBankBtn"> <i class="tri"></i>
+            </div>
+        </section>
+
+        <!--银行卡号-->
+        <section class="bindSection">
+            <h2>请填写银行卡号</h2>
+            <div class="otherInfo">
+                <input type="number" class="ipt" pattern="[0-9]*" placeholder="输入银行卡号" maxlength="19"  id="bankCard">
+            </div>
+        </section>
+
+        <!--银行预留的手机号-->
+        <section class="bindSection">
+            <h2>请填写在银行预留的手机号</h2>
+            <div class="otherInfo">
+                <input type="number" class="ipt" pattern="[0-9]*" id="bankMobile" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')">
+            </div>
+        </section>
+
+        <div class="protocol">
+            <label class="checkedLabel">
+                <i class="iconfont">&#xe650;</i>同意
+            </label>
+                <a href="protocolBank.html">《平安银行电子商务服务使用协议》</a>
+        </div>
+
+        <div class="nextStep">
+            <button type="submit" id="nextSetpBtn" class="">下一步</button>
+        </div>
+
+    </div>
+    <section class="mask">
+        <div class="errorBox">
+            <p class="errorContent">手机号输入有误，请重新输入</p>
+            <a class="sureBtn">确定</a>
+        </div>
+    </section>
+
+    <section class="loading">
+        <div class="iconLoding"></div>
+    </section>
+
+</body>
+<script src="js/bindingBank.js"></script>
+</html>

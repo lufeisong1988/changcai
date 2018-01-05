@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim88"
+        android:background="@color/sea_gray"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dim20"
+            android:text="取消"
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/txt34" />
+
+        <TextView
+            android:id="@+id/btn_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dim20"
+            android:text="确定"
+            android:textColor="@color/graph_bottom_click_dot"
+            android:textSize="@dimen/txt34" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:background="@color/mischka" />
+
+    <ListView
+        android:id="@+id/lv_userLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/mischka"
+        android:dividerHeight="@dimen/dim1"></ListView>
+</LinearLayout>

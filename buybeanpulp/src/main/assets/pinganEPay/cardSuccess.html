@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>绑定银行卡@none</title>
+    <link rel="stylesheet" href="css/pingan-changcai.css">
+    <script src="../common/js/config.js"></script>
+</head>
+
+<body>
+<div class="CradPayStatus CradPayStatusSuccess">
+    <i class="icon iconfont green">&#xe63e;</i><span>银行卡绑定成功</span>
+
+    <p>您已成功开通平安易宝，可以通过平安易宝进行交易。请设置支付密码，完成买家认证。</p>
+    <button id="goSetting" ontouchend="bindBankDone()">去设置支付密码</button>
+</div>
+</body>
+<script>
+    setTimeout(function(){
+        bank.bindBankSuccess("true");
+    },0.01)
+
+    function bindBankDone() {
+        bank.bindBankDone();
+    }
+</script>
+</html>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/item_background_gray">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dim40"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim34"
+                android:layout_marginRight="@dimen/dim34"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/please_input_phone_and_password"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/txt34" />
+
+                <EditText
+                    android:id="@+id/cet_phone_number"
+                    style="@style/loginItemLayout"
+                    android:layout_marginTop="@dimen/dim40"
+                    android:cursorVisible="true"
+                    android:digits="0123456789"
+                    android:hint="@string/hint_phone"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:maxLength="11"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/global_text_gray2"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/txt34" />
+
+
+                <com.changcai.buyer.view.PlainEditText
+                    android:id="@+id/cet_password"
+                    style="@style/loginItemLayout"
+                    android:layout_marginTop="@dimen/dim20"
+                    android:cursorVisible="true"
+                    android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    android:lines="1"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/global_text_gray2"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/txt34" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/common_dimen_20"
+                android:layout_marginRight="@dimen/common_dimen_20"
+                android:layout_marginTop="@dimen/dim80"
+                android:background="@drawable/login_disable_btn"
+                android:gravity="center"
+                android:minHeight="@dimen/login_item_width"
+                android:text="登录"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt38" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dim34"
+                android:layout_marginRight="@dimen/dim34"
+                android:layout_marginTop="@dimen/dim40"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="right"
+                    android:textColor="@color/global_blue"
+                    android:textSize="@dimen/txt34" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

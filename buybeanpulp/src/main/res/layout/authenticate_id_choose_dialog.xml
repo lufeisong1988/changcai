@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparents"
+    android:paddingLeft="@dimen/common_dimen_10"
+    android:paddingRight="@dimen/common_dimen_10"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/quoto_phone_normal"
+        >
+        <TextView
+            android:id="@+id/person"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/person"
+            android:gravity="center"
+            android:textSize="@dimen/txt40"
+            android:textColor="@color/global_blue" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dim1"
+            android:background="@color/color_4d"
+            android:alpha="70"
+            />
+
+        <TextView
+            android:id="@+id/company"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/company"
+            android:gravity="center"
+            android:textSize="@dimen/txt40"
+            android:textColor="@color/global_blue" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dimen_10"/>
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="取消"
+        android:gravity="center"
+        android:textSize="@dimen/txt40"
+        android:background="@drawable/quoto_phone_normal"
+        android:textColor="@color/global_blue"
+        android:layout_marginBottom="@dimen/common_dimen_10"
+        />
+</LinearLayout>

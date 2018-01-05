@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/item_background_gray"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim24"
+            android:paddingRight="@dimen/dim24">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/string_seller"
+                android:textSize="@dimen/txt34" />
+
+
+            <TextView
+                android:id="@+id/_tv_seller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt34"
+                tools:text="sdfsdf" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim20"
+            android:background="@color/global_text_gray2" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="@dimen/dim100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim20"
+            android:paddingRight="@dimen/dim34">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pick_up_time3"
+                android:textSize="@dimen/txt34" />
+
+            <TextView
+                android:id="@+id/_tv_deliver_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt34"
+                tools:text="@string/about_app" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim20"
+            android:background="@color/global_text_gray2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim24"
+            android:paddingRight="@dimen/dim24">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tv_pick_up_site"
+                android:textSize="@dimen/txt34" />
+
+
+            <TextView
+                android:id="@+id/_tv_pick_up_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt34"
+                tools:text="sdfsdf" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:background="@color/global_text_gray2" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginTop="@dimen/dim20"
+            android:background="@color/global_text_gray2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim20"
+            android:paddingRight="@dimen/dim34">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/actual_pick_up"
+                android:textSize="@dimen/txt34" />
+
+            <TextView
+                android:id="@+id/_tv_actual_pick_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                tools:text="100吨" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim20"
+            android:background="@color/global_text_gray2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim20"
+            android:paddingRight="@dimen/dim34">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/front_money_deduction"
+                android:textSize="@dimen/txt34" />
+
+            <TextView
+                android:id="@+id/_tv_money_deduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                tools:text="100吨" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim20"
+            android:background="@color/global_text_gray2" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim100"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dim20"
+            android:paddingRight="@dimen/dim34">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/waiting_pay_money"
+                android:textSize="@dimen/txt34" />
+
+            <TextView
+                android:id="@+id/_tv_waiting_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/flamingo"
+                tools:text="100吨" />
+        </LinearLayout>
+
+        <include layout="@layout/pay_common"/>
+
+    </LinearLayout>
+
+</ScrollView>

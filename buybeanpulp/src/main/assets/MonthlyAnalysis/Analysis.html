@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts简单使用</title>
+    <!-- 引入 echarts.js -->
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #echartsTableB{
+            margin: 0px 0px;
+            width:100%;
+            height:580px;
+        }
+    </style>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="echartsTableB"></div>
+<script src="../common/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+        var myChart = document.getElementById('echartsTableB');
+        <!--alert(screen.width + ';' + screen.height);-->
+        <!--myChart.style.width = (screen.width - 20) * 3+'px';-->
+        <!--if(myChart.style.height === 568){-->
+            <!--myChart.style.height = (screen.height -92.5-15-49-90-122) * 2.3+'px';-->
+        <!--}else{-->
+            <!--myChart.style.height = (screen.height -92.5-15-49-90-142) * 2.3+'px';-->
+        <!--}-->
+        <!--alert('width:' + myChart.style.width + ';height:' +  myChart.style.height);-->
+        <!--myChart.style.width = 100px;-->
+        <!--myChart.style.height = 568px;-->
+        <!--alert(document.documentElement.clientWidth);-->
+        var height = MonthlyAnalysisModel.jsCallOcAcquireHeight();
+        myChart.style.height = height;
+
+    </script>
+<script src="../common/js/config.js"></script>
+<script src="../common/dist/echarts.min.js"></script>
+<script src="js/basis.js"></script>
+</body>
+</html>

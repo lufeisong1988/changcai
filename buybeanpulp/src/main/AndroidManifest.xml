@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.changcai.buyer"
+    android:versionCode="34"
+    android:versionName="3.1.0">
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="false"
+        android:resizeable="true"
+        android:smallScreens="true" />
+    <!---->
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
+    <!-- 权限声明 -->
+
+    <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!-- 多媒体相关 -->
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 如果需要实时音视频通话模块，下面的权限也是必须的。否则，可以不加 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+
+    <!-- 发短信 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- 网络访问权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <!-- 允许挂载和反挂载文件系统可移动存储 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+
+    <!-- 极光推送 -->
+    <permission
+        android:name="com.changcai.buyer.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <uses-permission android:name="com.changcai.buyer.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+
+
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--网易云讯 start-->
+    <!-- SDK 权限申明, 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <!-- 和下面的 uses-permission 一起加入到你的 AndroidManifest 文件中。 -->
+    <permission
+        android:name="com.changcai.buyer.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" />
+    <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <uses-permission android:name="com.changcai.buyer.permission.RECEIVE_MSG" />
+    <!-- 小米推送 -->
+    <permission
+        android:name="com.changcai.buyer.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.changcai.buyer.permission.MIPUSH_RECEIVE" />
+    <!--网易云讯 end-->
+    <application
+
+        android:name=".CommonApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/appicon_andr"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:persistent="true"
+        android:theme="@style/AppTheme">
+        <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。45c6af3c98409b18a84451215d0bdd6e
+          如果 SDKOptions 中提供了，取 SDKOptions 中的值。 -->
+        <meta-data
+            android:name="com.netease.nim.appKey"
+            android:value="c4a6a3fa335adf3674a3922a7406e123" />
+
+        <!-- 云信后台服务，请使用独立进程。 -->
+        <service
+            android:name="com.netease.nimlib.service.NimService"
+            android:process=":core" />
+
+        <!-- 云信后台辅助服务 -->
+        <service
+            android:name="com.netease.nimlib.service.NimService$Aux"
+            android:process=":core" />
+
+        <!-- 云信后台辅助服务 -->
+        <service
+            android:name="com.netease.nimlib.job.NIMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":core" />
+
+        <!-- 云信监视系统启动和网络变化的广播接收器，保持和 NimService 同一进程 -->
+        <receiver
+            android:name="com.netease.nimlib.service.NimReceiver"
+            android:exported="false"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 云信进程间通信 Receiver -->
+        <receiver android:name="com.netease.nimlib.service.ResponseReceiver" />
+
+        <!-- 云信进程间通信service -->
+        <service android:name="com.netease.nimlib.service.ResponseService" />
+
+        <!-- 云信进程间通信provider -->
+        <!-- android:authorities="{包名}.ipc.provider", 请将com.netease.nim.demo替换为自己的包名 -->
+        <provider
+            android:name="com.netease.nimlib.ipc.NIMContentProvider"
+            android:authorities="com.changcai.buyer.ipc.provider"
+            android:exported="false"
+            android:process=":core" />
+        <!-- 申明自定义通知的广播接收器，第三方APP集成时，action中的com.netease.nim.demo请替换为自己的包名 -->
+        <!-- 需要权限申明 <uses-permission android:name="com.netease.nim.demo.permission.RECEIVE_MSG"/> -->
+        <receiver
+            android:name=".im.receiver.CustomNotificationReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.changcai.buyer.ACTION.RECEIVE_CUSTOM_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 申明白板会话的广播接收器，第三方APP集成时，action中的com.netease.nim.demo请替换为自己的包名 -->
+        <receiver
+            android:name="com.netease.nimlib.receiver.RTSBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.changcai.buyer.ACTION.RECEIVE_RTS_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 申明本地电话状态（通话状态）的广播接收器，第三方APP集成时音视频模块时，如果需要在App中处理网络通话与本地电话的交互请加上此接收器 -->
+        <!-- 在Demo的示例代码中是在Application进行了网络通话与本地电话的互斥处理 -->
+        <receiver android:name=".im.avchat.receiver.IncomingCallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 小米推送配置 -->
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":mixpush" />
+
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true"
+            android:process=":mixpush" />
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false"
+            android:process=":mixpush">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.netease.nimlib.mixpush.mi.MiPushReceiver"
+            android:exported="true">
+            <intent-filter android:priority="0x7fffffff">
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+
+        <!--华为推送配置-->
+
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="100006871" />
+
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="com.changcai.buyer.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+
+        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+        <receiver android:name="com.netease.nimlib.mixpush.hw.HWPushReceiver">
+            <intent-filter android:priority="0x7fffffff">
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看push通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+            <meta-data
+                android:name="CS_cloud_ablitity"
+                android:value="successRateAnalytics" />
+        </receiver>
+
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+                <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity
+            android:name=".ui.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="splash"
+                    android:scheme="maidoupo" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.HelperActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:hardwareAccelerated="true"
+            android:label="@string/label_main"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.title"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <!-- 登录注册模块 -->
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/label_login"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.title"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.login.RegisterAutoCodeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/label_register"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.title"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.login.RegisterSetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/label_submit"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.title"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- webview通用 -->
+        <activity
+            android:name=".ui.CommonWebViewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.quote.QuoteDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.quote.OrderActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.quote.ComputerOperationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.quote.OrderSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.OrderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.DeliveryListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.DeliveryDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.message.MessageListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.recharge.RechargeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.ping_an_bank_card_no.PingAnEasyPayRechargeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.message.MessageSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.quote.OperationDenyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.introduction.MemberShipIntroductionActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Customize" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.authenticate.AuthenticateActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.person_authenticate.PersonAuthenticateActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.person_introduce.PersonIntroduceActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.assign_platform.AssignPlatformActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business_logic.about_buy_beans.about_us.AboutBuyBeansActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business_logic.about_buy_beans.person_authenticate.child_accountId.ChildAccountIdActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.company_authenticate.CompanyAuthenticateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.set_paypassword.SetPayPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.app_function_introduce.AppFunctionIntroduceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business_logic.about_buy_beans.reset_paypassword.ResetPayPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.guidance.GuidanceActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.splash"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <service android:name=".interface_api.DownloadH5Service" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.html.my_property.PropertyActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".business_logic.about_buy_beans.recharge_result.RechargeResultActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Customize"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.sign_contract.SignContractActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".business_logic.about_buy_beans.full_pay.FullPayActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business_logic.about_buy_beans.pay_result.PayResultActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".business_logic.about_buy_beans.direct_pay.DirectPayActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".im.main.activity.NotifactionListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.NotifactionSessionListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ui.news.CalendarActivity" />
+        <activity android:name=".ui.quote.BusinessOrderActivity" />
+        <activity android:name=".business_logic.about_buy_beans.deposit_and_pay.DepositAndPayActivity" />
+        <activity
+            android:name=".business_logic.about_buy_beans.bind_bank.BindBankActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".business_logic.about_buy_beans.pay_record.PayRecordListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business_logic.about_buy_beans.point_price.PointPriceListActivity"
+            android:screenOrientation="portrait"
+
+            />
+        <activity
+            android:name=".business_logic.about_buy_beans.full_pay.PayActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business_logic.about_buy_beans.full_pay.full_pay_result.FullPayResultActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.share.ImageBucketActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.share.ImageGridActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.share.PhotoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.share.PublishActivity"
+            android:screenOrientation="portrait"></activity>
+
+
+        <!---极光推送开始-->
+
+        <!-- baidu location-->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="VQ1xn5EOMQaK5hAgM4Aqi4qpowzmrGSa" />
+
+        <!--User defined. For test only 用户自定义的广播接收器-->
+        <receiver
+            android:name="com.changcai.buyer.receiver.JPushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.changcai.buyer" />
+            </intent-filter>
+        </receiver>
+
+
+        <receiver android:name=".receiver.PackageReceiver">
+
+            <intent-filter>
+                <data android:scheme="package" />
+
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.BigPhotoActivity"
+            android:configChanges="orientation"
+            android:theme="@style/AppTheme.Customize.black" />
+
+        <activity
+            android:name=".business_logic.about_buy_beans.person_authenticate.big_photo.BigPhotoActivity"
+            android:configChanges="orientation"
+            android:theme="@style/AppTheme.Customize.black" />
+        <!-- Required SDK核心功能-->
+
+
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+                <category android:name="com.changcai.buyer" />
+            </intent-filter>
+        </service>
+
+
+        <!---极光推送结束-->
+
+        <!---umeng start-->
+        <!-- Analytics start -->
+        <!-- 友盟 -->
+        <!-- test 573fd6a7e0f55a6860000271 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5760e6d0e0f55a0d9e000058" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
+        <!-- Update Activitys Start -->
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+        <!-- Update Activitys End -->
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- wechat callback-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- tencent -->
+        <activity
+            android:name="com.umeng.qq.tencent.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105295555" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.umeng.qq.tencent.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!--<meta-data-->
+        <!--android:name="com.google.android.gms.version"-->
+        <!--android:value="@integer/google_play_services_version" />-->
+        <!---umeng end-->
+
+
+        <!--网易云讯-->
+        <activity
+            android:name=".im.main.activity.P2MMessageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.UserProfileActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.UserProfileSettingActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.UserProfileIntroductionActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.UserProfileNicknameActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ui.consultant.ConsultantSettingActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+    </application>
+
+</manifest>

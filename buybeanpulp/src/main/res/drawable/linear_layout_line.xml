@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line"
+    >
+
+    <size android:width="@dimen/dim750"
+        android:height="@dimen/dim1"
+        />
+    <solid android:color="@color/global_text_gray2"/>
+
+
+    <stroke android:width="@dimen/dim1"
+        android:color="@color/global_text_gray2"
+        />
+    <gradient
+        android:gradientRadius="0"
+        android:type="radial"
+        android:startColor="@color/white"
+        android:endColor="@color/global_text_gray"/>
+</shape>

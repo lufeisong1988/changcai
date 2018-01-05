@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+
+
+    <com.changcai.buyer.view.GeneralWebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/web_view"
+        android:scrollbars="none"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/no_network" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/common_dimen_10"
+            android:gravity="center"
+            android:paddingBottom="100dp"
+            android:text="点击屏幕 重新下载"
+            android:textColor="@color/global_text_gray"
+            android:textSize="@dimen/BasicTextSize" />
+    </LinearLayout>
+</FrameLayout>

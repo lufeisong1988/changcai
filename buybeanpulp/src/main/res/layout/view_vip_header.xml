@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dim20">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="@dimen/dim92"
+        android:layout_height="@dimen/dim92"
+        app:layout_constraintLeft_toLeftOf="@+id/parent"
+        app:layout_constraintRight_toRightOf="@+id/parent" />
+
+    <com.changcai.buyer.view.RoundImageView
+        android:id="@+id/iv_header"
+        android:layout_width="@dimen/dim80"
+        android:layout_height="@dimen/dim80"
+        android:layout_marginTop="@dimen/dim6"
+        android:src="@drawable/icon_default_head"
+        app:layout_constraintLeft_toLeftOf="@+id/parent"
+        app:layout_constraintRight_toRightOf="@+id/parent"
+        app:layout_constraintTop_toTopOf="@+id/parent"
+        app:type="circle" />
+
+    <ImageView
+        android:id="@+id/iv_guard"
+        android:layout_width="@dimen/dim76"
+        android:layout_height="@dimen/dim26"
+        android:layout_marginTop="@dimen/dim70"
+        android:src="@drawable/icon_byabove"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_bg"
+        app:layout_constraintLeft_toLeftOf="@+id/parent"
+        app:layout_constraintRight_toRightOf="@+id/parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="@dimen/dim104"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim8"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:text="服务咨询"
+        android:textColor="#757A81"
+        android:textSize="@dimen/txt26"
+        app:layout_constraintLeft_toLeftOf="@+id/parent"
+        app:layout_constraintRight_toRightOf="@+id/parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_bg" />
+
+    <ImageView
+        android:id="@+id/iv_dot"
+        android:layout_width="@dimen/dim20"
+        android:layout_height="@dimen/dim20"
+        android:layout_marginRight="@dimen/dim2"
+        android:layout_marginTop="@dimen/dim2"
+        android:background="@drawable/dot_red"
+        app:layout_constraintRight_toRightOf="@+id/iv_header"
+        app:layout_constraintTop_toTopOf="@+id/iv_header" />
+
+</android.support.constraint.ConstraintLayout>

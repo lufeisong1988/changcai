@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/parent"
+    android:background="@color/sea_gray"
+    tools:background="@android:color/white">
+
+
+    <View
+        android:id="@+id/center"
+        android:layout_width="@dimen/dim5"
+        android:layout_height="@dimen/dim5"
+        android:layout_centerInParent="true"
+        android:background="@drawable/white_dots" />
+
+
+    <View
+        android:id="@+id/top"
+        android:layout_width="@dimen/dim5"
+        android:layout_height="@dimen/dim5"
+        android:layout_above="@+id/center"
+        android:layout_alignRight="@+id/center"
+        android:layout_marginBottom="@dimen/dim4"
+        android:background="@drawable/white_dots" />
+
+
+    <View
+        android:id="@+id/bottom"
+        android:layout_width="@dimen/dim5"
+        android:layout_height="@dimen/dim5"
+        android:layout_alignRight="@+id/center"
+        android:layout_below="@+id/center"
+        android:layout_marginTop="@dimen/dim4"
+        android:background="@drawable/white_dots" />
+
+    <View
+        android:id="@+id/move_dots"
+        android:layout_width="@dimen/dim5"
+        android:layout_height="@dimen/dim5"
+        android:layout_alignRight="@+id/center"
+        android:layout_alignTop="@+id/bottom"
+        android:background="@drawable/black_dots" />
+
+
+</RelativeLayout>

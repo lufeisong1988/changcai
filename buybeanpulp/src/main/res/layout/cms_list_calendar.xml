@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dim25"
+    android:paddingRight="@dimen/dim25">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/news_calendar_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim13"
+            android:textColor="@color/membership_color"
+            android:textSize="@dimen/txt26"
+            tools:text="2016年11月01日" />
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim13"
+            android:gravity="top"
+            android:textColor="@color/membership_color"
+            android:textSize="@dimen/txt26"
+            tools:text="周二" />
+
+        <ImageView
+            android:id="@+id/iv_trade_day"
+            android:layout_width="@dimen/dim70"
+            android:layout_height="@dimen/dim23"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dim21"
+            android:src="@drawable/icon_jyr_app"
+            android:visibility="gone" />
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/tv_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/icon_inline_rgt"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:lines="1"
+            android:text="行业日历"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/txt24" />
+    </LinearLayout>
+
+
+</LinearLayout>

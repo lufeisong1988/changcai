@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_view_father"
+    >
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim110"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dim600"
+        >
+        <ImageView
+            android:layout_marginLeft="@dimen/dim34"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dim29"
+            android:layout_height="@dimen/dim29"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_cancel_calendar"
+            android:id="@+id/iv_cancel"
+            />
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txt34"
+            android:textColor="@color/sticky_header_text_color"
+            android:text="@string/chose_pick_up_time"
+            />
+    </RelativeLayout>
+    <ScrollView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+        <LinearLayout
+            android:id="@+id/ll_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+</LinearLayout>

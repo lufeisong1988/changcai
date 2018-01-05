@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dim40"
+    android:paddingRight="@dimen/dim40"
+    android:paddingTop="@dimen/dim40">
+
+
+    <TextView
+        android:id="@+id/percent"
+        style="@style/price_list_text"
+        android:layout_alignParentTop="true"
+        tools:text="邦基／45%／50KG" />
+
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/seller_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/percent"
+        android:layout_marginTop="@dimen/dim2"
+
+        android:text="@string/seller_title"
+        android:textColor="@color/membership_color"
+        android:textSize="@dimen/txt26" />
+
+    <ImageView
+        android:id="@+id/iv_oil_icon"
+        android:layout_width="@dimen/dim51"
+        android:layout_height="@dimen/dim26"
+        android:layout_below="@+id/percent"
+        android:layout_marginLeft="@dimen/dim8"
+        android:layout_marginRight="@dimen/dim8"
+        android:layout_toRightOf="@id/seller_text"
+        android:layout_marginTop="@dimen/dim2"
+        android:src="@drawable/icon_yc" />
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/name"
+        style="@style/price_list_text_info"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="上海学益"
+        android:layout_marginTop="@dimen/dim2"
+
+        android:textSize="@dimen/txt26"
+        android:layout_below="@+id/percent"
+        android:layout_toRightOf="@+id/iv_oil_icon"
+        />
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/location"
+        style="@style/price_list_text_info"
+        android:layout_below="@+id/name"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="提货：山东 山东龙口香驰工厂"
+        android:layout_marginTop="@dimen/dim2"
+        android:textSize="@dimen/txt26"
+        />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location"
+        android:layout_marginTop="@dimen/dim10"
+        android:textColor="@color/flamingo"
+        android:textSize="@dimen/txt34"
+        tools:text="M1705+200"
+        tools:textSize="@dimen/txt30" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/txt18"
+        android:textColor="@color/flamingo"
+        android:layout_toRightOf="@id/price"
+        android:layout_below="@+id/location"
+        android:layout_marginTop="@dimen/dim10"
+        android:layout_alignBaseline="@+id/price"
+        android:layout_marginLeft="@dimen/dim6"
+        android:id="@+id/tv_unit"
+        android:text="/吨"
+        />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dim130"
+        android:layout_height="@dimen/dim130"
+        android:layout_gravity="top"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        tools:src="@mipmap/no_network_2" />
+    <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/time"
+        style="@style/price_list_text_info"
+        android:layout_below="@+id/icon"
+        android:textSize="@dimen/txt24"
+        android:textColor="@color/gray_chateau"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dim20"
+        tools:text="2016-02-13 - 2016-03-10" />
+    <ImageView
+        android:id="@+id/iv_lose_efficacy"
+        android:layout_width="@dimen/dim120"
+        android:layout_height="@dimen/dim110"
+        android:layout_marginLeft="@dimen/dim89"
+        android:visibility="visible"
+        android:layout_below="@+id/seller_text"
+        android:src="@drawable/shixiao" />
+
+    <View
+        android:id="@+id/v_bottom"
+        style="@style/divide_line_all"
+        android:background="@color/mischka"
+        android:layout_below="@+id/price"
+        android:layout_marginTop="@dimen/dim36"
+        />
+</RelativeLayout>

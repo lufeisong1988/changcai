@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>绑定银行卡@bindingBank.html</title>
+    <link rel="stylesheet" href="css/pingan-changcai.css">
+    <link rel="stylesheet" href="../common/css/mobiscroll.custom-3.0.0-beta2.min.css">
+</head>
+<body>
+    <div class="sbWrap">
+        <section class="bindSection">
+            <div class="otherInfo">
+                <!--<input type="text" class="ipt iptBank" placeholder="所在地区" value="" readonly id=""> -->
+                <i class="tri"></i>
+                <ul id="cityList" style="display: none"></ul>
+            </div>
+            <div class="searchInfo">
+                <input type="text" class="ipt iptBank" placeholder="输入关键字"  id="depositBankBtn">
+                <button class="searchBankBtn" id="searchBankBtn">搜索</button>
+            </div>
+            <p class="exampleP">如“某某银行海淀支行<span>世纪城</span>分理处”，可以输入“<span>世纪城</span>”或“<span>世纪城</span>”作为关键字</p>
+        </section>
+
+        <section class="resultBank">
+            <div class="defaultTip">
+                <p>请选择开户行所在地区<br>
+                    或输入关键字</p>
+            </div>
+
+            <div class="noResultTip">
+                <p>没有找到相关银行<br>请调整所在地区或关键字</p>
+            </div>
+
+            <ul class="bankUl" id="bankUl">
+
+            </ul>
+
+            <p class="copyTel">客服热线：021-54180258</p>
+        </section>
+
+    </div>
+</body>
+    <script src="../common/js/jquery-1.8.3.min.js"></script>
+    <script src="../common/js/config.js"></script>
+    <script src="../common/js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <script src="js/city2.js"></script>
+    <script src="js/selectBank.js"></script>
+</html>

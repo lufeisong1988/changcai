@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_strategy" />
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_marginBottom="@dimen/dim44"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y26"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_tit_user" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/dim10"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/tv_name"
+            android:textColor="@color/report_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_above="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dim15"
+        android:layout_marginRight="@dimen/dim15"
+        android:layout_marginTop="@dimen/dim15"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.changcai.buyer.view.indicator.MagicIndicator
+            android:id="@+id/prompt_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dim90"
+             />
+
+        <FrameLayout
+            android:id="@+id/fl_cashreport_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+    </LinearLayout>
+
+
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/dim15"
+        android:layout_marginRight="@dimen/dim15"
+        android:background="@color/white"
+        android:layout_marginBottom="@dimen/dim141"
+        />
+</RelativeLayout>

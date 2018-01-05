@@ -1,0 +1,48 @@
+@import "../../common/css/resets_new.css";
+@rem:100rem;
+html{
+  font-size: calc(100vw/7.50);
+}
+.mwrap{
+  header{
+    //height: 88/@rem;
+
+    padding: 26/@rem 40/@rem;
+    border-bottom: 1px solid #DEDEE5;
+    .factoryInfo{
+      font-size: 26/@rem;
+      color: #757A81;
+      float: left;
+      width: 40%;
+     // line-height: 88/@rem;
+    }
+    .inputDate{
+      float: right;
+      width: 50%;
+      text-align: right;
+      position: relative;
+      .quoteDate{
+        width: 160/@rem;
+        padding: 0 20/@rem;
+        border: none;
+      }
+      .tri {
+        width: 0.09rem;
+        height: 0.09rem;
+        border: 1px solid #666;
+        border-top: 1px solid transparent;
+        border-left: 1px solid transparent;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -0.09rem;
+      }
+    }
+  }
+}
+
+.mbsc-ios .mbsc-dt-whl-d .mbsc-sc-itm{
+  text-align: left !important;
+}

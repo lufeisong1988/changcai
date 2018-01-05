@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim42"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:background="@color/dedee5"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim40"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="日"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="一"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="二"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="三"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="四"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="五"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="六"
+            android:textColor="@color/tuna"
+            android:textSize="@dimen/txt20" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:background="@color/dedee5"
+        />
+</LinearLayout>

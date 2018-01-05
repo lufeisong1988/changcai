@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>报价地图</title>
+    <link rel="stylesheet" href="css/map-changcai.css">
+    <link rel="stylesheet" href="../common/css/mobiscroll.custom-3.0.0-beta2.min.css">
+    <script src="../common/js/jquery-1.8.3.min.js"></script>
+    <script src="../common/js/config.js"></script>
+    <script src="./js/echarts.min.js"></script>
+    <script src="./js/china.js"></script>
+    <script src="../common/js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+</head>
+<body>
+    <div class="mwrap">
+        <header class="clearfix">
+            <div class="factoryInfo">
+                <span class="productName">豆粕</span> <span class="proteinSpec">43%</span>
+            </div>
+            <div class="inputDate">
+                <input id="quoteDate" class="quoteDate" readonly />
+                <i class="tri"></i>
+            </div>
+        </header>
+        <div id="mapChart"></div>
+    </div>
+</body>
+<script type="text/javascript">
+    var tokenId = "";
+    var mapChart;
+    setTimeout(function(){
+               
+        tokenId = OfferMapModel.jsCallObjcAcquireOfferMapBaseParameter();
+        var quoteDateYmd = $(".quoteDate").val();
+        var productName = $(".productName").text();
+        var proteinSpec = $(".proteinSpec").text();
+
+        getQuoteMap(quoteDateYmd,productName,proteinSpec);
+
+    },50);
+
+    $(function(){
+        var currentYear = new Date().getFullYear();
+        var currentMonth = new Date().getMonth()+1;
+        var currentDate = new Date().getDate();
+        var minDate = new Date(currentYear-5, 12, 31);
+        currentMonth = currentMonth<10 ? "0"+currentMonth : currentMonth;
+        currentDate = currentDate<10 ? "0"+currentDate : currentDate;
+        var today = currentYear + "-"+currentMonth+"-"+currentDate;
+        var quoteDateStorage = sessionStorage.getItem("quoteDateStorage");
+        if(quoteDateStorage){
+            $('#quoteDate').val(quoteDateStorage);
+        }else{
+            $('#quoteDate').val(today);//默认为当前日期
+        }
+        $('#quoteDate').mobiscroll().date({
+            lang:'zh',
+            theme: 'ios',
+            display: 'top',
+            min: minDate,
+            dateFormat:'yy-mm-dd',
+            defaultValue:new Date(),
+            onSet: function (event, inst) {
+                var productName = $(".productName").text();
+                var proteinSpec = $(".proteinSpec").text();
+                getQuoteMap(event.valueText,productName,proteinSpec);
+                sessionStorage.setItem('quoteDateStorage',event.valueText);
+            }
+        });
+
+        // 基于准备好的dom，初始化echarts实例
+        document.getElementById("mapChart").style.width = screen.width+'px';
+        document.getElementById("mapChart").style.height = (screen.height-44)+'px';
+
+        mapChart = echarts.init(document.getElementById("mapChart"));
+        mapChart.showLoading();
+
+    })
+
+    function getQuoteMap(quoteDateYmd,productName,proteinSpec){
+        $.ajax({
+            url: config.url + "/getQuoteMap",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "tokenId": tokenId,
+                "quoteDateYmd":quoteDateYmd,
+                "productName":productName,
+                "proteinSpec":proteinSpec
+            },
+            success: function(data, xhr) {
+                if(data.errorCode === "0"){
+                    var quoteMap = data.resultObject.quoteMap;
+                    var cityDataArr = [];
+                    var provinceDataArr = [];
+                    if(quoteMap.cityData){//排序
+                        var m = 0;
+                        for(var i in quoteMap.cityData){
+                            m++;
+                            if(m === 1){
+                                cityDataArr.push({"<-50":quoteMap.cityData['<-50']});
+                                provinceDataArr.push({"<-50":quoteMap.provinceData['<-50']});
+                            }else if(m === 2){
+                                cityDataArr.push({"-50~-1":quoteMap.cityData['-50~-1']});
+                                provinceDataArr.push({"-50~-1":quoteMap.provinceData['-50~-1']});
+                            }else if(m === 3){
+                                cityDataArr.push({"-1~1":quoteMap.cityData['-1~1']});
+                                provinceDataArr.push({"-1~1":quoteMap.provinceData['-1~1']});
+                            }else if(m === 4){
+                                cityDataArr.push({"1~50":quoteMap.cityData['1~50']});
+                                provinceDataArr.push({"1~50":quoteMap.provinceData['1~50']});
+                            }else if(m === 5){
+                                cityDataArr.push({">50":quoteMap.cityData['>50']});
+                                provinceDataArr.push({">50":quoteMap.provinceData['>50']});
+                            }
+                        }
+                    }
+
+                    var newData = {
+                        provinceData:provinceDataArr,
+                        cityData:cityDataArr
+                    }
+
+                    setOptionData(newData);
+                }else{
+                    //errorFn(data.errorDesc);
+                }
+            },
+            error: function(data){
+                //OfferMapModel.jsCallOcShowCurrentMonthData('您的网络情况不稳定');
+                //errorFn(data.errorDesc);
+            }
+        })
+    }
+
+    function setOptionData(data){
+        var legend = [];//图例
+        var regions = [];//区域填充
+        var series = [];
+        var seriesData = [];
+        var color = ['#9AF0C1','#DBFFEB','#FFE3E3','#FFA6A6'];//地图区域颜色
+        var color2 = ['#9AF0C1','#DBFFEB','#ccc','#FFE3E3','#FFA6A6'];//图例颜色
+        var provinceData = data.provinceData;
+        var cityData = data.cityData;
+        if(provinceData){
+
+            for(var i in provinceData){
+
+                var objProvince = provinceData[i];
+                for(var y in objProvince){
+                    if(y !== '-1~1'){
+                        var legendData = {};
+                        legendData.name = y;
+                        legendData.icon = 'rect';
+                        legend.push(legendData);
+                    }
+                    var obj = objProvince[y];
+                    for(var j =0; j< obj.length;j++){
+
+                        var areaColor = null;
+                        var regionsLine = {};
+                        regionsLine.name = obj[j].province;
+                        switch (y) {
+                            case '>50':
+                                areaColor = color[3]
+                                break;
+                            case '1~50':
+                                areaColor = color[2]
+                                break;
+                            case '-50~-1':
+                                areaColor = color[1]
+                                break;
+                            case '<-50':
+                                areaColor = color[0]
+                                break;
+                            default:
+                                areaColor = '#f5f5f5'
+                        }
+                        regionsLine.itemStyle = {
+                            normal: {
+                                areaColor: areaColor,
+                            },
+                            emphasis:{
+                                areaColor: areaColor,
+                            }
+                        }
+                        regions.push(regionsLine);
+
+                    }
+                }
+            }
+
+        }else{
+            regions=[];
+            legend = [];
+        }
+
+        if(cityData){
+
+            for(var i in cityData){
+
+                var objCity = cityData[i];
+                for(var y in objCity){
+                    var seriesTemp = {};
+                    seriesTemp.name = y;
+                    seriesTemp.type = 'scatter';
+                    seriesTemp.coordinateSystem = 'geo';
+                    seriesTemp.silent = true;//图形不响应和触发鼠标事件
+                    var obj = objCity[y];
+                    for(var j =0; j< obj.length;j++){
+                        var seriesLine = {};
+                        var changeColor = '#F9FAFB';
+                        var changeStatus = Number(obj[j].change);
+                        if(changeStatus > 0){
+                            changeColor = '#CB1044'
+                        }else if(changeStatus < 0){
+                            changeColor = '#14984F'
+                        }else{
+                            changeColor = '#000'
+                        }
+
+                        seriesLine.name = obj[j].city;
+                        obj[j].position.push(obj[j].value,obj[j].change);
+                        seriesLine.value = obj[j].position;
+                        seriesLine.symbolSize = 5;
+                        seriesLine.label= {
+                            normal: {
+                                show: true,
+                                position: 'right',
+                                formatter: nameFormatter,
+                                fontWeight:100,
+                                fontFamily:'PingFangSC-Light',
+                                color:'#000',
+                                rich: {
+                                    up: {
+                                        color: '#CB1044',
+                                        fontSize: 12
+                                    },
+                                    down: {
+                                        color: '#14984F',
+                                        fontSize: 12
+                                    }
+                                }
+                            }
+                        };
+                        seriesLine.itemStyle= {
+                            normal: {
+                                show: true,
+                                color:'#408AFF'
+                            },
+
+                        };
+                        seriesData.push(seriesLine);
+                    }
+                    seriesTemp.data = seriesData;
+
+                    series.push(seriesTemp);
+                }
+
+            }
+        }else{
+            series=[];
+        }
+
+        var title='涨幅值：'
+        drawChart(title,legend,regions,series,color2,mapChart);
+    }
+
+    function nameFormatter(params){
+        var changeStatus = Number(params.value[3]);
+        var valueType = null;
+        if(changeStatus>0){
+            valueType = 'up'
+            params.value[3] = '+'+params.value[3]
+        }else if(changeStatus<0){
+            valueType = 'down'
+        }
+        var info = params.name +'\n'
+                + '{'+valueType +'|'+params.value[2]+' '+params.value[3]+'}'
+        return info
+    }
+
+    function drawChart(title,legend,regions,series,color,myChart){
+        // 隐藏载入动画
+        myChart.hideLoading();
+        var option = {
+            title: {
+                text: title,
+                left: '40',
+                top:'12',
+                textStyle:{
+                    color:'#757A81',
+                    fontSize:'11'
+                }
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'horizontal',
+                left: '88',
+                top:'10',
+                selectedMode:false,
+                data:legend,
+                itemWidth:14,
+                itemHeight:14//正方形
+            },
+            geo: {
+                map: 'china',
+                label: {
+                    emphasis: {
+                        show: false
+                    }
+                },
+                roam: true,//缩放
+                zoom:2.6,//放大
+                center: [113.562461,37.044214],
+                scaleLimit:{min:1.2},
+                itemStyle: {
+                    normal: {
+                        areaColor: '#FFF',
+                        borderColor: '#b4c9c0'
+                    },
+                    emphasis: {
+                        areaColor: '#FFF',
+                    }
+                },
+                regions: regions
+            },
+            series: series,
+            color:color
+        };
+        myChart.setOption(option,{
+            notMerge: true  //不跟之前设置的option进行合并
+        });
+       // console.log(option);
+        return myChart;
+    }
+
+    function loginStatusChanged(){
+        sessionStorage.removeItem("quoteDateStorage")
+        location.reload();
+    }
+
+</script>
+</html>

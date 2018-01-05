@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.changcai.buyer.view.NavigationTabStrip
+        android:id="@+id/navigation_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim91"
+        app:nts_active_color="@color/membership_color"
+        app:nts_color="@color/membership_color"
+        app:nts_corners_radius="@dimen/dim0"
+        app:nts_gravity="bottom"
+        app:nts_inactive_color="@color/storm_gray"
+        app:nts_size="@dimen/txt34"
+        app:nts_titles="@array/share"
+        app:nts_type="point"
+        app:nts_weight="@dimen/dim5" />
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/dedee5"
+        android:layout_below="@+id/magic_indicator"
+        android:layout_height="@dimen/dim1"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fl_share"></FrameLayout>
+</LinearLayout>

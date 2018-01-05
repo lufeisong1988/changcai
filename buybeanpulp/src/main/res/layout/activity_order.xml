@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/alabaster"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/viewTop"
+        layout="@layout/common_title_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewTop">
+
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim110"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dim40"
+                    android:paddingRight="@dimen/dim40">
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/textView3"
+                        style="@style/left_text_style_pay1"
+                        android:text="@string/tv_pick_up_site" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/tv_pick_up_location"
+                        style="@style/quoted_price_middleSize_text_style"
+                        tools:text="上海学医工程" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="@dimen/dim40"
+                    android:layout_marginRight="@dimen/dim40"
+                    android:background="@color/mischka" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim110"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dim40"
+                    android:paddingRight="@dimen/dim40">
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        style="@style/left_text_style_pay1"
+
+                        android:text="@string/tv_pick_up_time" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+
+                        android:id="@+id/tv_pick_up_time"
+                        style="@style/quoted_price_middleSize_text_style"
+                        tools:text="2012-2--3to2048-2-3" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/mischka" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/dim40"
+                    android:background="@color/mischka" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim110"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dim40"
+                    android:paddingRight="@dimen/dim40">
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        style="@style/left_text_style_pay1"
+                        android:text="@string/tv_units1" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/tv_price"
+                        style="@style/quoted_price_middleSize_text_style"
+                        android:textColor="@color/membership_color"
+                        tools:text="1222" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="@dimen/dim40"
+                    android:layout_marginRight="@dimen/dim40"
+                    android:background="@color/mischka" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim110"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dim40"
+                    android:paddingRight="@dimen/dim40">
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        style="@style/left_text_style_pay1"
+                        android:text="购买数量" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/tv_ponds"
+                        android:textColor="@color/membership_color"
+                        style="@style/quoted_price_middleSize_text_style"
+                        tools:text="100" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="@dimen/dim40"
+                    android:layout_marginRight="@dimen/dim40"
+                    android:background="@color/mischka" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim150"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dim40"
+                    android:paddingRight="@dimen/dim40">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                       >
+
+                        <com.changcai.buyer.view.CustomFontTextView
+                            style="@style/left_text_style_pay1"
+                            android:text="保证金" />
+
+                        <com.changcai.buyer.view.CustomFontTextView
+                            android:id="@+id/tv_insurance"
+                            android:textColor="@color/membership_color"
+                            style="@style/quoted_price_middleSize_text_style"
+                            tools:text="112122,33" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dim10"
+                        android:gravity="right"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/dim40">
+
+                        <com.changcai.buyer.view.CustomFontTextView
+                            android:id="@+id/tv_deposit_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/global_text_gray3"
+                            tools:text="@string/buyer_deposit_money" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/divide_line_all" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <com.changcai.buyer.view.EmptyView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+           />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/ll_order_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim22"
+        android:layout_marginRight="@dimen/dim22"
+        android:layout_marginTop="@dimen/common_margin_30"
+        android:background="@drawable/btn_shdo_blue110"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/order"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dim100"
+            android:layout_gravity="center"
+            android:text="确认下单"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/txt40" />
+
+        <com.changcai.buyer.view.RotateDotsProgressView
+            android:id="@+id/progress"
+            android:layout_width="@dimen/dim200"
+            android:layout_height="@dimen/dim100"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:dots_normal_color="@drawable/abs_white_dots"
+            app:dots_selected_color="@drawable/no_alpha_white"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+
+</RelativeLayout>

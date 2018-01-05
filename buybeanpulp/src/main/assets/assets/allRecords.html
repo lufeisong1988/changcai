@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>收支记录</title>
+    <link rel="stylesheet" href="css/myApp.css">
+</head>
+
+<body>
+<div class="dateList">
+    <div class="header">日期筛选 <span class="blue" >全部<i class="icon iconfont">&#xe609;</i></span></div>
+    <div class="superposedLayer" style="z-index: -1">
+        <div class="top">
+            <ul style="top:0px">
+                <li class="dateLi blue">全部</li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li class="noDoLi">查询更多记录请登录买豆粕官网www.maidoupo.com</li>
+            </ul>
+            <!--<p>查询更多记录请登录买豆粕官网www.maidoupo.com</p>-->
+        </div>
+
+    </div>
+</div>
+<div class="bottom"></div>
+<div id="main1"></div>
+
+<script src="../common/js/jquery-1.8.3.min.js"></script>
+<script src="../common/js/config.js"></script>
+<script src="./js/subsidiary.js"></script>
+<script>
+    var isdrag = 0;
+    onAllRecords();
+    $("#main1").on('click', ".allRecords", function() {
+       
+        var _this = $(this).find('li');
+        var __this = $(this).find('span');
+        saveToLocalStorage(__this.eq(0).text(), _this.eq(0).text(),_this.eq(1).text(),_this.eq(2).html().split("<span>")[0], __this.eq(1).text().replace("，提货单号：", ""));
+        window.location = "./paymentDetails.html";
+    });
+</script>
+</body>
+
+</html>

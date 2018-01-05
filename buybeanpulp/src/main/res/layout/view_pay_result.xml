@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim124"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_pay_result"
+            android:layout_width="@dimen/dim50"
+            android:layout_height="@dimen/dim50"
+            android:src="@drawable/result_level_list" />
+
+        <TextView
+            android:id="@+id/tv_pay_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim20"
+            android:textColor="@color/cms_list_section_item_color"
+            android:textSize="@dimen/txt42"
+            tools:text="付款成功！等待卖家确认" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pay_result_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim34"
+        android:layout_marginRight="@dimen/dim34"
+        android:layout_marginTop="@dimen/dim64"
+        android:textSize="@dimen/txt30"
+        android:text="@string/pay_trust"
+        android:textColor="@color/sticky_header_text_color" />
+
+
+    <TextView
+        android:id="@+id/tv_agree_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/dim40"
+        android:layout_marginLeft="@dimen/dim34"
+        android:layout_marginRight="@dimen/dim34"
+        android:layout_marginTop="@dimen/dim100"
+        android:background="@drawable/confirm_assign_bg"
+        android:gravity="center"
+        android:text="@string/confirm_full_pay_directed"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dim38" />
+
+    <TextView
+        android:id="@+id/tv_check_my_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:text="@string/order_detail_btn_text"
+        android:textSize="@dimen/txt34"
+        android:textColor="@color/global_blue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dim60"
+        android:gravity="center_horizontal"
+        >
+        <TextView
+            android:id="@+id/tv_button_style_check_delivery"
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/recharge_bg"
+            android:gravity="center"
+            android:text="@string/delivery_detail_btn_text"
+            android:textColor="@color/global_blue"
+            tools:layout_marginRight="@dimen/dim30"
+            android:textSize="@dimen/txt30" />
+
+        <TextView
+            android:id="@+id/tv_button_style_check_order"
+            tools:visibility="visible"
+            android:visibility="gone"
+            tools:layout_marginLeft="@dimen/dim30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/recharge_bg"
+            android:gravity="center"
+            android:text="@string/order_detail_btn_text"
+            android:textColor="@color/global_blue"
+            android:textSize="@dimen/txt30" />
+    </LinearLayout>
+
+</LinearLayout>

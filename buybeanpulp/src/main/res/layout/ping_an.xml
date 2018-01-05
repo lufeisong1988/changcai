@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dim34"
+    android:paddingRight="@dimen/dim34">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim40"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_authenticate_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_ping_status" />
+
+        <TextView
+            android:id="@+id/tv_authenticate_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim10"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt30"
+            tools:text="认证身份：审核中" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_status_ongoing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dim20"
+        tools:visibility="visible"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_ongoing_colorful"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txt30"
+            android:text="您提交的“个人身份认证”资料将在1个工作日内审核完成，请耐心等待。有疑问请联系：021-54180258"
+            android:textColor="@color/orange_details_info" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/tv_ongoing_colorful"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dim80"
+            >
+            <TextView
+                android:id="@+id/tv_check_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="查看企业资料"
+                android:textSize="@dimen/txt30"
+                android:textColor="@color/global_blue" />
+
+            <ImageView
+                android:layout_width="@dimen/dim20"
+                android:layout_height="@dimen/dim20"
+                android:layout_below="@+id/tv_ongoing_colorful"
+                android:layout_marginLeft="@dimen/dim20"
+                android:src="@drawable/blue_more" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim20"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我是企业："
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt30" />
+
+        <TextView
+            android:id="@+id/tv_company_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt30"
+            android:text="认证企业身份，获取买豆粕网专属身份。还可以开通业务员、财务员多个子账号，流程完备，方便管理。" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dim20"
+        android:id="@+id/ll_person"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我是个人："
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt30"
+            />
+        <TextView
+            android:id="@+id/tv_person_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="认证个人身份，以个人身份买卖豆粕。"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt30" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim80"
+        android:background="@drawable/no_ping_an"
+        android:gravity="center"
+        android:text="我是企业"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt38" />
+
+
+    <TextView
+        android:id="@+id/tv_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim80"
+        android:background="@drawable/no_ping_an"
+        android:gravity="center"
+        android:text="我是个人"
+        android:textColor="@color/white"
+        android:textSize="@dimen/txt38" />
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/straddleParent"
+    android:orientation="vertical">
+
+    <com.changcai.buyer.view.PromptHeaderView
+        android:id="@+id/timeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim40" />
+
+    <TextView
+        android:id="@+id/contentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dim36"
+        android:layout_marginLeft="@dimen/dim50"
+        android:layout_marginRight="@dimen/dim50"
+        android:layout_marginTop="@dimen/dim30"
+        android:textColor="@color/membership_color"
+        android:textSize="@dimen/txt34"
+        tools:text="11V1压榨反套继续持有11V1压榨反套继续持有11V1压榨反套继续持有" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:layout_marginLeft="@dimen/dim50"
+        android:layout_marginRight="@dimen/dim50"
+        android:background="@color/mischka" />
+</LinearLayout>

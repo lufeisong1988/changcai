@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparents"
+    android:paddingLeft="@dimen/common_dimen_10"
+    android:paddingRight="@dimen/common_dimen_10"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="1212121"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="@dimen/common_dimen_10"
+        android:background="@drawable/quoto_phone_normal"
+        android:textColor="@color/global_blue" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dimen_10"/>
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="取消"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="@drawable/quoto_phone_normal"
+        android:textColor="@color/global_blue"
+        android:layout_marginBottom="@dimen/common_dimen_10"
+        />
+
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim5" />
+            <solid android:color="@color/dedee5" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <stroke android:width="@dimen/dim1" android:color="@color/mischka" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim5" />
+            <solid android:color="@color/dedee5" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <stroke android:width="@dimen/dim1" android:color="@color/mischka" />
+        </shape>
+    </item>
+
+    <item android:state_selected="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim5" />
+            <solid android:color="@color/white" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <stroke android:width="@dimen/dim1" android:color="@color/mischka" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim5" />
+            <solid android:color="@color/white" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <stroke android:width="@dimen/dim1" android:color="@color/mischka" />
+        </shape>
+    </item>
+
+
+</selector>

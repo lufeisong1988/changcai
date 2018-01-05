@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.changcai.buyer.view.NavigationTabStrip
+        android:id="@+id/navigation_indicator"
+        android:layout_width="@dimen/dim200"
+        android:layout_height="@dimen/dim91"
+        android:layout_marginLeft="@dimen/dim40"
+        app:nts_active_color="@color/membership_color"
+        app:nts_inactive_color="@color/storm_gray"
+        app:nts_color="@color/membership_color"
+        app:nts_gravity="bottom"
+        app:nts_size="@dimen/txt34"
+        app:nts_titles="@array/price_pattern"
+        app:nts_type="point"
+        app:nts_corners_radius="@dimen/dim0"
+        app:nts_weight="@dimen/dim5" />
+
+    <include
+        android:id="@+id/layout_no_quote_data"
+        layout="@layout/quote_header"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/mischka" />
+
+    <include layout="@layout/price_fragment_head_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/mischka" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+
+            <com.changcai.buyer.view.XListView
+                android:id="@+id/mListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fadingEdge="none"
+                android:scrollbars="none" />
+
+
+            <com.changcai.buyer.view.RotateDotsProgressView
+                android:id="@+id/dots_progress"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:background="@color/white"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:id="@+id/ll_empty_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dim140"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                >
+
+                <ImageView
+                    android:id="@+id/emptyView"
+                    android:src="@drawable/default_img_none"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_empty_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_chateau"
+                    android:textSize="@dimen/txt24"
+                    tools:text="联系买豆粕往客服：012sdsdsd" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/place_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/half_transparent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ll_place_parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim400"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/place_main_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:cacheColorHint="@color/black"
+                    android:divider="@color/mischka"
+                    android:dividerHeight="0.5dp"
+                    android:fastScrollEnabled="true"
+                    android:listSelector="@color/black"
+                    android:scrollbars="none" />
+
+                <View
+                    android:id="@+id/view_vertical"
+                    android:layout_width="@dimen/dim1"
+                    android:layout_height="match_parent"
+                    android:background="@color/mischka" />
+
+                <ListView
+                    android:id="@+id/place_more_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.7"
+                    android:background="@color/white"
+                    android:cacheColorHint="@color/black"
+                    android:divider="@color/mischka"
+                    android:dividerHeight="0.5dp"
+                    android:fastScrollEnabled="true"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ddd" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_more_filtrate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/half_transparent"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/proteinAndPriceLstView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim560"
+                android:background="@color/white"
+                android:divider="#ddd"
+                android:dividerHeight="@dimen/dim1"
+                android:fadingEdge="none"
+                android:scrollbars="none"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim102"
+                android:background="@color/item_background_gray"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dim20"
+                android:paddingLeft="@dimen/dim17"
+                android:paddingRight="@dimen/dim17"
+                android:paddingTop="@dimen/dim20">
+
+                <TextView
+                    android:id="@+id/tv_more_filtrate_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/common_tv_bg_selector"
+                    android:gravity="center"
+                    android:text="@string/reelect"
+                    android:textColor="@color/global_text_gray"
+                    android:textSize="@dimen/txt26" />
+
+                <View
+                    android:layout_width="@dimen/dim0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_more_filtrate_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/common_tv_bg_blue_selector"
+                    android:gravity="center"
+                    android:text="@string/accomplish"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+</LinearLayout>
+
+
+

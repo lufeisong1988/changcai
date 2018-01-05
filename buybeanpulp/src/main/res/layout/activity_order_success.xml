@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_gray"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/viewTop"
+        layout="@layout/common_title_bar" />
+
+
+    <ImageView
+        android:layout_width="@dimen/common_height_50"
+        android:layout_height="@dimen/common_height_50"
+        android:layout_gravity="center"
+        android:src="@mipmap/order_success"
+        android:layout_marginTop="@dimen/common_margin_50" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_margin_40"
+        android:text="@string/order_success_text"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/common_margin_20"
+        android:layout_marginRight="@dimen/common_margin_20"
+        android:layout_marginTop="@dimen/common_margin_40"
+        android:text="@string/order_success_message_1"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_margin_20"
+        android:layout_marginRight="@dimen/common_margin_20"
+        android:layout_marginTop="@dimen/common_margin_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/order_success_message_2"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+        <com.changcai.buyer.view.TimeTextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/common_margin_20"
+        android:layout_marginRight="@dimen/common_margin_20"
+        android:layout_marginTop="@dimen/common_margin_10"
+        android:text="@string/order_success_message_3"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_dimen_45"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/common_margin_30"
+        android:layout_marginLeft="@dimen/common_margin_40"
+        android:layout_marginRight="@dimen/common_margin_40"
+        >
+        <Button
+            android:id="@+id/order_detail"
+            android:text="@string/order_detail_btn_text"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:background="@drawable/order_success_btn_bg"
+            android:textColor="@color/global_blue"
+            />
+        
+         <View
+             android:layout_width="0dp"
+             android:layout_height="match_parent"
+             android:layout_weight="1"
+             />
+
+        <Button
+            android:id="@+id/go_back_quote"
+            android:text="@string/order_go_back_quote"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:textSize="16sp"
+            android:background="@drawable/order_success_btn_bg"
+            android:textColor="@color/global_blue"
+            />
+        
+    </LinearLayout>
+
+
+</LinearLayout>

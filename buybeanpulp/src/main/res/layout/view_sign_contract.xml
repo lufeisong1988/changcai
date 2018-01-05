@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:background="@color/item_background_gray"
+    android:orientation="vertical">
+
+
+    <com.changcai.buyer.view.countdowntextview.CountDownTextView
+        android:id="@+id/tv_count_down"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim58"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:background="@color/sazerac"
+        android:textColor="@color/flamingo"
+        android:textSize="@dimen/txt26"
+        tools:text="06时00分00秒" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:background="@color/global_text_gray2" />
+
+    <LinearLayout style="@style/linear_layout_pay">
+
+        <com.changcai.buyer.view.CustomFontTextView
+            style="@style/left_text_style_pay"
+            android:text="@string/tv_pick_up_time" />
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/tv_pick_up_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cms_list_section_item_color"
+            android:textSize="@dimen/txt28"
+            tools:text="2016-11-16 至 2016-12-14" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:layout_marginLeft="@dimen/dim20"
+        android:background="@color/global_text_gray2" />
+
+    <LinearLayout style="@style/linear_layout_pay">
+
+        <com.changcai.buyer.view.CustomFontTextView
+            style="@style/left_text_style_pay"
+            android:text="@string/tv_units" />
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cms_list_section_item_color"
+            android:textSize="@dimen/txt28"
+            tools:text="3200" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:layout_marginLeft="@dimen/dim20"
+        android:background="@color/global_text_gray2" />
+
+    <LinearLayout style="@style/linear_layout_pay">
+
+        <com.changcai.buyer.view.CustomFontTextView
+            style="@style/left_text_style_pay"
+            android:text="@string/tv_ton_units" />
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/tv_ton_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cms_list_section_item_color"
+            android:textSize="@dimen/txt28"
+            tools:text="100" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dim20">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+
+            <ImageView
+                android:id="@+id/iv_contract_template"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true" />
+
+
+        </ScrollView>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/dim20"
+            android:layout_marginRight="@dimen/dim20"
+            android:background="@drawable/btn_shdo_blue110"
+            >
+
+            <TextView
+                android:id="@+id/tv_agree_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dim100"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/confirm_contract"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt40" />
+
+            <com.changcai.buyer.view.RotateDotsProgressView
+                android:layout_width="@dimen/dim200"
+                android:layout_height="@dimen/dim100"
+                android:layout_gravity="center_horizontal"
+                app:dots_normal_color="@drawable/abs_white_dots"
+                app:dots_selected_color="@drawable/no_alpha_white"
+                android:id="@+id/progress"
+                android:visibility="invisible"
+                tools:visibility="visible"
+                />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

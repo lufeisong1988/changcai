@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_title_bar"></include>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:background="@color/color_E8E8E8"></View>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim140"
+            android:paddingLeft="@dimen/dim40"
+            android:paddingRight="@dimen/dim40">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置头像"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_header"
+                app:layout_constraintTop_toTopOf="@id/cl_header" />
+
+            <ImageView
+                android:id="@+id/btn_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_inline_rgt_gray"
+                app:layout_constraintBottom_toBottomOf="@id/cl_header"
+                app:layout_constraintRight_toRightOf="@id/cl_header"
+                app:layout_constraintTop_toTopOf="@id/cl_header" />
+
+            <com.changcai.buyer.view.RoundImageView
+                android:id="@+id/iv_header"
+                android:layout_width="@dimen/dim80"
+                android:layout_height="@dimen/dim80"
+                android:layout_marginRight="@dimen/dim60"
+                android:src="@drawable/icon_default_head"
+                app:layout_constraintBottom_toBottomOf="@id/cl_header"
+                app:layout_constraintRight_toRightOf="@id/btn_arrow"
+                app:layout_constraintTop_toTopOf="@id/cl_header"
+                app:type="circle" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:background="@color/color_E8E8E8"></View>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_user_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim108"
+            android:paddingLeft="@dimen/dim40"
+            android:paddingRight="@dimen/dim40">
+
+            <TextView
+                android:id="@+id/tv_nickname_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昵称"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_user_nickname"
+                app:layout_constraintTop_toTopOf="@id/cl_user_nickname" />
+
+            <ImageView
+                android:id="@+id/btn_arrow_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_inline_rgt_gray"
+                app:layout_constraintBottom_toBottomOf="@id/cl_user_nickname"
+                app:layout_constraintRight_toRightOf="@id/cl_user_nickname"
+                app:layout_constraintTop_toTopOf="@id/cl_user_nickname" />
+
+            <TextView
+
+                android:id="@+id/tv_nickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim60"
+                android:layout_marginRight="@dimen/dim60"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:lines="1"
+                android:text="@string/user_profile_introduction_tip"
+                android:textColor="@color/font_gray"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_user_nickname"
+                app:layout_constraintLeft_toRightOf="@id/tv_nickname_title"
+                app:layout_constraintRight_toRightOf="@id/btn_arrow_nickname"
+                app:layout_constraintTop_toTopOf="@id/cl_user_nickname" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:background="@color/color_E8E8E8"></View>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_user_introducion"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim108"
+            android:paddingLeft="@dimen/dim40"
+            android:paddingRight="@dimen/dim40">
+
+            <TextView
+                android:id="@+id/tv_introduction_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人介绍"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_user_introducion"
+                app:layout_constraintTop_toTopOf="@id/cl_user_introducion" />
+
+            <ImageView
+                android:id="@+id/btn_arrow_introduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_inline_rgt_gray"
+                app:layout_constraintBottom_toBottomOf="@id/cl_user_introducion"
+                app:layout_constraintRight_toRightOf="@id/cl_user_introducion"
+                app:layout_constraintTop_toTopOf="@id/cl_user_introducion" />
+
+            <TextView
+
+                android:id="@+id/tv_introduction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim60"
+                android:layout_marginRight="@dimen/dim60"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:lines="1"
+                android:text="@string/user_profile_introduction_tip"
+                android:textColor="@color/font_gray"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_user_introducion"
+                app:layout_constraintLeft_toRightOf="@id/tv_introduction_title"
+                app:layout_constraintRight_toRightOf="@id/btn_arrow_introduction"
+                app:layout_constraintTop_toTopOf="@id/cl_user_introducion" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:background="@color/color_E8E8E8"></View>
+    </LinearLayout>
+
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone" />
+</RelativeLayout>

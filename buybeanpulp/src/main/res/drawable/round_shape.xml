@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="oval">
+
+    <!-- 圆角 -->
+    <corners
+        android:radius="10dp"
+        />
+
+    <!-- 大小 -->
+    <size
+        android:width="65dp"
+        android:height="65dp"/><!-- 宽度和高度 -->
+
+    <!-- 填充 -->
+    <solid android:color="@color/global_text_gray"/><!-- 填充的颜色 -->
+
+    <!-- 描边 -->
+    <stroke
+        android:width="3dp"
+        android:color="@color/head_blue"/>
+
+</shape>

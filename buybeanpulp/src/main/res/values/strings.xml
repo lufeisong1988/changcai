@@ -1,0 +1,813 @@
+<resources>
+    <string name="app_name">买豆粕</string>
+
+    <!-- login register -->
+    <string name="label_login">登录</string>
+    <string name="label_register">注册</string>
+    <string name="label_find_password">找回密码</string>
+    <string name="label_submit">提交</string>
+    <string name="label_confirm">确认</string>
+    <string name="hint_phone">输入手机号</string>
+    <string name="hint_password">输入密码</string>
+    <string name="please_input_phone_and_password">请输入手机号和密码</string>
+    <string name="hint_verify_password">输入密码</string>
+    <string name="hint_verify_password_2">再次输入密码</string>
+    <string name="hint_verify_code">输入动态码</string>
+    <!-- main -->
+    <string name="label_main">首页</string>
+
+    <string name="no_signal_exception">亲，没找到您的网络啦，请检查网络配置</string>
+
+    <string name="net_work_exception">网络异常,请检查您的网络</string>
+
+    <!-- xlistview -->
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新</string>
+    <string name="xlistview_header_hint_loading">刷新中</string>
+    <string name="xlistview_header_last_time">上次更新:</string>
+    <string name="xlistview_header_unsupport_last_time">上次更新:%1$s</string>
+    <string name="xlistview_header_hint_success">更新成功</string>
+    <string name="xlistview_header_hint_fail">更新失败</string>
+    <string name="xlistview_footer_hint_normal">上拉加载更多</string>
+    <string name="xlistview_footer_hint_ready">松开加载更多</string>
+    <string name="xlistview_footer_hint_loading">加载中…</string>
+    <string name="xlistview_footer_hint_no_more">没有更多了</string>
+    <string name="listview_footer_hint_no_more_price">没有更多报价了</string>
+    <string name="listview_footer_hint_no_more">没有更多了</string>
+
+
+    <!--我的-->
+    <string name="my_not_login_username_text">还未登录</string>
+    <string name="my_order_text">我的订单</string>
+    <string name="my_order_watch_text">查看全部订单</string>
+    <string name="orders">全部订单</string>
+
+    <string name="click_login">点击登录/注册</string>
+    <string name="set_login_password">请设置登录密码</string>
+    <string name="set_pay_password2">请设置支付密码</string>
+    <string name="set_pay_password3">请设置新支付密码</string>
+    <string name="my_delivery_text">我的提货单</string>
+    <string name="my_delivery_watch_text">查看全部提货单</string>
+
+
+    <string name="my_message_text">消息列表</string>
+    <string name="my_remind_text">提醒设置</string>
+
+    <!-- 星期 -->
+    <string name="Mon">一</string>
+    <string name="Tue">二</string>
+    <string name="Wed">三</string>
+    <string name="Thu">四</string>
+    <string name="Fri">五</string>
+    <string name="Sat">六</string>
+    <string name="Sun">日</string>
+
+
+    <string name="computer_operation_text">未完成买家认证,无法下单购买</string>
+    <string name="computer_operation_message">\t\t    请在电脑上访问买豆粕网站（www.maidou.com）,登录后在“我的业务”里找到“我的身份”这个选项,并在电脑上完成认证。</string>
+    <string name="order_text">买卖双方都将支付保证金,支付货款时保证金抵扣</string>
+    <string name="deposit_text">保证金(元)</string>
+    <string name="order_compute_1">保证金金额=(%1$s%2$s%3$s)*%4$s*%5$s。</string>
+    <string name="order_buyer_rule">购买吨数（库存%1$s吨，%2$s吨起售）</string>
+    <string name="order_compute_2">保证金金额计算方法：(前一交易日%1$s收盘价+基差价格)*购买数量*保证金比例。</string>
+    <string name="computer_operation_message_1">\t\t请在电脑上访问买豆粕网站（www.maidou.com）,登录后在“我的业务”里找到这笔订单, 然后操作。</string>
+    <string name="order_limited_quantity">本商品最少购买%1$s吨</string>
+
+
+    <string name="order_success_text">下单成功&#160;!</string>
+    <string name="order_success_text2">下单成功</string>
+    <string name="order_success_message_1">请联系财务员在报价有效时间内尽快签署合同并支付保证金。</string>
+    <string name="order_success_message_2">报价有效时间</string>
+    <string name="order_success_message_3">卖家也可能随时更改报价,未支付保证金的订单将不受保护。</string>
+    <string name="seller_title">卖家：</string>
+    <string name="order_success_message_4">财务员联系方式: %1$s</string>
+
+
+    <string name="order_detail_btn_text">查看订单详情</string>
+    <string name="delivery_detail_btn_text">查看提货单详情</string>
+    <string name="order_go_back_quote">返回报价</string>
+    <string name="quote_empty_view_text">抱歉没有找到相应的报价，请调整筛选条件，或者联系客服</string>
+    <string name="most_new_news">最新资讯</string>
+    <string name="all">全部栏目</string>
+    <string name="string_company">登录后可买卖豆粕</string>
+    <string name="my_membership_level">会员等级说明</string>
+    <string name="reload_text">点击屏幕重新加载</string>
+    <string name="tv_release_info">买豆粕网系统升级中，请稍后再访问...</string>
+    <string name="contact_type">客服热线：021-54180258（工作日上午9:00--下午6:00)\n邮箱地址：沈女士 shenjiali@maidoupo.com\n
+     &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;李女士 liyiling@maidoupo.com</string>
+    <string name="no_cms_dta">抱歉，该栏目暂无资讯</string>
+    <string name="user_introduction_info">真实、详细的介绍信息，有助于提升信誉度，达成更多交易。买家介绍必填</string>
+    <string name="user_introduction">卖家介绍:&#160;</string>
+    <string name="seller_name">卖家名称:&#160;</string>
+    <string name="please_input_user_introduction_with_length_limited">请输入卖家介绍，字数10-200</string>
+    <string name="please_input_buyer_introduction_with_length_limited">请输入买家介绍，字数10-200</string>
+
+
+    <string name="buyer_introduction">买家介绍:</string>
+    <string name="post">提交</string>
+    <string name="confirm_assign_platform_agreement">确认签署网站入驻协议</string>
+    <string name="payment_limited_info">密码必须6-16位，包含字母和数字，与登录密码不同</string>
+    <string name="payment_limited_info2">密码6-16位，包含字母和数字，请重新输入</string>
+    <string name="set_payment_password">设置密码</string>
+    <string name="legal_people_information">请填写法人资料</string>
+    <string name="legal_person_information">法人资料</string>
+    <string name="legal_people_name">法人姓名：</string>
+    <string name="please_input_legal_people_name">输入法人姓名</string>
+    <string name="legal_people_id_card">法人身份证号码:</string>
+    <string name="please_input_legal_people_id_card3">输入身份证号</string>
+    <string name="please_input_legal_people_id_card">输入法人身份证号码</string>
+    <string name="please_input_legal_people_id_card2">&#160;&#160;&#160;&#160;&#160;请输入法人身份证号码</string>
+    <string name="please_input_legal_right_people_id_card">请输入正确法人身份证号码</string>
+    <string name="please_input_legal_right_people_id_card6">请输入正确身份证号码</string>
+    <string name="company_code_type">请选择企业代码类型</string>
+    <string name="company_type">企业代码类型</string>
+    <string name="company_type_code">企业代码</string>
+    <string name="uniform_standard_credit_code">统一社会信用代码</string>
+    <string name="please_uniform_standard_credit_code">请输入正确统一社会信用代码</string>
+    <string name="organize_structural_code">组织机构代码</string>
+    <string name="company_info">请填写企业资料</string>
+    <string name="company_info2">企业资料</string>
+    <string name="company_name">企业名称：</string>
+    <string name="please_input_credit_code">输入代码号</string>
+
+    <string name="message_dynamic_code">短信动态码:</string>
+    <string name="register_mobile_number">注册手机号:</string>s
+    <string name="please_input_received_dynamic_code">输入动态码</string>
+    <string name="organization_code">组织机构代码:</string>
+    <string name="organization_code6">企业代码:</string>
+    <string name="organization_code2">输入组织机构代码</string>
+    <string name="organization_code3">输入正确组织机构代码</string>
+    <string name="please_input_organization_code">输入企业代码</string>
+    <string name="new_payment_password">新支付密码:</string>
+    <string name="new_payment_password_again">新支付密码:</string>
+    <string name="please_input_new_payment_password">输入新支付密码</string>
+    <string name="please_input_new_payment_password_again">请再次输入新的支付密码</string>
+    <string name="please_input_payment_password">支付密码</string>
+    <string name="please_input_payment_password_again">再次输入支付密码</string>
+    <string name="please_input_payment_password_again1">再次输入密码:</string>
+    <string name="confirm_modify">确认修改</string>
+    <string name="password_modify">修改</string>
+    <string name="id_authenticate_text">我的身份</string>
+    <string name="certify_authenticate_text">认证身份</string>
+    <string name="authenticate_certify_text">身份认证</string>
+    <string name="check_it">查看</string>
+    <string name="string_authenticate_details_waiting">您提交的“个人身份认证”资料将在1个工作日内审核完成，请耐心等待。有疑问请联系：021-54180258</string>
+    <string name="string_authenticate_details_waiting_company">您提交的“企业身份认证”资料将在1个工作日内审核完成，请耐心等待。有疑问请联系：021-54180258</string>
+    <string name="sign_bank_account">绑定银行卡</string>
+    <string name="string_authenticate_second_step_info">身份认证通过后才能签约</string>
+    <string name="string_pay_safe"><![CDATA[为了您的资金安全，请用电脑访问买豆粕网www.maidoupo.com 登录后进入”我的业务>我的身份>身份认证“完成此步骤]]></string>
+    <string name="set_pay_password">设置支付密码</string>
+    <string name="string_authenticate_third_step_info">银行签约后才能设置</string>
+    <string name="assign_platform_agreement">签署网站入驻协议</string>
+    <string name="string_authenticate_four_step_info">设置支付密码后才能签署</string>
+    <string name="input_user_introduction">填写用户介绍</string>
+    <string name="string_authenticate_fifth_step_info">签署完网站入驻协议后才能填写</string>
+    <string name="person">我是个人</string>
+    <string name="person1">个人</string>
+    <string name="company">我是企业</string>
+    <string name="company2">企业</string>
+    <string name="person_certify">认证个人身份</string>
+    <string name="about_app">关于买豆粕</string>
+    <string name="check_version">检查新版本</string>
+    <string name="function_introduce">功能介绍</string>
+    <string name="afterwards">以后再说</string>
+    <string name="right_now_upgrade">马上更新</string>
+    <string name="finance_officer_buy_jurisdiction">买家权限：签署合同，支付保证金／支付货款／支付补充打款</string>
+    <string name="finance_officer_seller_jurisdiction">卖家权限：签署合同，支付保证金／支付补充打款</string>
+    <string name="trader_jurisdiction">交易员：挂单，输入点价结果</string>
+    <string name="salesman_buyer_jurisdiction">买家权限：查看报价/下订单，发起提货/确认收货/发起补充打款，发起点价</string>
+    <string name="salesman_seller_jurisdiction">卖家权限：发布报价/确认订单，确认提货/发起补充打款</string>
+    <string name="admin_success">已认证：%s用户(管理员)</string>
+    <string name="child_success">已关联：%s</string>
+    <string name="admin_fail">审核未通过，请按要求重新提交</string>
+    <string name="admin_init">身份认证后，即可买豆粕</string>
+    <string name="admin_process">审核中</string>
+    <string name="admin_step_one">完成剩余4步，即可开始买豆粕啦！</string>
+    <string name="admin_step_two">完成剩余3步，即可开始买豆粕啦！</string>
+    <string name="admin_step_three">完成剩余2步，即可开始买豆粕啦！</string>
+    <string name="admin_step_four">完成剩余1步，即可开始买豆粕啦！</string>
+    <string name="all_step_done">您已完成认证签约流程，现在可以开始买豆粕啦！</string>
+    <string name="assign_platform_agreement_success">签署入驻协议成功</string>
+    <string name="personality_information">请填写个人资料</string>
+    <string name="personality_information2">个人资料</string>
+    <string name="people_name">姓名:</string>
+    <string name="people_name2">输入姓名</string>
+    <string name="people_id_card">身份证号:</string>
+    <string name="people_id_card2">输入身份证号</string>
+    <string name="relevant_credentials">请上传相关证件照片</string>
+    <string name="relevant_credentials2">相关证件照片</string>
+    <string name="id_front">身份证正面</string>
+    <string name="id_background">身份证背面</string>
+    <string name="handle_id_card_front_picture">手持身份证正面照</string>
+    <string name="take_picture_from_camera">拍照</string>
+    <string name="gallery">本地相册</string>
+    <string name="permissions_tips_gallery">这个App请求访问你的相册</string>
+    <string name="permissions_tips_call">这个App请求拨打电话</string>
+    <string name="permissions_write_and_read">这个App请求访问你的存储</string>
+    <string name="permissions_phone_and_location_storage">这个App请求如下权限</string>
+    <string name="company_authenticate">认证企业身份</string>
+    <string name="legal_id_front">法人身份证正面</string>
+    <string name="legal_id_background">法人身份证背面</string>
+    <string name="license">工商营业执照</string>
+    <string name="tax_license">税务登记证</string>
+    <string name="institutional_framework_code">组织机构代码</string>
+    <string name="chanese_name">请输入正确的姓名</string>
+    <string name="please_input_legal_people_id_card1">请填写法人身份证号码</string>
+    <string name="please_input_correct_legal_people_id_card">请填写法人身份证号码</string>
+    <string name="please_input_no2">请填写身份证号码</string>
+    <string name="please_input_no2_be_correct">请输入正确身份证号码</string>
+    <string name="please_input_legal_name">请填写法人姓名</string>
+    <string name="please_input_people_name">请填写姓名</string>
+    <string name="please_commit_correct_photo">请提交全部相关证件照片</string>
+    <string name="commit_success">您的资料将在1个工作日内审核完成，请耐心等待。有疑问请联系：021-54180258。</string>
+    <string name="please_input_buyer_introduce">请填写买家介绍</string>
+    <string name="string_limit">请将卖家介绍字数限制在10-200</string>
+    <string name="string_limit_for_buyer">请将买家介绍字数限制在10-200</string>
+    <string name="buyer_and_seller_limit">买家卖家介绍字数限制在10-200</string>
+    <string name="password_limit">密码不符合要求</string>
+    <string name="password_empty_limit">密码不能为空</string>
+    <string name="password_equals_limit">两次密码输入不一致，请重新输入</string>
+    <string name="set_success">设置成功</string>
+    <string name="reset_password">修改支付密码</string>
+    <string name="send_sms_success">短信发送成功</string>
+    <string name="please_input_code">请输入动态码</string>
+    <string name="please_input_cell_phone_and_code">请输入手机号，并获取动态码</string>
+    <string name="common_code_limit">组织机构代码不正确，请重新输入/统一社会信用代码输入不正确，请重新输入。</string>
+    <string name="sms_limit">动态验证码输入不正确，请重新输入</string>
+    <string name="password_not_equals">两次密码输入不一致，请重新输入。</string>
+    <string name="service_phone">拨打客服热线：</string>
+    <string name="service_phone4">客服热线：</string>
+    <string name="service_phone2">拨打客服热线：%s</string>
+    <string name="certify_authenticate_text_fail">身份认证：审核未通过，请按要求重新提交</string>
+    <string name="ping_an_easy_pay">平安易宝</string>
+    <string name="back_type">农业银行</string>
+    <string name="agree_bank">已绑定</string>
+    <string name="already_agree_bank">已签约银行账户</string>
+    <string name="already_set_pay_pass">已设置支付密码</string>
+    <string name="already_agree_contract">已签署网站入驻协议</string>
+    <string name="already_input_introduce">已填写用户介绍</string>
+    <string name="quit_input">您是否放弃已填写内容？</string>
+    <string name="already_new_version">已经是最新版本</string>
+    <string name="contact_service">联系客服</string>
+    <string name="contact_number">联系方式</string>
+    <string name="string_quote_header">当前暂无报价，请在交易日 9:00 ～ 18:00 查询报价。以下为历史报价，仅供参考。</string>
+    <string name="string_processing">认证身份：审核中</string>
+    <string name="please_input_uniform_code">请输入组织机构代码</string>
+    <string name="please_input_ogzion_code">请输入统一社会信用代码</string>
+    <string name="organization_correct_code">请输入正确的组织机构代码</string>
+    <string name="please_input_correct_uniform_code">请输入正确的统一社会信用代码</string>
+    <string name="please_input_company">输入企业名称</string>
+    <string name="perssion_for_set">请到系统设置中开启存储设备读取权限！</string>
+    <string name="perssion_for_call">请到系统设置中开启拨打电话权限！</string>
+    <string name="perssion_for_group">请到系统设置中开启相应权限！</string>
+    <string name="reupload">重新上传</string>
+    <string name="please_reload">上传失败请重新上传</string>
+    <string name="modify_success">修改成功</string>
+    <string name="certify_done">认证完成</string>
+    <string name="uploading">图片上传中请稍后...</string>
+    <string name="get_picture_failed">照片获取失败请重新拍照或上传本地图片</string>
+
+
+
+    <string name="icons">&#xe643;</string>
+    <string name="pleanse_input_id_certify">未完成身份认证，无法下单</string>
+    <string name="start_action_experience">开始体验</string>
+    <string name="cms_default">咨询详情</string>
+    <string name="newest_cms_default">咨询详情</string>
+    <string name="cancel_string">暂不认证</string>
+    <string name="affirm">去认证身份</string>
+    <string name="notice">提示</string>
+    <string name="today_event">今日%s个事件</string>
+    <string name="today_no_event">查看行业日历</string>
+    <string name="profession_calendar">行业日历</string>
+    <string name="step1_ongoing">我是企业：认证企业身份，获取买豆粕网专属身份。还可以开通\n业务员、财务员多个子账号，流程完备，方便管理。\n我是个人：认证个人身份，以个人身份买卖豆粕。</string>
+    <string name="i_m_company">我是企业：</string>
+    <string name="i_m_company_details">认证企业身份，获取买豆粕网专属身份。还可以开通业务员、财务员多个子账号，流程完备，方便管理。</string>
+    <string name="i_m_person_details">认证个人身份，以个人身份买卖豆粕。</string>
+    <string name="i_m_person">我是个人：</string>
+    <string name="check_assign_platform_agreement">查看网站入驻协议</string>
+    <string name="my_property_text">我的资产</string>
+    <string name="unfinished_identity_authentication">未完成身份认证，无法查看。</string>
+    <string name="finished_identity_authentication">完成身份认证后查看联系方式</string>
+    <string name="recharge_title">充值(银转商)</string>
+    <string name="recharge">充值</string>
+    <string name="ping_an_balance">平安易宝账户余额</string>
+    <string name="platform_balance">平台账户余额</string>
+    <string name="recharge_ping_an">平安易宝充值</string>
+    <string name="tv_ping_an_info">充值至买豆粕网(银转商)</string>
+    <string name="recharge_money_number">充值金额：</string>
+    <string name="please_input_recharge_money">请输入充值金额</string>
+    <string name="recharge_money_password">支付密码：</string>
+    <string name="product_pay_info">支付信息</string>
+    <string name="forget_recharge_money_password">忘记支付密码？</string>
+    <string name="please_input_recharge_money_password">请输入支付密码</string>
+    <string name="recharge_ing">充值中...</string>
+    <string name="recharge_waiting">充值金额将在10分钟内到账。如果未到账，请联系客服021-54180258</string>
+    <string name="check_my_property">查看我的资产</string>
+    <string name="check_my_order">查看我的订单</string>
+    <string name="tv_ping_an_bank_card">其它银行转账至您的平安易宝账户：</string>
+    <string name="account">账号：</string>
+    <string name="copy_card">复制账号</string>
+    <string name="bank_introduce">若您是通过买豆粕网注册平安易宝账户，开户行名 称为平安银行上海古北支行 ；若您是通过其他渠道 注册平安易宝账户，开户行名称请在平安易宝官网的 【资金划出】栏目中查询。</string>
+    <string name="confirm_recharge">确认充值</string>
+    <string name="copy_success">复制成功</string>
+    <string name="recharge_result">充值结果</string>
+    <string name="recharge_success">充值成功！</string>
+    <string name="recharge_loading">加载中...</string>
+    <string name="balance_not_enough">账户余额不足</string>
+    <string name="balance_not_enough_go_recharge">您的平安易宝账户余额不足，请先充值。</string>
+    <string name="balance_recharge_cancel">取消</string>
+    <string name="go_to_recharge">充值平安易宝</string>
+    <string name="go_to_recharge2">去充值</string>
+    <string name="pay_password_error">支付密码输入有误，请重新输入</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="forget_password2">忘记密码?</string>
+    <string name="forget_password3">忘记支付密码?</string>
+    <string name="retry">重试</string>
+    <string name="go_back">返回上一页</string>
+    <string name="get_balance_failed">获取账户余额失败</string>
+    <string name="please_input_recharge_money_error">充值金额输入有误，请重新输 入</string>
+    <string name="tv_pick_up_time">提货期间</string>
+    <string name="tv_units">单价(元)</string>
+    <string name="tv_units1">单价</string>
+    <string name="tv_ton_units">购买吨数</string>
+    <string name="tv_ton_units2">购买数量</string>
+    <string name="tv_ton_unit">数量(吨)</string>
+    <string name="sign_contract">签署合同</string>
+    <string name="time_limit_sign_contract">内签署合同</string>
+    <string name="time_limit_full_pay">内全额付款</string>
+    <string name="recharge_failed">因网络原因充值失败，请稍候再试</string>
+    <string name="net_error">网络异常，请稍后再试</string>
+    <string name="transform_info">平安易宝仅能接收同户名账户转账充值，非同户名 充值将被拒绝并原路退回。</string>
+    <string name="company_recharge_go_to_pc">企业用户请在电脑端进行充值操作</string>
+    <string name="confirm_contract">确认签署合同</string>
+    <string name="tv_pick_up_site">提货地点</string>
+    <string name="string_seller">卖家</string>
+    <string name="total_amount">总价(元)</string>
+    <string name="total_amount1">总价</string>
+    <string name="pay_attention"> 选择全额付款，会扣除账户中总价对应的金额</string>
+    <string name="confirm_full_pay">确认全额付款</string>
+    <string name="full_pay">全额付款</string>
+    <string name="go_full_pay">去全额付款</string>
+    <string name="go_full_pay5">去支付</string>
+    <string name="go_full_pay4">去支付货款</string>
+    <string name="delivery_pay6">支付货款</string>
+    <string name="waiting_pay_money">待支付货款</string>
+    <string name="go_sign_contract">去签署合同</string>
+    <string name="go_fast_pay">去转为直接付</string>
+    <string name="down_pay_money">支付定金</string>
+    <string name="confirm_down_pay_money">确认支付定金</string>
+    <string name="please">请在</string>
+    <string name="pay_time_limit">内全额付款</string>
+    <string name="pay_success">付款成功</string>
+    <string name="pay_trust">现在订单为担保付，保证金和货款都保留在买豆粕网，您确认收货后，才打给卖家。\n\n您如果信任卖家，也可以选择“直接付”，保证金和货款都将打到卖家账户。</string>
+    <string name="confirm_full_pay_directed">直接付，全部打给卖家</string>
+    <string name="pay_fail">付款失败！</string>
+    <string name="pay_fail_title">付款失败</string>
+    <string name="pay_success_and_waiting_seller_confirm">付款成功！等待卖家确认</string>
+    <string name="pay_fail_info">支付失败原因一般有：\n1、平安易宝余额不足。\n2、平安易宝系统出错。\n3、你也可以联系买豆粕网客服021-54180258</string>
+    <string name="full_pay_fail_info">支付失败原因一般有：\n1、平安易宝余额不足。\n2、平安易宝系统出错。\n如有问题请联系买豆粕网客服021-54180258</string>
+    <string name="waiting_ping_an_easy_pay_confirm">等待平安易宝返回结果！</string>
+    <string name="waiting_info">我们还在等待平安易宝返回支付结果，请稍后再看。你也可以联系买豆粕网客服021-54180258</string>
+    <string name="contact_maidoupo">联系买豆粕网客服：%1$s</string>
+    <string name="direct_pay_result">直接付成功</string>
+    <string name="look_other_price_info">查看其他报价</string>
+    <string name="limit_enough">权限不足</string>
+    <string name="limit_enough_contact">您权限不足，请联系管理员。</string>
+    <string name="mobile_limit">手机不支持基差下单，请去电脑端操作</string>
+    <string name="time_up_sign_contract">签署合同时间已失效</string>
+    <string name="time_up_full_pay">全额付时间已失效</string>
+    <string name="time_up_down_pay">定金支付时间已失效</string>
+    <string name="pick_up_time">提货时间：</string>
+    <string name="pick_up_time2">提货日期：</string>
+    <string name="pick_up_time3">提货日期</string>
+    <string name="chose_pick_up_time">选择提货日期</string>
+    <string name="input_incrected_password">支付密码输入有误，请重新输入</string>
+    <string name="full_pay_waiting_confirm">全额支付待确认</string>
+    <string name="alert">提示</string>
+    <string name="full_pay_networt_error">全额支付网络异常</string>
+    <string name="pay_waiting">付款等待</string>
+    <string name="direct_pay_to_seller">直接打给卖家</string>
+    <string name="direct_pay_to_seller_info">您的保证金和货款都将直接打到卖家账户，请确认。</string>
+    <string name="waiting_seller_confirm">卖家确认订单后，保证金和货款将直接打到卖家账户。</string>
+    <string name="direct_pay_success">直接付成功！</string>
+    <string name="please_chose_pick_up_time">请选择提货日期</string>
+    <string name="grand_standard_package">品牌/蛋白规格/包装:</string>
+    <string name="grand_standard_package2">规格信息</string>
+    <string name="buyer_pick_by_self">(买方自提)</string>
+    <string name="login_and_auth_to_see_contact_way">登录认证后查看联系方式</string>
+    <string name="buyer_deposit">买家保证金比例：%1$s</string>
+    <string name="seller_deposit">卖家保证金比例：%1$s</string>
+    <string name="seller_deposit2">卖家交%1$s保证金</string>
+    <string name="all_deposit">保证金（买家比例%1$s,卖家比例%2$s）</string>
+    <string name="buyer_deposit_money">保证金金额：%1$s*%2$s*%3$s=%4$s</string>
+    <string name="buyer_deposit_money_base">保证金金额：(%1$s)*%2$s*%3$s=%4$s</string>
+    <string name="buyer_deposit_money2">%1$s*%2$s*%3$s=%4$s</string>
+    <string name="buyer_deposit_money_base2">(%1$s)*%2$s*%3$s=%4$s</string>
+    <string name="invalid">报价已失效</string>
+    <string name="price_data_changed">报价信息变动提示</string>
+    <string name="oil">油厂</string>
+    <string name="send_sms_to_financial_affairs">我们已短信通知财务员，在6个小时内签署合同。</string>
+    <string name="more_filtrate">更多筛选</string>
+    <string name="reelect">重置</string>
+    <string name="accomplish">完成</string>
+    <string name="exit">退出</string>
+    <string name="cunt_down_time_pre_string">报价还剩</string>
+    <string name="pay_way">支付方式：</string>
+    <string name="guarantee">担保付</string>
+    <string name="fast_pay">直接付</string>
+    <string name="direct">同意直接打款给卖家</string>
+    <string name="direct1">同意直接打款</string>
+    <string name="agree_fast_pay">(您已同意卖家的申请，保证金和货款将直接支付给卖家)</string>
+    <string name="agree_fast_pay2">同意使用买豆粕网快捷支付</string>
+    <string name="pay_alert">付款提醒</string>
+    <string name="pay_alert_message">同意直接付款后，保证金和货款将直接打给卖家，会增大你的风险。\n为了最大限度保障您的利益，买豆粕网强烈推荐您，保持目前的担保付模式，将保证金和货款保留在买豆粕网担保账户，确认收货后再付款给卖家。</string>
+    <string name="keep_guarantee">保持担保付</string>
+    <string name="next">下一步</string>
+    <string name="reset_password_info">为了安全，您需要输入短信动态码，并%1$s</string>
+    <string name="reset_password_info2">为了安全，您需要输入短信动态码，并输入组织机构代码</string>
+    <string name="retrieve_password">找回支付密码</string>
+    <string name="input_society_credit_code">输入统一社会信用代码</string>
+    <string name="handle_later">稍后处理</string>
+    <string name="pay_explain">支付说明</string>
+    <string name="recharge_ok_pay_fail">余额不足或系统出错导致付款失败，但您的资金已由平安易宝转入买豆粕网平台账户，当前可用余额为22.00元，请点击“继续支付”按钮完成支付。</string>
+    <string name="go_on_to_pay">继续支付</string>
+    <string name="bind_bank">绑定银行卡</string>
+    <string name="tv_my_bill_of_landing">我的提货单</string>
+    <string name="tv_check_all_landing_bill">查看全部提货单</string>
+    <string name="actual_pick_up">实际提货数量</string>
+    <string name="front_money_deduction">定金抵扣</string>
+    <string name="all_point_price">全部点价单</string>
+    <string name="pay_record">支付记录</string>
+    <string name="delivery_pay_success">货款支付成功！</string>
+    <string name="delivery_pay_success_info">卖家已收到您货款，系统将会短信通知卖家。</string>
+    <string name="front_money_pay_success_info">若您需要发起提货，请联系卖家发起提货。</string>
+    <string name="front_money_pay_success">定金支付成功！</string>
+    <string name="confirm_delivery_pay">确认支付货款</string>
+    <string name="recharge_ok_delivery_pay_fail">余额不足或系统出错导致付款失败，但您的资金已由平安易宝转入买豆粕网平台账户，当前可用余额为22.00元，请点击“继续支付”按钮完成支付。</string>
+    <string name="empty">""</string>
+    <string name="full_pay_result_success">现在订单为担保付，保证金和货款都保留在买豆粕网，您确认收货后，才打给卖家。\n您如果信任卖家，也可以选择“直接付”，保证金和货款都将打到卖家账户。</string>
+    <string name="full_pay_result_confirm">正在等待平安易宝返回支付结果，请稍后再看。\n你也可以联系买豆粕网客服021-54180258</string>
+    <string name="recharge_ok_delivery_pay_fail_for_full">系统出了点小差，您的资金已由平安易宝转入买豆粕网平台账户，请点击“继续支付”按钮完成支付。</string>
+    <string name="network_unavailable">网络连接不可用</string>
+    <string name="xlistview_footer_hint_no_more_fail">加载失败，点击重新加载</string>
+    <string name="no_ping_an_ongoing_text">"您提交的“%1$s”资料将在1个工作日内审核完成，请耐心等待。有疑问请联系：021-54180258"</string>
+    <string name="listview_footer_hint_no_more_cms">没有更多资讯了</string>
+    <string name="no_more_conten">没有更多内容了</string>
+
+
+
+    <!--im start-->
+
+    <string name="main_tab_session">会话</string>
+    <string name="main_tab_contact">通讯录</string>
+    <string name="user_profile">个人名片</string>
+    <string name="login">登录</string>
+    <string name="logining">登录中\u2026</string>
+    <string name="register">注册</string>
+    <string name="registering">注册中\u2026</string>
+    <string name="agree">同意</string>
+    <string name="reject">拒绝</string>
+    <string name="network_is_not_available">网络连接失败，请检查你的网络设置</string>
+    <string name="login_hint_account">请输入帐号</string>
+    <string name="login_hint_password">请输入密码</string>
+    <string name="input_account">请输入帐号，限20位字母或者数字</string>
+    <string name="register_account_tip">帐号限20位字母或者数字</string>
+    <string name="input_nickname">请输入昵称，限10位汉字、字母或者数字</string>
+    <string name="register_nick_name_tip">昵称限10位汉字、字母或者数字</string>
+    <string name="input_password">请输入密码，6~20位字母或者数字</string>
+    <string name="register_password_tip">密码必须为6~20位字母或者数字</string>
+    <string name="register_success">注册成功</string>
+    <string name="register_failed">注册失败,错误码%1$s:%2$s</string>
+    <string name="login_has_account">已有帐号？直接登录</string>
+    <string name="done">完成</string>
+    <string name="prepare_data">正在准备数据...</string>
+
+    <string name="readed">已读</string>
+    <string name="about">关于</string>
+    <string name="logout">注销</string>
+    <string name="add">添加</string>
+    <string name="remove">移除</string>
+    <string name="menu">菜单</string>
+    <string name="verify_reminder">验证提醒</string>
+    <string name="without_content">暂无</string>
+    <string name="create">新建</string>
+    <string name="delete_tip">删除提示</string>
+    <string name="delete_system_message">删除该条系统消息？</string>
+    <string name="delete_success">删除成功</string>
+    <string name="clear_all_success">清空成功</string>
+    <string name="login_failed">帐号或密码错误</string>
+    <string name="login_exception">无效输入</string>
+    <string name="file_browser">文件浏览器</string>
+    <string name="upload_text">上传</string>
+    <string name="download_text">下载</string>
+    <string name="now_allow_space">不能含有空格</string>
+    <string name="open">开启</string>
+    <string name="close">关闭</string>
+    <string name="search_advanced_team">搜索高级群</string>
+    <string name="net_broken">当前网络不可用</string>
+    <string name="nim_status_unlogin">未登录</string>
+    <string name="nim_status_connecting">连接中...</string>
+    <string name="nim_status_logining">登录中...</string>
+    <string name="copyright">Copyright ©1997-2017 网易公司版权所有</string>
+    <string name="user_not_exsit">该用户不存在</string>
+    <string name="user_tips">请检查你输入的帐号是否正确</string>
+    <string name="edit">编辑</string>
+
+    <!-- session -->
+    <string name="input_panel_guess">猜 拳</string>
+    <string name="input_panel_audio_call">语音通话</string>
+    <string name="input_panel_video_call">视频通话</string>
+    <string name="input_panel_file">发送文件</string>
+    <string name="input_panel_RTS">白 板</string>
+    <string name="input_panel_snapchat">阅后即焚</string>
+    <string name="input_panel_tip">Tip</string>
+    <string name="message_history_query">云消息记录</string>
+    <string name="message_search_title">搜索本地消息记录</string>
+    <string name="message_clear">清空本地消息记录</string>
+    <string name="message_info">聊天信息</string>
+
+    <!-- 通讯录 -->
+    <string name="add_friend">加为好友</string>
+    <string name="remove_friend">删除好友</string>
+    <string name="begin_chat">聊天</string>
+    <string name="remove_friend_tip">删除好友后，将同时解除双方的好友关系</string>
+    <string name="remove_friend_success">删除好友成功</string>
+    <string name="add_friend_self_tip">不能添加自己为好友</string>
+    <string name="add_friend_verify_tip">好友验证请求</string>
+    <string name="black_list_tip">你不会接收到列表中联系人的任何消息</string>
+
+    <!-- 群 -->
+    <string name="add_buddy">添加好友</string>
+    <string name="create_normal_team">创建讨论组</string>
+    <string name="team_apply_sending">发送中…</string>
+    <string name="no_team">您还没有群</string>
+    <string name="no_normal_team">您还没有讨论组</string>
+    <string name="team_search_hint">请输入群号进行搜索</string>
+    <string name="team_number_not_exist">群号不存在</string>
+    <string name="team_join">加入群组</string>
+    <string name="team_join_success">成功加入群: %1$s</string>
+    <string name="team_apply_to_join_send_success">申请已发出</string>
+    <string name="has_exist_in_team">已经在群里</string>
+    <string name="team_num_limit">群数量已达上限</string>
+
+    <!-- 消息提醒 -->
+
+    <!-- 自定义通知 -->
+    <string name="custom_notification">自定义通知</string>
+    <string name="select_custom_notification_target">选择发送对象</string>
+    <string name="send_custom_notification_tip">请输入要发送的内容</string>
+    <string name="send_custom_notification_success">自定义通知发送成功</string>
+    <string name="send_custom_notification_failed">自定义通知发送失败</string>
+    <string name="send_custom_notification_to_buddy">发送给好友</string>
+    <string name="send_custom_notification_to_team">发送给群组</string>
+
+    <!-- 消息类型 -->
+    <string name="msg_type_image">图片</string>
+    <string name="msg_type_audio">语音</string>
+
+    <!-- location -->
+    <string name="location_navigate">导航</string>
+    <string name="location_loading">正在定位</string>
+    <string name="location_map">地图定位</string>
+    <string name="my_location">我的位置</string>
+    <string name="location_address_unkown">该位置信息暂无</string>
+    <string name="format_mylocation">我的位置：%s</string>
+    <string name="location_address_fail">获取位置信息失败</string>
+    <string name="tools_selected">选择工具</string>
+    <string name="friends_map_navigation_web">在网页中打开</string>
+    <string name="location_open_map_error">打开地图出错</string>
+
+    <!-- about -->
+    <string name="about_clear_msg_history">清空所有聊天记录</string>
+    <string name="clear_msg_history_success">聊天记录已清空</string>
+
+    <!-- 云信SDK所需文案 -->
+    <string name="nim_status_bar_multi_messages_incoming">%1$d位联系人有新消息</string>
+    <string name="nim_status_bar_ticker_text">%1$s有新消息</string>
+    <string name="nim_status_bar_image_message">%1$s发来一条图片消息</string>
+    <string name="nim_status_bar_audio_message">%1$s发来一条语音消息</string>
+    <string name="nim_status_bar_video_message">%1$s发来一条视频消息</string>
+    <string name="nim_status_bar_file_message">%1$s发来一条文件消息</string>
+    <string name="nim_status_bar_location_message">%1$s分享了一个地理位置</string>
+    <string name="nim_status_bar_notification_message">%1$s: 通知消息</string>
+    <string name="nim_status_bar_custom_message">%1$s: 自定义消息</string>
+    <string name="nim_status_bar_unsupported_message">%1$s: 无法显示该内容</string>
+    <string name="nim_status_bar_hidden_msg_content">你收到一条新消息</string>
+
+    <!--RTS白板-->
+    <string name="start_session">正在邀请对方，请稍后</string>
+    <string name="callee_reject">对方拒绝了本次请求</string>
+    <string name="callee_ack_timeout">对方未接受请求</string>
+    <string name="receive_session">对方发起白板演示</string>
+    <string name="start_session_record">我发起了白板演示</string>
+    <string name="session_end_record">白板演示已结束</string>
+    <string name="end_session_tip_head">退出白板演示</string>
+    <string name="end_session_tip_content">退出后，你将不再接收白板演示的消息内容</string>
+    <string name="target_has_end_session">对方结束白板演示</string>
+    <string name="accept_session">接受</string>
+    <string name="reject_session">拒绝</string>
+    <string name="doodle_back">上一步</string>
+    <string name="doodle_clear">清屏</string>
+
+    <!-- setting -->
+    <string name="settings">设置</string>
+    <string name="no_disturb">免打扰</string>
+    <string name="multiport_push">PC/Web在线推送</string>
+    <string name="msg_notice">消息提醒</string>
+    <string name="setting_about">关于</string>
+    <string name="setting_close">已关闭</string>
+    <string name="no_disturb_tips">在设定的时间段内云信消息将不再提醒</string>
+    <string name="time_from">从</string>
+    <string name="time_to">至</string>
+    <string name="time_from_default">22:00</string>
+    <string name="time_to_default">08:00</string>
+    <string name="black_list">黑名单</string>
+    <string name="msg_speaker">听筒模式</string>
+    <string name="ring">响铃模式</string>
+    <string name="led">自定义呼吸灯</string>
+    <string name="notice_content">通知栏标题定制</string>
+    <string name="clear_index">清理全文检索缓存</string>
+    <string name="operation_too_frequent">操作太频繁</string>
+    <!-- 多端登录 -->
+    <string name="multiport_manager">多端登录管理</string>
+    <string name="multiport_logout">下线</string>
+    <string name="computer_version">云信电脑版</string>
+    <string name="web_version">云信网页版</string>
+    <string name="mobile_version">云信移动版</string>
+    <string name="multiport_logging">正在使用</string>
+    <string name="kickout_notify">下线通知</string>
+    <string name="kickout_content">你的帐号被%1$s踢出下线，请确定帐号信息安全</string>
+
+    <!-- 多端在线类型 -->
+    <string name="on_line">在线</string>
+    <string name="on_line_pc">PC在线</string>
+    <string name="on_line_mac">Mac在线</string>
+    <string name="on_line_web">web在线</string>
+    <string name="client_aos">Android</string>
+    <string name="client_ios">iOS</string>
+    <string name="on_line_busy">忙碌</string>
+    <string name="off_line">离线</string>
+
+    <!-- 阅后即焚 -->
+    <string name="snapchat_longclick_to_view">按住查看</string>
+
+    <!-- 个人名片 -->
+    <string name="birthday">生 日</string>
+    <string name="phone">手 机</string>
+    <string name="email">邮 箱</string>
+    <string name="signature">签 名</string>
+    <string name="head">头 像</string>
+    <string name="user_information">个人信息</string>
+    <string name="nickname">昵 称</string>
+    <string name="alias">备注名</string>
+    <string name="gender">性 别</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="other">其他</string>
+    <string name="phone_number">手机号码</string>
+    <string name="set_head_image">设置头像</string>
+    <string name="user_info_update_success">设置成功</string>
+    <string name="user_info_update_cancel">取消更新</string>
+    <string name="user_info_update_failed">设置失败，请重试</string>
+    <string name="head_update_success">头像设置成功</string>
+    <string name="head_update_failed">头像设置失败，请重试</string>
+    <string name="nickname_empty">昵称不能为空</string>
+
+    <!-- JsBridge -->
+    <string name="js_bridge">NIM JS Bridge</string>
+    <string name="js_bridge_demonstration">Js Bridge演示</string>
+
+    <!--机器人-->
+    <string name="nim_robot_title">云小信机器人</string>
+    <string name="robot_start_chat">开始对话</string>
+
+    <!-- NRTC -->
+    <string name="nrtc_settings">网络通话设置</string>
+    <string name="nrtc_setting_voe">语音通话</string>
+    <string name="nrtc_setting_vie">视频通话</string>
+    <string name="nrtc_setting_other">其它</string>
+
+    <string name="nrtc_setting_vie_crop_ratio_key">nrtc_setting_vie_crop_ratio_key</string>
+    <string name="nrtc_setting_vie_crop_ratio">画面裁剪比例</string>
+
+    <string-array name="nrtc_setting_vie_crop_ratio_entries"> 
+        <item>原始比例</item> 
+        <item>16:9</item> 
+        <item>4:3</item> 
+        <item>3:2</item> 
+        <item>1:1</item> 
+    </string-array>
+    <string-array name="nrtc_setting_vie_crop_ratio_values"> 
+        <item>0</item> 
+        <item>1</item> 
+        <item>2</item> 
+        <item>3</item> 
+        <item>4</item> 
+    </string-array>
+
+
+    <string name="nrtc_setting_vie_quality_key">nrtc_setting_vie_quality_key</string>
+    <string name="nrtc_setting_vie_quality">视频清晰度</string>
+    <string-array name="nrtc_setting_vie_quality_entries"> 
+        <item>Default</item> 
+        <item>Low</item> 
+        <item>Medium</item> 
+        <item>High</item> 
+        <item>480P</item> 
+        <item>720P</item>
+    </string-array>
+    <string-array name="nrtc_setting_vie_quality_values"> 
+        <item>0</item> 
+        <item>1</item> 
+        <item>2</item> 
+        <item>3</item> 
+        <item>4</item> 
+        <item>5</item> 
+    </string-array>
+    <string-array name="nrtc_setting_vie_hw_encoder_entries"> 
+        <item>自动</item> 
+        <item>禁用</item> 
+        <item>强制</item> 
+    </string-array>
+    <string-array name="nrtc_setting_vie_hw_encoder_values"> 
+        <item>0</item> 
+        <item>1</item> 
+        <item>2</item> 
+    </string-array>
+    <string-array name="nrtc_setting_other_device_rotation_entries"> 
+        <item>0</item> 
+        <item>90</item> 
+        <item>180</item> 
+        <item>270</item> 
+    </string-array>
+    <string-array name="nrtc_setting_other_device_rotation_values"> 
+        <item>0</item> 
+        <item>1</item> 
+        <item>2</item> 
+        <item>3</item> 
+    </string-array>
+    <string-array name="nrtc_setting_vie_hw_decoder_entries"> 
+        <item>自动</item> 
+        <item>禁用</item> 
+        <item>强制</item> 
+    </string-array>
+    <string-array name="nrtc_setting_vie_hw_decoder_values"> 
+        <item>0</item> 
+        <item>1</item> 
+        <item>2</item> 
+    </string-array>
+    <string-array name="nrtc_setting_voe_audio_effect_entries"> 
+        <item>Disable</item> 
+        <item>SDK Built-In</item> 
+        <item>Platform Built-In</item> 
+    </string-array>
+    <string-array name="nrtc_setting_voe_audio_effect_values"> 
+        <item>0</item> 
+        <item>1</item> 
+        <item>2</item> 
+    </string-array>
+    <string name="nrtc_setting_other_device_default_rotation_key">nrtc_setting_other_device_default_rotation_key</string>
+    <string name="nrtc_setting_other_device_default_rotation">设备默认旋转角度(特殊设备使用)</string>
+    <string name="nrtc_setting_other_device_rotation_fixed_offset_key">nrtc_setting_other_device_rotation_fixed_offset_key</string>
+    <string name="nrtc_setting_other_device_rotation_fixed_offset">设备旋转角度修正偏移量(特殊设备使用)</string>
+    <string name="nrtc_setting_vie_rotation_key">nrtc_setting_vie_rotation_key</string>
+    <string name="nrtc_setting_vie_rotation">画面旋转</string>
+    <string name="nrtc_setting_vie_default_front_camera_key">nrtc_setting_vie_default_front_camera_key</string>
+    <string name="nrtc_setting_vie_default_front_camera">默认前置摄像头</string>
+    <string name="nrtc_setting_vie_hw_encoder_key">nrtc_setting_vie_hw_encoder_key</string>
+    <string name="nrtc_setting_vie_hw_encoder">硬件编码(仅部分设备支持)</string>
+    <string name="nrtc_setting_vie_hw_decoder_key">nrtc_setting_vie_hw_decoder_key</string>
+    <string name="nrtc_setting_vie_hw_decoder">硬件解码(仅部分设备支持)</string>
+    <string name="nrtc_setting_other_server_record_audio_key">nrtc_setting_other_server_record_audio_key</string>
+    <string name="nrtc_setting_other_server_record_audio">音频服务器录制</string>
+    <string name="nrtc_setting_other_webrtc_compat_key">setting_other_webrtc_compat_key</string>
+    <string name="nrtc_setting_other_webrtc_compat">WebRTC兼容</string>
+    <string name="nrtc_setting_other_server_record_video_key">nrtc_setting_other_server_record_video_key</string>
+    <string name="nrtc_setting_other_server_record_video">视频服务器录制</string>
+    <string name="nrtc_setting_voe_call_proximity_key">nrtc_setting_voe_call_proximity_key</string>
+    <string name="nrtc_setting_voe_call_proximity">通话期间关闭屏幕</string>
+    <string name="nrtc_setting_vie_fps_reported_key">nrtc_setting_vie_fps_reported_key</string>
+    <string name="nrtc_setting_vie_fps_reported">帧率汇报</string>
+    <string name="nrtc_setting_vie_max_bitrate_key">nrtc_setting_vie_max_bitrate_key</string>
+    <string name="nrtc_setting_vie_max_bitrate">码率(Kbps)</string>
+    <string name="nrtc_setting_voe_audio_aec_key">nrtc_setting_voe_audio_aec_key</string>
+    <string name="nrtc_setting_voe_audio_aec">回音消除</string>
+    <string name="nrtc_setting_voe_audio_ns_key">nrtc_setting_voe_audio_ns_key</string>
+    <string name="nrtc_setting_voe_audio_ns">降噪</string>
+    <string name="nrtc_setting_voe_high_quality_key">nrtc_setting_voe_high_quality_key</string>
+    <string name="nrtc_setting_voe_high_quality">高清语音</string>
+    <string name="nrtc_setting_voe_dtx_key">nrtc_setting_voe_dtx_key</string>
+    <string name="nrtc_setting_voe_dtx">人声检测</string>
+
+
+    <!--im end-->
+
+    <string name="notifaction_title">消息中心</string>
+    <string name="notifaction_answer">问题答复</string>
+    <string name="user_profile_introduction">个人介绍</string>
+    <string name="user_profile_introduction_tip">请填写</string>
+    <string name="user_profile_title">个人资料</string>
+    <string name="user_profile_nickname">昵称</string>
+    <string name="user_setting_choose">请选择</string>
+</resources>

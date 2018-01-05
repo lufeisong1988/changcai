@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>我的资产</title>
+    <link rel="stylesheet" href="css/myApp.css">
+</head>
+
+<body>
+    <section class="myProperty">
+        <div class="money">冻结中(元)<i class="icon iconfont">&#xe60d;</i><span id="numGuarantee"></span></div>
+        <div class="money">提现中(元)<i class="icon iconfont">&#xe60d;</i><span id="numBond"></span></div>
+        <p>
+            可用余额(元)<span id="numAvaiable"></span><a ontouchend="goToRecharge();">充值</a>
+        </p>
+    </section>
+    <div class="records">
+        <i class="icon iconfont">&#xe651;</i> 收支记录
+        <i class="icon iconfont">&#xe60d;</i>
+    </div>
+    <script src="../common/js/jquery-1.8.3.min.js"></script>
+    <script src="../common/js/config.js"></script>
+    <script src="js/subsidiary.js"></script>
+    <script>
+
+    $(function() {
+        setTimeout(function() {
+            var result = ResultModel.jsCallOcGetUserAccountList();
+            window.sessionStorage.result = result;
+            
+            $.ajax({
+                url: config.url + "/getUserAccountList.do",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "requestJSON": result
+                },
+                success: function(data, xhr) {
+                    if (data.errorCode == 0) {
+                        var resultObject = data.resultObject;
+                        for (i in resultObject) {
+                            var obj = resultObject[i];
+                            if (obj.accountType == "RECHARGE") { //余额账户
+                                var rechange = obj.amountYuan;
+                                $("#numAvaiable").html(rechange);
+                            } else if (obj.accountType == "WITHDRAW") { //提现
+                                var withdraw = obj.amountYuan;
+                                $("#numBond").html(withdraw);
+                            } else if (obj.accountType == "GUARANTEE") { //冻结中账户
+                                var guarantee = obj.amountYuan;
+                                $("#numGuarantee").html(guarantee);
+                            }else if (obj.accountType == "TOTAL") { //总资产
+                                var total = obj.amountYuan;
+                                $("#numTotal").html(total);
+                            }else if (!obj.accountType) { //余额账户
+                                $("#numAvaiable").html("0");
+                            } else if (!obj.accountType) { //提现
+                                $("#numBond").html("0");
+                            } else if (!obj.accountType) { //冻结中账户
+                                $("#numGuarantee").html("0");
+                            } 
+                        }
+                    } else {
+                        alert(data.errorDesc);
+                    }
+                }
+            })
+        }, 100);
+    })
+
+    //充值
+    function goToRecharge() {
+        ResultModel.jsCallResult('1234567890');
+    }
+    </script>
+</body>
+
+</html>

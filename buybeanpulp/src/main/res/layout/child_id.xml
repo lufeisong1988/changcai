@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lily_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim21"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim89"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim20"
+                android:src="@drawable/list_identity_relation" />
+
+            <TextView
+                android:id="@+id/tv_relation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim17"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt30"
+                tools:text="@string/actionbar_activity_not_found" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:background="@color/global_text_gray2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim188"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dim29"
+            android:paddingTop="@dimen/dim35"
+            >
+
+            <TextView
+                android:id="@+id/tv_relation_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/tuna"
+                android:textSize="@dimen/txt24"
+                tools:text="关联企业：畅采电子商贸"
+                />
+
+            <TextView
+                android:id="@+id/buyer_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:layout_marginTop="@dimen/dim30"
+                android:textColor="@color/aluminum"
+                android:text="@string/finance_officer_buy_jurisdiction"
+                android:textSize="@dimen/txt24"
+                android:ellipsize="end"
+                />
+            <TextView
+                android:id="@+id/salesman_power"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:layout_marginTop="@dimen/dim20"
+                android:textColor="@color/aluminum"
+                android:text="@string/finance_officer_seller_jurisdiction"
+                android:textSize="@dimen/txt24"
+                android:ellipsize="end"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_service_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/service_phone"
+        android:textColor="@color/global_text_gray3"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dim60"
+        />
+</RelativeLayout>

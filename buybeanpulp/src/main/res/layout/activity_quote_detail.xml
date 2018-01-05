@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/viewTop"
+        layout="@layout/common_title_bar" />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewTop"
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim40"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dim23"
+                android:paddingRight="@dimen/dim40">
+
+                <View
+                    android:layout_width="@dimen/dim5"
+                    android:layout_height="@dimen/dim13"
+                    android:background="@color/global_blue" />
+
+                <TextView
+                    style="@style/price_title_style"
+                    android:text="产品详情" />
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/ctv_publish_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/storm_gray"
+                    tools:text="12:00 发布" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dim34"
+                android:paddingLeft="@dimen/dim40"
+                android:paddingRight="@dimen/dim40"
+                android:paddingTop="@dimen/dim22">
+
+                <requestFocus />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/dim130"
+                    android:orientation="vertical">
+
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/grand_standard_package2"
+                        android:textColor="@color/storm_gray"
+                        android:textSize="@dimen/txt26" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/tv_product_info_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dim8"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/membership_color"
+                        android:textSize="@dimen/txt28"
+
+                        tools:text="汇福 / 43% / 50kg" />
+
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dim8"
+                        android:gravity="center_vertical"
+                        android:text="提货期间"
+                        android:textColor="@color/global_text_gray3"
+
+                        android:textSize="@dimen/txt28" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/deliveryTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dim8"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/membership_color"
+                        android:textSize="@dimen/txt28"
+
+                        tools:text="2017.3.13-2017.3.10" />
+
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        style="@style/cms_list_item_bottom_text"
+                        android:layout_marginTop="@dimen/dim8"
+                        android:text="提货地点"
+
+                        android:textColor="@color/global_text_gray3"
+                        android:textSize="@dimen/txt28" />
+
+                    <com.changcai.buyer.view.CustomFontTextView
+                        android:id="@+id/place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dim8"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/membership_color"
+                        android:textSize="@dimen/txt28"
+                        tools:text="是不是傻逼最痛苦的莫过于差一点，而不是曾经拥有" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/dim130"
+                    android:layout_height="@dimen/dim130"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    tools:src="@mipmap/no_network_2" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim1"
+                android:layout_marginLeft="@dimen/dim40"
+                android:layout_marginRight="@dimen/dim40"
+                android:background="@color/mischka" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim40"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dim23"
+                android:paddingRight="@dimen/dim40">
+
+                <View
+                    android:layout_width="@dimen/dim5"
+                    android:layout_height="@dimen/dim13"
+                    android:background="@color/global_blue" />
+
+                <TextView
+                    style="@style/price_title_style"
+                    android:text="下单信息" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dim40"
+                android:paddingRight="@dimen/dim40"
+                android:paddingTop="@dimen/dim24">
+
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/price_text"
+                    style="@style/cms_list_item_bottom_text"
+                    android:text="参考单价 (联系卖家获取实际成交价)"
+                    android:textColor="@color/storm_gray"
+                    android:textSize="@dimen/txt26" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/flamingo"
+                        android:textSize="@dimen/txt34"
+                        tools:text="M1730+100" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim6"
+                        android:text="/吨"
+                        android:textColor="@color/flamingo"
+                        android:textSize="@dimen/txt18" />
+
+                </LinearLayout>
+
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/tv_storage_and_start_less"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim25"
+                    android:textColor="@color/storm_gray"
+                    android:textSize="@dimen/txt26"
+                    tools:text="@string/kakao_share" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim10"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_reduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/order_reduce" />
+
+
+                    <EditText
+                        android:id="@+id/et_buy_pond"
+                        android:layout_width="@dimen/dim360"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn2md"
+                        android:cursorVisible="true"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:maxLength="10"
+                        android:textColor="@color/cms_list_section_item_color"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/txt34"
+                        tools:text="100" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/order_add" />
+                </LinearLayout>
+
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/tv_cash_deposit"
+                    style="@style/cms_list_item_bottom_text"
+                    android:layout_marginTop="@dimen/dim20"
+                    android:text="@string/deposit_text"
+                    android:textSize="@dimen/txt26" />
+
+
+                <TextView
+                    android:id="@+id/tv_insurance_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/sticky_header_text_color"
+                    android:textSize="@dimen/txt34"
+                    tools:text="32,000" />
+
+                <TextView
+                    android:id="@+id/tv_deposit_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_chateau"
+                    android:textSize="@dimen/txt24"
+                    tools:text="3200*100*10%=32,000" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim1"
+                android:layout_marginLeft="@dimen/dim40"
+                android:layout_marginRight="@dimen/dim40"
+                android:layout_marginTop="@dimen/dim40"
+                android:background="@color/mischka" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim40"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dim23"
+                android:paddingRight="@dimen/dim40">
+
+                <View
+                    android:layout_width="@dimen/dim5"
+                    android:layout_height="@dimen/dim13"
+                    android:background="@color/global_blue" />
+
+                <TextView
+                    style="@style/price_title_style"
+                    android:text="卖家信息" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dim40"
+                android:paddingRight="@dimen/dim40">
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dim20"
+                    android:text="卖家名称"
+                    android:textColor="@color/storm_gray"
+                    android:textSize="@dimen/txt26" />
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/tv_company_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim5"
+                    android:textColor="@color/membership_color"
+                    android:textSize="@dimen/txt30"
+                    tools:text="上海学益实业有限公司" />
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim5"
+                    android:gravity="center_vertical"
+                    android:text="@string/contact_number"
+
+                    android:textColor="@color/storm_gray"
+                    android:textSize="@dimen/txt26" />
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/tv_contact_way"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim5"
+                    android:gravity="center_vertical"
+
+                    android:textColor="@color/sticky_header_text_color"
+                    android:textSize="@dimen/txt30"
+                    tools:text="15910233405" />
+
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim5"
+                    android:text="卖家简介"
+
+                    android:textSize="@dimen/txt24" />
+
+                <com.changcai.buyer.view.CustomFontTextView
+                    android:id="@+id/tv_seller_company_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dim200"
+                    android:layout_marginTop="@dimen/dim5"
+                    android:textColor="@color/membership_color"
+                    android:textSize="@dimen/txt30"
+                    tools:text="公司成立于2001年7月，属民营有限责任公司，具备增值税一般纳税人资格。公司的经营范围：饲料、饲料原料、饲料添加剂、饲料拥有的批发和零售。公司法人为杨云。公司于2007年9月成为岳阳市饲料行业协会的理事单位。" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <ImageView
+        android:id="@+id/iv_invalid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dim80"
+        android:layout_marginTop="@dimen/dim40"
+        android:src="@drawable/shixiao"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_order_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dim25"
+        android:layout_marginRight="@dimen/dim25"
+        android:background="@drawable/btn_scale_price_point9"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/ll_contract_seller"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dim36"
+                android:layout_height="@dimen/dim36"
+                android:src="@drawable/icon_btn_call" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dim100"
+                android:gravity="center"
+                android:text="联系卖家"
+                android:textColor="@color/global_blue"
+                android:textSize="@dimen/txt34" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/order"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim100"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="立即下单"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt34" />
+
+            <com.changcai.buyer.view.RotateDotsProgressView
+                android:id="@+id/orderProgress"
+                android:layout_width="@dimen/dim100"
+                android:layout_height="@dimen/dim100"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:dots_normal_color="@drawable/abs_white_dots"
+                app:dots_selected_color="@drawable/no_alpha_white"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="gone"></com.changcai.buyer.view.RotateDotsProgressView>
+
+</RelativeLayout>

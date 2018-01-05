@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="@dimen/common_dimen_10"
+    android:background="@color/alabaster"
+    android:paddingRight="@dimen/common_dimen_10" >
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dim21"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:orientation="horizontal" >
+        
+        <View
+            android:layout_width="@dimen/dim5"
+            android:layout_height="@dimen/dim13"
+            android:background="@color/global_blue"/>
+
+        <TextView
+            android:layout_marginLeft="@dimen/dim13"
+            android:id="@+id/tv_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015 "
+            android:textColor="@color/membership_color"
+            android:textSize="@dimen/txt26"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+        <TextView
+            android:id="@+id/tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:textColor="@color/membership_color"
+            android:textSize="@dimen/txt26"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+
+        <com.changcai.buyer.view.MyGridView
+            android:id="@+id/gv_calendar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="0dip"
+            android:listSelector="@null"
+            android:numColumns="7"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0dip" />
+    </LinearLayout>
+
+</LinearLayout>

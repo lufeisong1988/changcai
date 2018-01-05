@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name ="viewport" content ="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>Calendar</title>
+    <script type="text/javascript" src="../common/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../common/js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <link rel="stylesheet" href="../common/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+
+    <style>
+    body,h1,h2,h3,h4,h5,h6,hr,p,dl,dt,dd,ul,ol,li,form,fieldset,input,label{margin:0;padding:0;}
+        @font-face {
+            font-family: 'iconfont';  /* project id 142203 */
+            src: url('//at.alicdn.com/t/font_e1bb0m3zpxa2lnmi.eot');
+            src: url('//at.alicdn.com/t/font_e1bb0m3zpxa2lnmi.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_e1bb0m3zpxa2lnmi.woff') format('woff'),
+            url('//at.alicdn.com/t/font_e1bb0m3zpxa2lnmi.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_e1bb0m3zpxa2lnmi.svg#iconfont') format('svg');
+        }
+        .iconfont{
+            font-family: "iconfont" !important;
+            font-size: 14px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        #demo .mbsc-mobiscroll .mbsc-cal-event{
+            padding: 2%;
+        }
+        .mbsc-mobiscroll .mbsc-cal-event-color{
+            background: #45474E;
+        }
+        .mbsc-mobiscroll .mbsc-cal-events{
+            background: #45474E;
+        }
+        .mbsc-cal-event-time{display:none;}
+        .mbsc-ios .mbsc-cal-event{
+        	background: #45474E;
+        	padding: .5em .5em .5em .5em;
+        	border-top:none;
+        }
+        .mbsc-ios .mbsc-cal-events-b{
+        	margin: .583333em 0 .5em;
+        }
+        .mbsc-cal-event-color{display:none;}
+        .detailEvent {
+            background: #2E3034;
+            border-radius: 3px;
+            color: #FFFFFF;
+            padding: 2% 0 0 2%;
+        }
+        .detailEvent h4{
+            font-size: 1.5em;
+            line-height: 2;
+            margin: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .detailEvent .text{
+            font-size: 1em;
+            line-height: 1.8;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .detailEvent .typeEvent{
+            
+        }
+        .detailEvent .typeEvent small{
+            color: #99A0AA;
+            display: inline-block;
+            width: 62%;
+            padding-top: 2%;
+        }
+        .detailEvent .typeEvent a{
+            color: #408AFF;
+            display: inline-block;
+            width: 36%;
+            text-align: right;
+            text-decoration: none;
+            padding: 2% 2% 2% 0;
+        }
+        .currD{display: inline-block;color: #99A0AA;}
+        .currD span{color: #99A0AA;}
+        .tradingDay{
+            display: inline-block;
+            margin-left: 3%;
+            vertical-align: middle;
+        }
+        .tradingDay img{
+        	width: 10%;
+        }
+        .tradingDay i{
+            color: #FC7208;
+            font-weight: normal;
+        }
+        .currD{
+            padding-bottom: 2%;
+        }
+        .dTypeEvent{margin: 10px 0 0 0;}
+        .dTypeEvent a{ padding: 2% 5%;background: #fff; color: #45474E;margin-left: 2%; }
+        .dTypeEvent a.active{background: #408AFF; color: #fff; }
+        .selEvents{
+        		padding: 1%;
+    			text-align: center; 
+    			background: #fff;
+    			}
+        #tEvent_dummy{
+            background: url(images/icon-jt.png) 92% center no-repeat;
+            color: #000;
+            font-size: 1.0em;
+            padding: 2% 0.1%;
+            border: none;
+            text-align: center;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 2;
+            top: 1.2%;
+            left: 4%;
+            width: 36%;
+            background-size: 9%;
+        }
+        .mbsc-cal-btnc{
+            font-size: 1.4em;
+            line-height: 2.1;
+        }
+      
+        .mbsc-cal-btnw{
+            width: 60%;
+           margin-left: 40%;
+        }
+        .mbsc-ios .mbsc-cal .mbsc-cal-day-fg{
+		       font-size: 1.4em;
+		    color: #45474E;
+		    line-height: 1.5;
+    	}
+    	.mbsc-ios .mbsc-cal-day-sel .mbsc-cal-day-fg{
+    	  color: #fff;
+    	}
+    	.mbsc-ios .mbsc-cal-day{
+    	 padding: 1.6em .357142em .714285em .357142em;
+    	}
+    	.mbsc-ios .mbsc-cal-events{
+    	margin: .5em 0 .583333em 0;
+    	    background: #45474E;
+    	}
+    	.mbsc-ios .mbsc-fr-w{
+    	    background: #fff;
+    	}
+    	.mbsc-cal-header{border-bottom: 1px solid #ccc; }
+    	.mbsc-ios .mbsc-cal-day{border-top: 1px solid #ccc;}
+    	.mbsc-ios .mbsc-cal-events-b .mbsc-cal-events-arr{
+    		border-color: transparent transparent #45474E transparent;
+    	}
+    	.mbsc-ios .mbsc-cal-events-arr{
+    	    border-color: #45474E transparent transparent transparent;
+    	}
+    	.mbsc-ios .mbsc-cal-day-m-c{
+    	background: rgba(64,138,255,0.40);
+    	}
+    	.mbsc-ios .mbsc-cal-day-m{
+    		bottom: 0.642857em;
+    	}
+        .mbsc-ios .mbsc-sc-whl-gr{
+            padding: 0;
+        }
+        .mbsc-ios .mbsc-cal-today .mbsc-cal-day-fg{
+            background: #fff;
+            color: #007aff;
+            border-radius: 1000px;
+            border: 1px solid #007aff;
+        }
+    </style>
+   
+</head>
+ 	<div class="selEvents">
+		<select name="events" id="tEvent">
+			<option value="">全部事件</option>
+			<option value="1" selected="selected">产业事件</option>
+			<option value="2">宏观事件</option>
+		</select>
+	</div>
+<div id="demo"></div>
+ <script type="text/javascript">
+			
+        $(function () {
+        	var sessionStorageYear,sessionStorageMonth;
+            var now = new Date(),
+                    min = new Date(2016, 10, 1),
+                max = new Date(now.getFullYear(), now.getMonth() + 12, now.getDate()),
+                nowYear = now.getFullYear(),
+                nowMonth = now.getMonth();
+            var typeEvent = window.sessionStorage.getItem("typeEvent");
+            
+            var keyStorageYear = sessionStorage.getItem("sessionStorageYear"),
+    			keyStorageMonth = sessionStorage.getItem("sessionStorageMonth");
+            //记录详情页年月
+	    	 if(keyStorageYear && keyStorageMonth){
+	    		sessionStorageYear = keyStorageYear,
+	    		sessionStorageMonth = parseInt(keyStorageMonth)-1;
+	    	}else{
+	    		sessionStorageYear = nowYear,
+	    		sessionStorageMonth = nowMonth;
+	    	}
+            
+            if(typeEvent){
+                if(typeEvent == "all"){
+                    typeEvent = "";
+                }else{
+                    typeEvent = typeEvent;
+                }
+                $("#tEvent").val(typeEvent);
+            }else{
+                typeEvent = 1;
+                $("#tEvent").val(typeEvent);
+            }
+            var screenHeight = screen.height-180;
+            $('#tEvent').mobiscroll().select({
+		        theme: 'ios',
+		        lange:'zh',
+		        minWidth: 200,
+		        setText:'确定',
+		        cancelText:'',
+		        onSet: function (event, inst) {
+		        	if(event.valueText == "全部事件"){
+                        typeEvent = "";
+		                    $('#demo').mobiscroll('refresh');
+		        	}else if(event.valueText == "产业事件"){
+                        typeEvent = 1;
+	                    $('#demo').mobiscroll('refresh');
+	        		} 
+		        	else if(event.valueText == "宏观事件"){
+                        typeEvent = 2;
+	                    $('#demo').mobiscroll('refresh');
+	        		} 
+		        },
+		        
+    		});
+
+            $('#demo').mobiscroll().eventcalendar({
+                theme: 'ios',
+                display: 'inline',
+                layout: 'liquid',
+                lang: 'zh',
+                firstDay: 1,
+                nowText:"Now",
+                calendarHeight:screenHeight,
+                max:max,
+                min:min,
+                defaultValue:new Date(sessionStorageYear,sessionStorageMonth),//初始化年月，假如2017-7，传new Date(2017,6)
+                yearChange: false,
+                showOuterDays: true,
+                onMonthLoading: function (event, inst) {
+                    var eventCalendar = event.year + "-" + (event.month+1);
+                    $.ajax({
+                        url: 'http://cms.maidoupo.com/calendar/detailInfo',
+                        type : 'POST',
+                        dataType: 'json',
+                        data:{
+                            typeId:typeEvent,
+                            nowMonth:eventCalendar
+                        },
+                        success : function (data,e) {
+                           if(e == "success"){
+                               var events = [];
+                               for (var i = 0; i < data.length; i++) {
+                                   var oEvent = data[i].event;
+                                   for(m in oEvent){
+                                       var str = '';
+                                       if(m == 0){
+                                           var strE = data[i].start,
+                                                   strArr = strE.split("-"),
+                                                   strMonth = parseInt(strArr[1]),
+                                                   strDay = parseInt(strArr[2]),
+                                                   strWeek = getWeekDay(strE);
+
+                                           str += '<div class=\'currD\'><span>'+strArr[0]+'</span> <span>'+strMonth+'</span>月<span>'+strDay+'</span>日 <span>'+strWeek+'</span>'
+                                           if(data[i].businessDay){
+                                               str += '<span class=\'tradingDay\'><img src=\'images/tradeDay.png\'/></span>'
+                                           }
+                                           str += '</div>'
+                                       }
+                                       str += '<div class=\'detailEvent\'>' +
+                                               '<h4>'+oEvent[m].calendarContent+'</h4>'
+                                       if(oEvent[m].calendarRemark){
+                                           str += '<div class=\'text\'>' +oEvent[m].calendarRemark+'</div>'
+                                       }
+                                       str += '<div class=\'typeEvent\'><small>'+oEvent[m].typeName+'事件</small>'
+                                       if(oEvent[m].url){
+                                           str += '<a href='+oEvent[m].url+' dataYear='+event.year+' dataMonth='+(event.month+1)+' dataUrl='+oEvent[m].url+' '
+                                                   if(typeEvent){
+                                                       str += 'typeEvent='+typeEvent
+                                                   }else{
+                                                       str += 'typeEvent=all'
+                                                   }
+                                           str += ' ontouchend=\'toDetail(this)\'>查看报告详情</a>'
+                                       }
+                                       str += '</div>' +
+                                               '</div>'
+
+                                       events.push({
+                                           d:new Date(data[i].start),
+                                           text: str,
+                                       });
+                                   }
+                               }
+                               inst.setEvents(events);
+                           }
+
+                        }
+                    });
+                    
+                },
+
+            });
+            
+        });
+        
+        //查看详情
+        function toDetail(o){
+        	window.sessionStorage.setItem("sessionStorageYear",o.getAttribute("dataYear"));
+        	window.sessionStorage.setItem("sessionStorageMonth",o.getAttribute("dataMonth"));
+        	window.sessionStorage.setItem("typeEvent",o.getAttribute("typeEvent"));
+        	window.location.href =o.getAttribute("dataUrl");
+        }
+        //日期获取星期
+        function getWeekDay(day){
+            var weekArray = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+            var arys1= new Array();
+            arys1=day.split('-');     //日期为输入日期，格式为 2013-3-10
+            var ssdate=new Date(arys1[0],parseInt(arys1[1]-1),arys1[2]);
+            var week = weekArray[ssdate.getDay()];
+            return week;
+        }
+        //获取cookie
+       /*  function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        } */
+
+    </script>
+</body>
+</html>

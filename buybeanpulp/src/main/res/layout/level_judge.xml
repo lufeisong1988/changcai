@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/iv_level"
+        android:layout_width="@dimen/dim208"
+        android:layout_height="@dimen/dim172"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dim176"
+        android:scaleType="centerInside"
+        tools:src="@drawable/vip2_by_app" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_level"
+        android:layout_centerHorizontal="true"
+        android:text="您的会员等级不够"
+        android:textColor="@color/membership_color"
+        android:textSize="@dimen/txt34" />
+
+
+    <TextView
+        android:id="@+id/tv_level_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dim20"
+        android:text="升级到       黄金会员 即可查看内容"
+        android:textColor="@color/membership_color"
+        android:textSize="@dimen/txt26" />
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/tv_upgrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dim40"
+        android:drawablePadding="@dimen/dim8"
+        android:drawableRight="@drawable/arrow_rgt_blue"
+        android:gravity="center_vertical"
+        android:text="如何升级"
+        android:layout_below="@+id/tv_level_details"
+        android:textColor="@color/global_blue" />
+
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/tv_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:padding="@dimen/dim40"
+        android:drawablePadding="@dimen/dim8"
+        android:gravity="bottom|center_horizontal|left"
+        android:text="如何升级"
+        android:textColor="@color/storm_gray" />
+
+</merge>

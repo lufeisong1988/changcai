@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/web_assign"
+            android:scrollbars="vertical"
+            />
+
+        <TextView
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/dim34"
+            android:background="@drawable/confirm_assign_bg"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/dim34"
+            android:layout_marginRight="@dimen/dim34"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/dim38"
+            android:id="@+id/tv_agree_sign"
+            android:text="@string/confirm_assign_platform_agreement"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+</LinearLayout>

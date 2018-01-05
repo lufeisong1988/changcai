@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim339"
+    android:clipChildren="false"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:clipChildren="false"
+        android:layout_marginTop="@dimen/dim20"
+        android:layout_height="match_parent">
+
+        <com.changcai.buyer.view.banner.CBLoopViewPager
+            android:id="@+id/cbLoopViewPager"
+            android:layout_width="match_parent"
+            android:clipChildren="false"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:layout_height="wrap_content" />
+
+        <!-- 翻页指示点的viewgroup -->
+
+
+        <LinearLayout
+            android:id="@+id/loPageTurningPoint"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim42"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/common_dimen_5"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_widthPercent="25%"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

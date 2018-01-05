@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim20"
+        android:background="@color/item_background_gray"
+        android:id="@+id/viewTop"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dim1"
+        android:background="@color/global_text_gray2"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/dim20">
+
+        <TextView
+            android:id="@+id/tv_point_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txt26"
+            tools:text="点价时间：" />
+
+        <TextView
+            android:id="@+id/tv_point_price_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_point_price"
+            android:textSize="@dimen/txt26"
+            tools:text="2016-11-16 10:00:00" />
+
+        <TextView
+            android:id="@+id/tv_futures_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_point_price"
+            android:layout_marginTop="@dimen/dim20"
+            tools:text="期货价格：" />
+
+        <TextView
+            android:id="@+id/tv_futures_price_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_point_price"
+            android:layout_marginTop="@dimen/dim20"
+            android:layout_toRightOf="@+id/tv_futures_price"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt26"
+            tools:text="3500元" />
+
+        <TextView
+            android:id="@+id/tv_title_deal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_futures_price"
+            android:layout_marginTop="@dimen/dim20"
+            android:text="成交数量/申请数量："
+            android:textColor="@color/global_text_gray" />
+
+        <TextView
+            android:id="@+id/tv_deal_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_futures_price"
+            android:layout_marginTop="@dimen/dim20"
+            android:layout_toRightOf="@+id/tv_title_deal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt30"
+            tools:text="6" />
+
+        <TextView
+            android:id="@+id/tv_apply_for_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_futures_price"
+            android:layout_marginTop="@dimen/dim20"
+            android:layout_toRightOf="@+id/tv_deal_count"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt26"
+            tools:text="/60手" />
+
+        <TextView
+            android:id="@+id/tv_point_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/global_blue"
+            tools:text="待挂单" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:id="@+id/viewLastLine"
+        android:background="@color/global_text_gray2"
+        />
+</LinearLayout>

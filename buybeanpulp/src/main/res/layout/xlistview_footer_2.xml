@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/xlistview_footer_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+
+        <com.changcai.buyer.view.CustomFontTextView
+            android:id="@+id/xlistview_footer_hint_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/xlistview_footer_hint_normal" />
+
+
+        <com.changcai.buyer.view.RotateDotsProgressView
+            android:id="@+id/xlistview_footer_progressbar"
+            android:layout_width="@dimen/dim100"
+            android:layout_height="@dimen/dim100"
+            android:layout_toLeftOf="@+id/xlistview_footer_hint_textview"
+            tools:visibility="visible"
+            app:dots_radius="@dimen/dim5"
+            app:dots_gap="@dimen/dim4"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</LinearLayout>

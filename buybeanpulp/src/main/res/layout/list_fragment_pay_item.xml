@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dim20"
+        android:id="@+id/rl_payment"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/global_text_gray"
+            android:id="@+id/tv_pay_record_time"
+            android:textSize="@dimen/txt24"
+            tools:text="2016-12-13 10:59:59"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt28"
+            android:id="@+id/tv_pay_action"
+            android:layout_below="@id/tv_pay_record_time"
+            tools:text="退还保证金"
+            android:layout_marginTop="@dimen/dim20"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_pay_incoming_and_outgoings"
+            android:textSize="@dimen/txt36"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            tools:text="-1,000"
+            android:textColor="@color/black"
+            />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:background="@color/global_text_gray2"
+        android:layout_below="@+id/rl_payment"
+        android:layout_marginLeft="@dimen/dim20"
+        android:id="@+id/view_divider"
+        />
+</RelativeLayout>

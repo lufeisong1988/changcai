@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/rl_parent_view"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <HorizontalScrollView
+            android:paddingLeft="@dimen/dim10"
+            android:paddingRight="@dimen/dim10"
+            android:id="@+id/hsv_cashreport_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.changcai.buyer.view.GraphLineView
+                android:id="@+id/glView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.changcai.buyer.view.GraphLineView>
+        </HorizontalScrollView>
+        <ImageView
+            android:id="@+id/iv_nav_help_top"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dim10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_nav_help"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top">
+
+        <WebView
+            android:layout_marginTop="@dimen/y6"
+            android:id="@+id/wb_cashreport_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
+        <ImageView
+            android:id="@+id/iv_nav_help_bottom"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dim10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_nav_help"/>
+
+    </RelativeLayout>
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/dots_progress"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@color/transparent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

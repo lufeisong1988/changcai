@@ -1,0 +1,41 @@
+@import "../../common/css/resets_new.css";
+html {
+  font-size: calc(13.33333333vw);
+}
+.mwrap header {
+  padding: 0.26rem 0.4rem;
+  border-bottom: 1px solid #DEDEE5;
+}
+.mwrap header .factoryInfo {
+  font-size: 0.26rem;
+  color: #757A81;
+  float: left;
+  width: 40%;
+}
+.mwrap header .inputDate {
+  float: right;
+  width: 50%;
+  text-align: right;
+  position: relative;
+}
+.mwrap header .inputDate .quoteDate {
+  width: 1.6rem;
+  padding: 0 0.2rem;
+  border: none;
+}
+.mwrap header .inputDate .tri {
+  width: 0.09rem;
+  height: 0.09rem;
+  border: 1px solid #666;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -0.09rem;
+}
+.mbsc-ios .mbsc-dt-whl-d .mbsc-sc-itm {
+  text-align: left !important;
+}

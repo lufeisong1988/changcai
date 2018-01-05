@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/price_fragment_head_layout" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/mischka" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/ll_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y188"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/default_img_none" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/y10"
+                android:text="抱歉，该栏目暂无内容"
+                android:textColor="@color/graph_bottom_line" />
+        </RelativeLayout>
+        <com.jingchen.pulltorefresh.PullToRefreshLayout
+            android:id="@+id/layout_quoterend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.jingchen.pulltorefresh.PinnedSectionListView
+                android:id="@+id/lv_quoterend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"></com.jingchen.pulltorefresh.PinnedSectionListView>
+        </com.jingchen.pulltorefresh.PullToRefreshLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/rl_resource_login_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_login"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                android:src="@drawable/bg_login"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dim186"
+                android:text="登录后可查看更多现货资源"
+                android:textColor="@color/resource_font"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/btn_resource_login"
+                android:layout_width="@dimen/dim188"
+                android:layout_height="@dimen/dim64"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dim250"
+                android:background="@drawable/resource_login_btn"
+                android:gravity="center"
+                android:text="立即登录"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_quotertrend_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/half_transparent"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/lv_quotertrend_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/mischka"
+                android:dividerHeight="0.5dp"
+                android:visibility="gone"></ListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim484">
+
+                <ListView
+                    android:id="@+id/lv_quotertrend_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/mischka"
+                    android:dividerHeight="0.5dp"
+                    android:visibility="gone"></ListView>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <com.changcai.buyer.view.RotateDotsProgressView
+            android:id="@+id/dots_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

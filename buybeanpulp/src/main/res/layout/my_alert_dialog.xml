@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dim560"
+    android:layout_height="@dimen/dim144"
+    android:alpha="0.8"
+    android:background="@color/black"
+    android:gravity="center"
+    android:id="@+id/ll_parent"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/iv_alert_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_alt_fail" />
+
+    <TextView
+        android:id="@+id/tv_alert_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim20"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dim34"
+        tools:text="网络异常，请稍后再试" />
+</LinearLayout>

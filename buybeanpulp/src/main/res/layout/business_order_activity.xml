@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/item_background_gray"
+    >
+
+
+    <include
+        android:id="@+id/viewTop"
+        layout="@layout/common_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/ll_booking_status"
+        android:layout_below="@+id/viewTop"
+        android:layout_marginTop="@dimen/dim45"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:layout_marginLeft="@dimen/dim40"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:src="@drawable/icon_tit_done"
+            android:id="@+id/iv_recharge_status"
+            android:layout_width="@dimen/dim68"
+            android:layout_height="@dimen/dim68"
+            />
+
+        <TextView
+            android:id="@+id/tv_recharge_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim20"
+            android:textColor="@color/sticky_header_text_color"
+            android:textSize="@dimen/txt42"
+            android:text="@string/order_success_text" />
+    </LinearLayout>
+
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:layout_below="@+id/ll_booking_status"
+        android:id="@+id/tv_recharge_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim40"
+        android:layout_marginTop="@dimen/dim85"
+        android:text="@string/send_sms_to_financial_affairs"
+        android:textColor="@color/membership_color"
+        android:textSize="@dimen/txt30"
+        android:layout_marginRight="@dimen/dim40"
+        />
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:layout_below="@+id/tv_recharge_number"
+        android:textColor="@color/membership_color"
+        android:id="@+id/tv_waiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim40"
+        android:textSize="@dimen/txt30"
+        android:layout_marginRight="@dimen/dim40"
+        android:layout_marginTop="@dimen/dim20"
+        tools:text="财务员联系方式：张二  18712345678" />
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_waiting"
+        android:layout_marginTop="@dimen/dim80"
+        android:layout_marginLeft="@dimen/dim40"
+        android:textSize="@dimen/txt34"
+        android:textColor="@color/global_blue"
+        android:drawableRight="@drawable/icon_inline_rgt"
+        android:text="看看其它报价"
+        android:id="@+id/ctv_other"
+        />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_margin_20"
+        android:layout_marginRight="@dimen/common_margin_20"
+        android:layout_marginTop="@dimen/common_margin_30"
+        android:background="@drawable/btn_shdo_blue110"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_check_my_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dim43"
+            android:text="查看订单详情"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt40" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/item_background_gray"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <TextView
+        android:text="@string/transform_info"
+        android:background="@color/pipi"
+        android:paddingLeft="@dimen/dim34"
+        android:paddingRight="@dimen/dim34"
+        android:gravity="center|left"
+        android:textColor="@color/orange_details_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim110" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dim30"
+        android:layout_marginBottom="@dimen/dim30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/txt30"
+        android:layout_marginLeft="@dimen/dim34"
+        android:textColor="@color/global_text_gray3"
+        android:text="@string/tv_ping_an_bank_card"
+        />
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dim34"
+        android:paddingRight="@dimen/dim26"
+        >
+        <LinearLayout
+            android:layout_marginTop="@dimen/dim40"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim48"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:textSize="@dimen/txt36"
+                android:textColor="@color/sticky_header_text_color"
+                android:text="@string/account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/txt36"
+                android:textColor="@color/sticky_header_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_bank_card"
+                tools:text="6234 5678 9012 3456"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/tv_copy_plate"
+                android:textSize="@dimen/txt26"
+                android:text="@string/copy_card"
+                android:textColor="@color/global_text_gray"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/copy_bg"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:textColor="@color/global_text_gray3"
+            android:id="@+id/tv_ping_an_beans_contract"
+            android:textSize="@dimen/dim30"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/bank_introduce"
+            android:layout_marginTop="@dimen/dim46"
+            android:layout_marginBottom="@dimen/dim46"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dim30"
+    android:paddingLeft="@dimen/dim17"
+    android:paddingRight="@dimen/dim17"
+    android:paddingTop="@dimen/dim30">
+
+
+    <TextView
+        android:id="@+id/tv_more_filtrate_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dim20"
+        android:drawableLeft="@drawable/vertical_bule_rectangle"
+        android:drawablePadding="@dimen/dim12"
+        android:textColor="@color/sticky_header_text_color"
+        android:textSize="@dimen/txt28"
+        tools:text="@string/buyer_deposit_money" />
+
+    <com.changcai.buyer.view.MyGridView
+        android:id="@+id/gv_more_filtrate_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/dim20"
+        android:layout_marginLeft="@dimen/dim12"
+        android:layout_marginRight="@dimen/dim12"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/dim20"></com.changcai.buyer.view.MyGridView>
+</LinearLayout>

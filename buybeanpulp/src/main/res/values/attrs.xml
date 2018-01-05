@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="IndicatorView">
+        <attr name="iv_IndicatorEven" format="reference|boolean" />
+        <attr name="iv_IndicatorColor" format="reference|color" />
+        <attr name="iv_IndicatorColorStart" format="reference|color" />
+        <attr name="iv_IndicatorColorEnd" format="reference|color" />
+        <attr name="iv_IndicatorColorGradient" format="reference|boolean" />
+        <attr name="iv_IndicatorTextGap" format="reference|dimension" />
+        <attr name="iv_IndicatorTextArray" format="reference" />
+        <attr name="iv_IndicatorTextSize" format="reference|dimension" />
+        <attr name="iv_IndicatorTextColorNormal" format="reference|color" />
+        <attr name="iv_IndicatorTextColorSelected" format="reference|color" />
+        <attr name="iv_IndicatorLengthExtra" format="reference|dimension" />
+        <attr name="iv_IndicatorDuration" format="reference|integer" />
+        <attr name="iv_IndicatorSelectedIndex" format="reference|integer" />
+        <attr name="iv_IndicatorHeight" format="reference|dimension" />
+        <attr name="iv_IndicatorBgTouchedColor" format="reference|color" />
+        <attr name="iv_IndicatorViewPagerAnim" format="reference|boolean" />
+    </declare-styleable>
+    <!--自定义比例控件 -->
+    <declare-styleable name="PercentLayout_Layout">
+        <attr name="layout_widthPercent" format="string"/>
+        <attr name="layout_heightPercent" format="string"/>
+
+        <attr name="layout_marginPercent" format="string"/>
+        <attr name="layout_marginLeftPercent" format="string"/>
+        <attr name="layout_marginTopPercent" format="string"/>
+        <attr name="layout_marginRightPercent" format="string"/>
+        <attr name="layout_marginBottomPercent" format="string"/>
+        <attr name="layout_marginStartPercent" format="string"/>
+        <attr name="layout_marginEndPercent" format="string"/>
+
+        <attr name="layout_textSizePercent" format="string"/>
+
+        <attr name="layout_maxWidthPercent" format="string"/>
+        <attr name="layout_maxHeightPercent" format="string"/>
+        <attr name="layout_minWidthPercent" format="string"/>
+        <attr name="layout_minHeightPercent" format="string"/>
+
+        <attr name="layout_paddingPercent" format="string"/>
+        <attr name="layout_paddingTopPercent" format="string"/>
+        <attr name="layout_paddingBottomPercent" format="string"/>
+        <attr name="layout_paddingLeftPercent" format="string"/>
+        <attr name="layout_paddingRightPercent" format="string"/>
+    </declare-styleable>
+
+    <!-- 检测的进度分数 -->
+    <declare-styleable name="check_progress_style">
+
+        <!-- 半径 -->
+        <attr name="round_radius" format="dimension" />
+    </declare-styleable>
+
+    <!-- 仿4.0gridlayout -->
+    <declare-styleable name="MyGridLayout">
+        <attr name="numColumns" format="integer" />
+        <attr name="itemMargin" format="dimension" />
+        <!-- 是否宽等于高 -->
+        <attr name="isWidthEqualsHeight" format="boolean" />
+    </declare-styleable>
+
+    <!--自定义底部tab -->
+    <declare-styleable name="CustomBottomView">
+        <attr name="label_text" format="reference|string" />
+        <attr name="label_img" format="reference" />
+        <!-- 图片是否隐藏 -->
+        <attr name="is_hide" format="boolean" />
+    </declare-styleable>
+
+    <!-- 自定义汽车控制按钮-->
+    <declare-styleable name="CarOperaView">
+        <attr name="text" format="reference|string" />
+        <attr name="image" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="slideswitch">
+        <attr name="themeColor" format="color" />
+        <attr name="isOpen" format="boolean" />
+        <attr name="shape">
+            <enum name="rect" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="TimeTextView">
+    </declare-styleable>
+
+
+    <declare-styleable name="SubsamplingScaleImageView">
+        <attr name="src" format="reference"/>
+        <attr name="assetName" format="string"/>
+        <attr name="panEnabled" format="boolean"/>
+        <attr name="zoomEnabled" format="boolean"/>
+        <attr name="quickScaleEnabled" format="boolean"/>
+        <attr name="tileBackgroundColor" format="color"/>
+    </declare-styleable>
+
+
+
+
+    <declare-styleable name="NavigationTabStrip">
+        <attr name="nts_color" format="color"/>
+        <attr name="nts_size" format="dimension"/>
+        <attr name="nts_weight" format="dimension"/>
+        <attr name="nts_factor" format="float"/>
+        <attr name="nts_titles" format="reference"/>
+
+        <attr name="nts_type" format="enum">
+            <enum name="line" value="0"/>
+            <enum name="point" value="1"/>
+        </attr>
+        <attr name="nts_gravity" format="enum">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr>
+
+        <attr name="nts_typeface" format="string"/>
+        <attr name="nts_corners_radius" format="dimension"/>
+        <attr name="nts_animation_duration" format="integer"/>
+
+        <attr name="nts_inactive_color" format="color"/>
+        <attr name="nts_active_color" format="color"/>
+        <attr name="nts_tab_space" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="RotateDotsProgressView">
+        <attr name="dots_radius" format="dimension|reference" />
+        <attr name="dots_gap" format="dimension|reference" />
+        <attr name="dots_normal_color" format="color|reference" />
+        <attr name="dots_selected_color" format="color|reference" />
+        <attr name="dots_number" format="integer|reference"/>
+
+    </declare-styleable>
+
+
+    <!--im start-->
+    <!-- 分页标签 -->
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color"/>
+        <attr name="pstsUnderlineColor" format="color"/>
+        <attr name="pstsDividerColor" format="color"/>
+        <attr name="pstsCheckedTextColor" format="reference"/>
+        <attr name="pstsUncheckedTextColor" format="reference"/>
+        <attr name="pstsIndicatorHeight" format="dimension"/>
+        <attr name="pstsUnderlineHeight" format="dimension"/>
+        <attr name="pstsDividerPadding" format="dimension"/>
+        <attr name="pstsTabPaddingLeftRight" format="dimension"/>
+        <attr name="pstsScrollOffset" format="dimension"/>
+        <attr name="pstsTabBackground" format="reference"/>
+        <attr name="pstsShouldExpand" format="boolean"/>
+        <attr name="pstsTextAllCaps" format="boolean"/>
+    </declare-styleable>
+
+    <!-- 左右文本 -->
+    <declare-styleable name="TwoTextView">
+
+        <!-- 左边文本内容 -->
+        <attr name="ttLeftText" format="string|reference"/>
+        <!-- 右边文本内容 -->
+        <attr name="ttRightText" format="string|reference"/>
+        <!-- 左边文本字体大小 -->
+        <attr name="ttLeftTextSize" format="dimension"/>
+        <!-- 右边文本字体大小 -->
+        <attr name="ttRightTextSize" format="dimension"/>
+        <!-- 左边文本颜色 -->
+        <attr name="ttLeftTextColor" format="reference"/>
+        <!-- 右边文本颜色 -->
+        <attr name="ttRightTextColor" format="reference"/>
+    </declare-styleable>
+    <!--im end-->
+</resources>

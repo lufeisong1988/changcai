@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/item_background_gray"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/dim34"
+        android:paddingRight="@dimen/dim34"
+        android:layout_marginBottom="@dimen/dim34"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_company_legal_person"
+                style="@style/authenticate_style_left_title_text"
+                android:text="@string/legal_people_information" />
+
+
+            <EditText
+                android:id="@+id/et_legal_people_name"
+                style="@style/loginItemLayout"
+                android:layout_marginTop="@dimen/dim40"
+                android:layout_toRightOf="@+id/tv_lawful_name"
+                android:cursorVisible="true"
+                android:hint="@string/please_input_legal_people_name"
+                android:maxLength="16"
+                android:textColor="@color/global_text_gray"
+                android:textColorHint="@color/global_text_gray"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:id="@+id/et_legal_people_id_card"
+                style="@style/loginItemLayout"
+                android:layout_marginTop="@dimen/dim20"
+                android:layout_toRightOf="@+id/tv_lawful_id_no"
+                android:cursorVisible="true"
+                android:hint="@string/please_input_legal_people_id_card"
+                android:textColor="@color/global_text_gray"
+                android:textColorHint="@color/global_text_gray"
+                android:textCursorDrawable="@null" />
+
+
+            <TextView
+                android:id="@+id/tv_company_type"
+                style="@style/authenticate_style_left_title_text"
+                android:text="@string/company_code_type" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_unification_code"
+                style="@style/authenticate_style_linear_layout_selector"
+                android:layout_marginTop="@dimen/dim20"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dim20">
+
+                <TextView
+                    android:id="@+id/tv_credit_title"
+                    style="@style/txt_selector_with_radio_button"
+                    android:layout_weight="1"
+                    android:text="@string/uniform_standard_credit_code" />
+
+                <ImageView
+                    android:id="@+id/iv_code_selected1"
+                    android:layout_width="@dimen/dim34"
+                    android:layout_height="@dimen/dim34"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/iv_company_type_selector" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_organization_code"
+                style="@style/authenticate_style_linear_layout_selector"
+                android:layout_marginTop="@dimen/dim20"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dim20">
+
+                <TextView
+                    style="@style/txt_selector_with_radio_button"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_institutional_title"
+                    android:text="@string/organize_structural_code" />
+
+                <ImageView
+                    android:id="@+id/iv_code_selected2"
+                    android:layout_width="@dimen/dim34"
+                    android:layout_height="@dimen/dim34"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/iv_company_type_selector" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_company_data"
+                style="@style/authenticate_style_left_title_text"
+                android:layout_marginTop="@dimen/dim80"
+                android:text="@string/company_info" />
+
+
+            <EditText
+                android:id="@+id/et_company_name"
+                style="@style/loginItemLayout"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/tv_company_name"
+                android:cursorVisible="true"
+                android:ellipsize="end"
+                android:hint="@string/please_input_company"
+                android:lines="1"
+                android:textColor="@color/global_text_gray"
+                android:textColorHint="@color/global_text_gray"
+                android:maxWidth="@dimen/dim387"
+                android:textCursorDrawable="@null" />
+
+
+            <EditText
+                android:id="@+id/et_uniform_standard_credit_code"
+                style="@style/loginItemLayout"
+                android:layout_marginTop="@dimen/dim20"
+                android:cursorVisible="true"
+                android:hint="@string/please_input_credit_code"
+                android:textColor="@color/global_text_gray"
+                android:textColorHint="@color/global_text_gray"
+                android:textCursorDrawable="@null" />
+
+
+            <TextView
+                android:id="@+id/tv_correlation_credentials"
+                style="@style/authenticate_style_left_title_text"
+                android:text="@string/relevant_credentials" />
+
+            <FrameLayout
+                style="@style/authenticate_linear_layout_style_copy"
+                android:layout_height="@dimen/dim312"
+                android:layout_marginTop="@dimen/dim20"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_front_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:id="@+id/ll_progress_front"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.6"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    >
+
+                    <com.changcai.buyer.view.SectorProgressView
+                        android:id="@+id/progress_front"
+                        android:layout_width="@dimen/dim30"
+                        android:layout_height="@dimen/dim30" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ll_id_front"
+                    android:layout_width="@dimen/dim251"
+                    android:layout_height="@dimen/dim163"
+                    android:layout_gravity="center"
+                    android:background="@drawable/img_frsfzzm_company"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"></ImageView>
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim231"
+                android:layout_marginTop="@dimen/dim20"
+                android:background="@null">
+
+                <FrameLayout
+                    style="@style/authenticate_linear_layout_style_copy"
+                    android:layout_width="@dimen/dim0"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dim10"
+                    android:layout_weight="1"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_background_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY" />
+
+                    <ImageView
+                        android:id="@+id/ll_id_background"
+                        android:layout_width="@dimen/dim251"
+                        android:layout_height="@dimen/dim163"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/img_frsfzbm_company"
+                        android:orientation="vertical">
+
+
+                    </ImageView>
+
+                    <LinearLayout
+                        android:id="@+id/ll_progress_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.6"
+                        android:background="@color/black"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        >
+
+                        <com.changcai.buyer.view.SectorProgressView
+                            android:id="@+id/progress_back"
+                            android:layout_width="@dimen/dim30"
+                            android:layout_height="@dimen/dim30" />
+                    </LinearLayout>
+                </FrameLayout>
+
+
+                <FrameLayout
+                    style="@style/authenticate_linear_layout_style_copy"
+                    android:layout_width="@dimen/dim0"
+                    android:layout_height="@dimen/dim231"
+                    android:layout_marginLeft="@dimen/dim10"
+                    android:layout_weight="1"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_license"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_progress_license"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.6"
+                        android:background="@color/black"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        >
+
+                        <com.changcai.buyer.view.SectorProgressView
+                            android:id="@+id/progress_license"
+                            android:layout_width="@dimen/dim30"
+                            android:layout_height="@dimen/dim30" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ll_industry_license"
+                        android:layout_width="@dimen/dim221"
+                        android:layout_height="@dimen/dim157"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/img_gsyezz_company"
+                        android:orientation="vertical">
+
+
+                    </ImageView>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_view_cell_three"
+                android:layout_height="@dimen/dim231"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dim20"
+                android:background="@null">
+
+                <FrameLayout
+                    style="@style/authenticate_linear_layout_style_copy"
+                    android:layout_width="@dimen/dim0"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dim10"
+                    android:layout_weight="1"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_institutional_framework_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_progress_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.6"
+                        android:background="@color/black"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        >
+
+                        <com.changcai.buyer.view.SectorProgressView
+                            android:id="@+id/progress_code"
+                            android:layout_width="@dimen/dim30"
+                            android:layout_height="@dimen/dim30" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ll_institutional_framework"
+                        android:layout_width="@dimen/dim251"
+                        android:layout_height="@dimen/dim170"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/img_zzjgdm_company"
+                        android:orientation="vertical">
+
+                    </ImageView>
+                </FrameLayout>
+
+
+                <FrameLayout
+                    style="@style/authenticate_linear_layout_style_copy"
+                    android:layout_width="@dimen/dim0"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dim10"
+                    android:layout_weight="1"
+                    >
+
+                    <ImageView
+                        android:id="@+id/iv_tax_license"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_progress_tax_license"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.6"
+                        android:background="@color/black"
+                        android:gravity="center"
+                        android:visibility="gone"
+                       >
+
+                        <com.changcai.buyer.view.SectorProgressView
+                            android:id="@+id/progress_front_tax_license"
+                            android:layout_width="@dimen/dim30"
+                            android:layout_height="@dimen/dim30" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ll_tax_license"
+                        android:layout_width="@dimen/dim191"
+                        android:layout_height="@dimen/dim158"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/img_swdjz_company"
+                        android:orientation="vertical">
+
+
+                    </ImageView>
+
+                </FrameLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dim82"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/dim38"
+                    android:layout_height="@dimen/dim38"
+                    android:src="@drawable/agree_sign"
+                    android:id="@+id/iv_agree_sign"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/global_text_gray"
+                    android:text="同意并签署"
+                    android:id="@+id/tv_sign_text"
+                    android:layout_marginLeft="@dimen/dim10"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/global_blue"
+                    android:id="@+id/tv_net_sign"
+                    android:text="《网站入驻协议》"
+                    />
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="@dimen/dim34"
+                android:layout_marginLeft="@dimen/dim34"
+                android:layout_marginRight="@dimen/dim34"
+                android:layout_marginTop="@dimen/dim40"
+                android:background="@drawable/confirm_assign_bg"
+                android:gravity="center"
+                android:text="@string/post"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dim38" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

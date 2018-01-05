@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/dpv_parent"
+    android:layout_height="match_parent">
+
+
+    <View
+        android:id="@+id/view_center_dots"
+        android:layout_width="@dimen/dim16"
+        android:layout_height="@dimen/dim16"
+        android:layout_centerInParent="true"
+        android:background="@drawable/white_dots"
+        />
+
+    <View
+        android:id="@+id/view_left_dots"
+        android:layout_width="@dimen/dim16"
+        android:layout_height="@dimen/dim16"
+        android:layout_alignBottom="@+id/view_center_dots"
+        android:layout_marginRight="@dimen/dim14"
+        android:layout_toLeftOf="@id/view_center_dots"
+        android:background="@drawable/white_dots"
+        tools:background="@drawable/black_dots" />
+
+    <View
+        android:id="@+id/view_right_dots"
+        android:layout_width="@dimen/dim16"
+        android:layout_height="@dimen/dim16"
+        android:layout_alignBottom="@+id/view_center_dots"
+        android:layout_marginLeft="@dimen/dim14"
+        android:layout_toRightOf="@+id/view_center_dots"
+        android:background="@drawable/white_dots" />
+
+    <View
+        android:id="@+id/view_move_dots"
+        android:layout_width="@dimen/dim16"
+        android:layout_height="@dimen/dim16"
+        android:layout_alignBottom="@+id/view_center_dots"
+        android:layout_marginRight="@dimen/dim14"
+        android:layout_toLeftOf="@id/view_center_dots"
+        android:background="@drawable/black_dots"
+
+        />
+</RelativeLayout>

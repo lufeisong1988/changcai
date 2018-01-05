@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/web_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_rgba"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="@dimen/dim200"
+        >
+
+        <ImageView
+            android:id="@+id/iv_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/default_img_404" />
+
+        <TextView
+            android:id="@+id/tv_empty_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加载失败，请点击刷新"
+            android:textColor="@color/gray_chateau"
+            android:textSize="@dimen/txt24" />
+
+        <TextView
+            android:id="@+id/tv_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim40"
+            android:background="@drawable/common_tv_bg_2radius"
+            android:gravity="center"
+            android:text="立即刷新"
+            android:textColor="@color/global_blue" />
+    </LinearLayout>
+
+    <com.tencent.smtt.sdk.WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        tools:visibility="invisible" />
+
+
+
+    <include
+        android:id="@+id/viewTop"
+        layout="@layout/common_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim100"
+        android:layout_alignParentBottom="true" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:layout_above="@id/viewTop"
+        android:background="@color/dedee5" />
+
+
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/progress"
+        tools:visibility="invisible"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

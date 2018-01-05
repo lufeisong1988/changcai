@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/titleView"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim100"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="@dimen/dim68"
+        android:layout_height="@dimen/dim68"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dim20"
+        android:clickable="true"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_nav_back"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/btnLeft"
+        android:layout_width="@dimen/dim68"
+        android:layout_height="@dimen/dim68"
+        android:layout_centerVertical="true"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:layout_toRightOf="@id/btnBack"
+        tools:text="111"
+        android:layout_marginLeft="@dimen/dim40"
+        tools:visibility="visible"
+        android:textColor="@color/global_blue"
+        android:textSize="@dimen/LargeTextSize"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/membership_color"
+        android:textSize="@dimen/txt34" />
+
+    <TextView
+        android:id="@+id/btnRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/common_dimen_10"
+        android:textColor="@color/global_blue"
+        android:textSize="@dimen/txt34"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_service_phone"
+        android:layout_width="@dimen/dim120"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/common_dimen_10"
+        android:src="@drawable/icon_hotline_white"
+        android:text="@string/contact_service"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        tools:src="@drawable/icon_hotline_blue"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_btn_right"
+        android:layout_width="@dimen/dim68"
+        android:layout_height="@dimen/dim68"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        tools:visibility="visible"
+        android:layout_marginRight="@dimen/dim24"
+        android:layout_alignParentRight="true"
+        tools:src="@drawable/share_image_drawable"
+        />
+
+    <View
+        android:id="@+id/view_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:background="@color/mischka" />
+</RelativeLayout>

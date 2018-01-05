@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_gray"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/ll_first_step"
+                style="@style/authenticate_layout_style">
+
+                <ImageView
+                    android:id="@+id/iv_authenticate_step_first"
+                    style="@style/authenticate_step_icon"
+                    android:src="@drawable/certify_first_step_level_list" />
+
+                <TextView
+                    android:id="@+id/tv_authenticate_first_info"
+                    style="@style/authenticate_step_title"
+                    android:layout_weight="1"
+                    android:text="@string/certify_authenticate_text"
+                    tools:textColor="@color/red_orange" />
+
+                <TextView
+                    android:id="@+id/tv_check_first"
+                    style="@style/tv_check_it"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/check_it"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_more_icon"
+                    style="@style/iv_more_icon"
+                    android:src="@drawable/list_right"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim1"
+                android:background="@color/global_text_gray2" />
+
+            <LinearLayout
+                android:id="@+id/ll_first_step_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim1"
+                    android:background="@color/global_text_gray2" />
+
+                <LinearLayout
+                    android:id="@+id/ll_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_authenticate_first_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim120"
+                        android:layout_marginLeft="@dimen/dim29"
+                        android:layout_marginRight="@dimen/dim37"
+                        android:gravity="center_vertical"
+                        android:maxHeight="@dimen/dim144"
+                        android:textColor="@color/orange_details_info"
+                        android:textSize="@dimen/txt24"
+                        tools:text="@string/step1_ongoing" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dim19"
+                    android:id="@+id/ll_web_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim29"
+                    android:layout_marginRight="@dimen/dim37"
+                    android:layout_marginBottom="@dimen/dim20"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/i_m_company"
+                            android:textColor="@color/global_text_gray"
+                            android:textSize="@dimen/txt24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim6"
+                            android:text="@string/i_m_company_details"
+                            android:textColor="@color/global_text_gray"
+                            android:textSize="@dimen/txt24" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/dim12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/i_m_person"
+                            android:textColor="@color/global_text_gray"
+                            android:textSize="@dimen/txt24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim6"
+                            android:text="@string/i_m_person_details"
+                            android:textColor="@color/global_text_gray"
+                            android:textSize="@dimen/txt24" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_second"
+                style="@style/authenticate_layout_style">
+
+                <ImageView
+                    android:id="@+id/iv_authenticate_step_second"
+                    style="@style/authenticate_step_icon"
+                    android:src="@drawable/iv_step_second" />
+
+                <TextView
+                    android:id="@+id/tv_step_second_title"
+                    style="@style/authenticate_step_title"
+                    android:text="@string/sign_bank_account" />
+
+                <TextView
+                    android:id="@+id/tv_second_step_info"
+                    android:layout_width="@dimen/dim0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim20"
+                    android:layout_weight="5"
+                    android:gravity="left"
+                    android:text="@string/string_authenticate_second_step_info"
+                    android:textColor="@color/global_text_gray3"
+                    android:textSize="@dimen/txt24"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_contract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dim30"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_ping_an"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dim20"
+                        android:drawableLeft="@drawable/identity_pingan"
+                        android:gravity="center"
+                        android:text="@string/ping_an_easy_pay"
+                        android:textColor="@color/global_text_gray3"
+                        android:textSize="@dimen/txt24" />
+
+                    <TextView
+                        android:id="@+id/tv_nong_hang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/identity_nonghang"
+                        android:gravity="center"
+                        android:text="@string/back_type"
+                        android:textColor="@color/global_text_gray3"
+                        android:textSize="@dimen/txt24" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_more_icon2"
+                    style="@style/iv_more_icon"
+                    android:src="@drawable/list_right"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_second_step"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim117"
+                android:background="@color/orange_details_info2"
+                android:orientation="vertical"
+                tools:visibility="visible"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim1"
+                    android:background="@color/global_text_gray2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginLeft="@dimen/dim29"
+                    android:layout_marginRight="@dimen/dim29"
+                    android:gravity="center|left"
+                    android:text="@string/string_pay_safe"
+                    android:textColor="@color/orange_details_info"
+                    android:textSize="@dimen/txt24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_third"
+                style="@style/authenticate_layout_style">
+
+                <ImageView
+                    android:id="@+id/iv_authenticate_step_third"
+                    style="@style/authenticate_step_icon"
+                    android:src="@drawable/iv_step_third" />
+
+                <TextView
+                    android:id="@+id/tv_step_third_title"
+                    style="@style/authenticate_step_title"
+                    android:text="@string/set_pay_password" />
+
+                <TextView
+                    android:clickable="true"
+                    android:id="@+id/tv_third_step_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim20"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="@string/string_authenticate_third_step_info"
+                    android:textColor="@color/global_text_gray3"
+                    android:textSize="@dimen/txt24" />
+
+                <TextView
+                    android:id="@+id/tv_check_three"
+                    style="@style/tv_check_it"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/password_modify"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_more_icon_3"
+                    style="@style/iv_more_icon"
+                    android:src="@drawable/list_right"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_fourth"
+                style="@style/authenticate_layout_style">
+
+                <ImageView
+                    android:id="@+id/iv_authenticate_step_fourth"
+                    style="@style/authenticate_step_icon"
+                    android:src="@drawable/iv_step_fourth" />
+
+                <TextView
+                    android:id="@+id/tv_step_fourth_title"
+                    style="@style/authenticate_step_title"
+                    android:text="@string/assign_platform_agreement" />
+
+                <TextView
+                    android:id="@+id/tv_third_fourth_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim20"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="@string/string_authenticate_four_step_info"
+                    android:textColor="@color/global_text_gray3"
+                    android:textSize="@dimen/txt24" />
+
+                <TextView
+                    android:id="@+id/tv_check_four"
+                    style="@style/tv_check_it"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/check_it"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_more_icon_4"
+                    style="@style/iv_more_icon"
+                    android:src="@drawable/list_right"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_input_user_introduce"
+                style="@style/authenticate_layout_style">
+
+                <ImageView
+                    android:id="@+id/iv_authenticate_step_fifth"
+                    style="@style/authenticate_step_icon"
+                    android:src="@drawable/iv_step_fifth" />
+
+                <TextView
+                    android:id="@+id/tv_step_fifth_title"
+                    style="@style/authenticate_step_title"
+                    android:text="@string/input_user_introduction" />
+
+                <TextView
+                    android:id="@+id/tv_third_fifth_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim20"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="@string/string_authenticate_fifth_step_info"
+                    android:textColor="@color/global_text_gray3"
+                    android:textSize="@dimen/txt24" />
+
+                <TextView
+                    android:id="@+id/tv_check_five"
+                    style="@style/tv_check_it"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/password_modify"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_more_icon_5"
+                    style="@style/iv_more_icon"
+                    android:src="@drawable/list_right"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvServicePhone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dim30"
+                android:gravity="bottom|center"
+                tools:text="@string/service_phone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

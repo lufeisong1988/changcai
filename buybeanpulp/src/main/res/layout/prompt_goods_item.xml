@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent">
+    <com.changcai.buyer.view.PromptHeaderView
+        android:id="@+id/timeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim40" />
+    <TextView
+        android:layout_marginLeft="@dimen/dim50"
+        android:layout_marginRight="@dimen/dim50"
+        android:layout_marginTop="@dimen/dim30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleText"
+        android:textColor="@color/membership_color"
+        tools:text="买豆粕网现货策略建议表现季报 哈哈哈哈哈哈或或或或或或或或或或或或"
+        android:ellipsize="end"
+        android:textSize="@dimen/txt34"
+        />
+
+    <com.changcai.buyer.view.CustomFontTextView
+        android:layout_marginLeft="@dimen/dim50"
+        android:layout_marginRight="@dimen/dim50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentText"
+        android:layout_marginTop="@dimen/dim17"
+        android:textColor="@color/membership_color"
+        tools:text="USDA5月供需报告新旧豆美国库存均低于平均预期，但全球库存高于平均预期。报告难以改变美豆库存高于平均预期。报告难以改变美豆库存高于平均预期。报告难以改变美豆"
+        />
+
+</LinearLayout>

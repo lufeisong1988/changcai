@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_title_bar"></include>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:background="@color/color_E8E8E8"></View>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_servicelevel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim108"
+            android:paddingLeft="@dimen/dim40"
+            android:paddingRight="@dimen/dim40">
+
+            <TextView
+                android:id="@+id/tv_service_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务会员等级"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_servicelevel"
+                app:layout_constraintTop_toTopOf="@id/cl_servicelevel" />
+
+            <ImageView
+                android:id="@+id/btn_arrow_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_inline_rgt_gray"
+                app:layout_constraintBottom_toBottomOf="@id/cl_servicelevel"
+                app:layout_constraintRight_toRightOf="@id/cl_servicelevel"
+                app:layout_constraintTop_toTopOf="@id/cl_servicelevel" />
+
+            <TextView
+
+                android:id="@+id/tv_level"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim60"
+                android:layout_marginRight="@dimen/dim60"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:lines="1"
+                android:text="@string/user_setting_choose"
+                android:textColor="@color/font_gray"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_servicelevel"
+                app:layout_constraintLeft_toRightOf="@id/tv_service_title"
+                app:layout_constraintRight_toRightOf="@id/btn_arrow_level"
+                app:layout_constraintTop_toTopOf="@id/cl_servicelevel" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:background="@color/color_E8E8E8"></View>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_onlinestatus"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim108"
+            android:paddingLeft="@dimen/dim40"
+            android:paddingRight="@dimen/dim40">
+
+            <TextView
+                android:id="@+id/tv_onlinestatus_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在线状态"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_onlinestatus"
+                app:layout_constraintTop_toTopOf="@id/cl_onlinestatus" />
+
+            <ImageView
+                android:id="@+id/btn_arrow_onlinestatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_inline_rgt_gray"
+                app:layout_constraintBottom_toBottomOf="@id/cl_onlinestatus"
+                app:layout_constraintRight_toRightOf="@id/cl_onlinestatus"
+                app:layout_constraintTop_toTopOf="@id/cl_onlinestatus" />
+
+            <TextView
+
+                android:id="@+id/tv_onlinestatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim60"
+                android:layout_marginRight="@dimen/dim60"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:lines="1"
+                android:text="@string/user_setting_choose"
+                android:textColor="@color/font_gray"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_onlinestatus"
+                app:layout_constraintLeft_toRightOf="@id/tv_onlinestatus_title"
+                app:layout_constraintRight_toRightOf="@id/btn_arrow_onlinestatus"
+                app:layout_constraintTop_toTopOf="@id/cl_onlinestatus" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:background="@color/color_E8E8E8"></View>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_servicestatus"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim108"
+            android:paddingLeft="@dimen/dim40"
+            android:paddingRight="@dimen/dim40">
+
+            <TextView
+                android:id="@+id/tv_servicestatus_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务状态"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_servicestatus"
+                app:layout_constraintTop_toTopOf="@id/cl_servicestatus" />
+
+            <ImageView
+                android:id="@+id/btn_arrow_servicestatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_inline_rgt_gray"
+                app:layout_constraintBottom_toBottomOf="@id/cl_servicestatus"
+                app:layout_constraintRight_toRightOf="@id/cl_servicestatus"
+                app:layout_constraintTop_toTopOf="@id/cl_servicestatus" />
+
+            <TextView
+
+                android:id="@+id/tv_servicestatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim60"
+                android:layout_marginRight="@dimen/dim60"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:lines="1"
+                android:text="@string/user_setting_choose"
+                android:textColor="@color/font_gray"
+                android:textSize="@dimen/txt34"
+                app:layout_constraintBottom_toBottomOf="@id/cl_servicestatus"
+                app:layout_constraintLeft_toRightOf="@id/tv_servicestatus_title"
+                app:layout_constraintRight_toRightOf="@id/btn_arrow_servicestatus"
+                app:layout_constraintTop_toTopOf="@id/cl_servicestatus" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:layout_marginLeft="@dimen/dim40"
+            android:layout_marginRight="@dimen/dim40"
+            android:background="@color/color_E8E8E8"></View>
+    </LinearLayout>
+
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone" />
+</RelativeLayout>

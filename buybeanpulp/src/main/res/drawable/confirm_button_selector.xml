@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim4" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <gradient android:angle="270"
+                android:startColor="@color/picton_blue"
+                android:endColor="@color/bleu_de_france"
+                android:type="linear"
+                />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim4" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <gradient android:angle="270"
+                android:startColor="@color/picton_blue"
+                android:endColor="@color/bleu_de_france"
+                android:type="linear"
+                />
+        </shape>
+    </item>
+
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim4" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <gradient android:angle="270"
+                android:startColor="@color/picton_blue"
+                android:endColor="@color/bleu_de_france"
+                android:type="linear"
+                />
+        </shape>
+    </item>
+    <item android:state_selected="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim4" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <gradient android:angle="270"
+                android:startColor="@color/picton_blue"
+                android:endColor="@color/bleu_de_france"
+                android:type="linear"
+                />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dim4" />
+            <size android:width="@dimen/dim122" android:height="@dimen/dim62" />
+            <gradient android:angle="270"
+                android:startColor="@color/picton_blue"
+                android:endColor="@color/bleu_de_france"
+                android:type="linear"
+                />
+        </shape>
+    </item>
+
+</selector>

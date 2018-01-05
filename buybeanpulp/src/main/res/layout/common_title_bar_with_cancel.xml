@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/titleView"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    tools:background="@color/black"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/common_dimen_10"
+        android:clickable="true"
+        android:gravity="center"
+        tools:visibility="visible"
+        android:padding="@dimen/common_dimen_5"
+        android:src="@drawable/icon_nav_back"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/dim33"
+        android:layout_height="@dimen/dim33"
+        android:id="@+id/iv_direct_finish"
+        android:src="@drawable/icon_clos_zxxq"
+        android:tintMode="multiply"
+        android:layout_marginLeft="@dimen/dim50"
+        android:layout_toRightOf="@+id/btnBack"
+        />
+    <TextView
+        android:id="@+id/btnLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/global_blue"
+        android:textSize="@dimen/LargeTextSize"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/black"
+        android:textSize="@dimen/TitleTextSize" />
+
+    <TextView
+        android:id="@+id/btnRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/common_dimen_10"
+        android:textColor="@color/global_blue"
+        android:textSize="@dimen/LargeTextSize"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/iv_btn_right"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/common_dimen_10"
+        android:clickable="true"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

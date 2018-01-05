@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dim34"
+            android:layout_marginRight="@dimen/dim34"
+            android:layout_marginTop="@dimen/dim40"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/please_input_cell_phone_and_code"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt34" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dim40"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim100"
+                    android:orientation="horizontal">
+
+
+                    <EditText
+                        android:id="@+id/cet_phone_number"
+                        style="@style/loginItemLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/common_dimen_5"
+                        android:layout_weight="0.8"
+                        android:cursorVisible="true"
+                        android:digits="0123456789"
+                        android:hint="@string/hint_phone"
+                        android:inputType="phone"
+                        android:lines="1"
+                        android:maxLength="11"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/global_text_gray2"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/txt34" />
+
+                    <TextView
+                        android:id="@+id/tv_get_otp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dim100"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/login_get_auth_background"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:minWidth="60dp"
+                        android:padding="5dp"
+                        android:text="获取动态码"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt34" />
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/cet_verify_code"
+                    style="@style/loginItemLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dim20"
+                    android:cursorVisible="true"
+                    android:digits="0123456789"
+                    android:hint="@string/hint_verify_code"
+                    android:inputType="phone"
+                    android:lines="1"
+                    android:maxLength="8"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/global_text_gray2"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/txt34" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dim80"
+                android:background="@drawable/login_disable_btn"
+                android:gravity="center"
+                android:minHeight="@dimen/login_item_width"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt38"
+                tools:text="@string/next" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

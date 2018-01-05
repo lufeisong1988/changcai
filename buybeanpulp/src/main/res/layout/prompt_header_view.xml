@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.changcai.buyer.view.CustomFontTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dim37"
+    android:drawableLeft="@drawable/img_datedot"
+    android:drawablePadding="@dimen/dim30"
+    android:textColor="@color/membership_color"
+    tools:text="2017-06-11 12:00" />
