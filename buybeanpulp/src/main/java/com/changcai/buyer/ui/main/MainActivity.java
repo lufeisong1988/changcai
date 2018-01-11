@@ -5,7 +5,6 @@ import android.animation.AnimatorInflater;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -726,7 +725,5 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
 
     }
 
-    public void change(View view){
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-    }
+
 }

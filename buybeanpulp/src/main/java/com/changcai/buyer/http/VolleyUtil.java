@@ -19,17 +19,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.changcai.buyer.util.DesUtil;
-import com.changcai.buyer.util.SPUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.util.AndroidUtil;
+import com.changcai.buyer.util.DesUtil;
 import com.changcai.buyer.util.JsonFormat;
 import com.changcai.buyer.util.LogUtil;
+import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.StringUtil;
 import com.changcai.buyer.util.UserInfoUtil;
 import com.changcai.buyer.view.LoadingProgressDialog;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -50,7 +50,7 @@ import java.util.UUID;
  */
 public class VolleyUtil {
     private static final String TAG = "VolleyUtil";
-    private static final int REQUEST_TIME = 6000;
+    private static final int REQUEST_TIME = 20000;
     private static VolleyUtil instance;
     private static RequestQueue queue;
 
@@ -77,6 +77,7 @@ public class VolleyUtil {
      */
     public void httpPost(final Context context, final String url, final Map<String, String> params,
                          final HttpListener listener, final boolean isShowProgress, final boolean needCookie) {
+
         if (isShowProgress && !isShowPd()) {
             showPd(context);
         }
@@ -87,19 +88,19 @@ public class VolleyUtil {
 //        setAuth(params);
 //        Map<String, String> baseParams = SPUtil.getObjectFromShare(Constants.REQUEST_BASE_PARAMETERS);
 //        if (baseParams == null) {
-            params.put("clientinfo_appname", "买豆粕");//app名称
-            params.put("clientinfo_appversion", AndroidUtil.getAppVersionName(context));//app版本号
-            params.put("clientinfo_os", "Android");
-            params.put("clientinfo_osversion", Build.VERSION.RELEASE + "");//操作系统名称
-            params.put("clientinfo_channel", AndroidUtil.getMetaValue(context, "UMENG_CHANNEL"));//渠道号
-            params.put("clientinfo_devicevendor", Build.BRAND);//手机品牌
-            params.put("clientinfo_devicename", Build.MODEL + "/" + Build.VERSION.RELEASE);
-            params.put("clientinfo_deviceid", AndroidUtil.getIMEI(context));
+        params.put("clientinfo_appname", "买豆粕");//app名称
+        params.put("clientinfo_appversion", AndroidUtil.getAppVersionName(context));//app版本号
+        params.put("clientinfo_os", "Android");
+        params.put("clientinfo_osversion", Build.VERSION.RELEASE + "");//操作系统名称
+        params.put("clientinfo_channel", AndroidUtil.getMetaValue(context, "UMENG_CHANNEL"));//渠道号
+        params.put("clientinfo_devicevendor", Build.BRAND);//手机品牌
+        params.put("clientinfo_devicename", Build.MODEL + "/" + Build.VERSION.RELEASE);
+        params.put("clientinfo_deviceid", AndroidUtil.getIMEI(context));
 //        }
 //        params.putAll(baseParams);
 
-        if (!params.containsKey(Constants.KEY_TOKEN_ID)){
-            params.put(Constants.KEY_TOKEN_ID,SPUtil.getString(Constants.KEY_TOKEN_ID));
+        if (!params.containsKey(Constants.KEY_TOKEN_ID)) {
+            params.put(Constants.KEY_TOKEN_ID, SPUtil.getString(Constants.KEY_TOKEN_ID));
         }
 //        params.put("sign", getSignByValueAsc(params));
 //        params.remove("key");
@@ -110,10 +111,12 @@ public class VolleyUtil {
             LogUtil.d(TAG, "-------" + url + "?requestJSON=" + gson.toJson(params));
             LogUtil.d(TAG, "-------" + url + "?requestJSON=" + DesUtil.encrypt(gson.toJson(params), "abcdefgh"));
         }
+
+
         StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                LogUtil.d(TAG, "url = " + url + "----succeed = "  +response);
+                LogUtil.d(TAG, "url = " + url + "----succeed = " + response);
                 if (listener != null) {
                     listener.onResponseString(response);
                     try {
@@ -132,7 +135,7 @@ public class VolleyUtil {
             @Override
             public void onErrorResponse(VolleyError error) {
                 cancelProgressDialog();
-                LogUtil.d(TAG,"url = " + url + "----error = "  + error.toString());
+                LogUtil.d(TAG, "url = " + url + "----error = " + error.toString());
                 if (error != null) {
                     if (null == error.networkResponse) {
                         listener.onError(Constants.CONNECT_SERVER_FAILED);
@@ -173,8 +176,10 @@ public class VolleyUtil {
             // 设置超时
             @Override
             public RetryPolicy getRetryPolicy() {
+                //设置超时时间 无效！！！！！
                 RetryPolicy retryPolicy = new DefaultRetryPolicy(REQUEST_TIME, 0,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
                 return retryPolicy;
             }
 
@@ -195,6 +200,11 @@ public class VolleyUtil {
             }
 
         };
+        //重新设置超时时间
+        RetryPolicy retrtPolicy = new DefaultRetryPolicy(REQUEST_TIME, 0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(retrtPolicy);
+        LogUtil.d("VolleyUtil","requestTime = " +  postRequest.getTimeoutMs());
         queue.add(postRequest);
     }
 

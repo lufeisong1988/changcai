@@ -50,6 +50,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         if (!UserDataUtil.isLogin()) {
             if (view != null) {
                 view.hideNOTIFACTION();
+                view.updateConsultantStatus(false,"登录后查看会话消息", System.currentTimeMillis());
             }
         } else {
             UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
@@ -219,7 +220,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                 if (contactsBlock == null) {
                     if (view != null) {
                         view.updateAllStatus(false, "", System.currentTimeMillis());
-                        view.updateConsultantStatus(false, "", System.currentTimeMillis());
+                        view.updateConsultantStatus(false, UserDataUtil.isLogin() ? "" : "登录后查看会话消息", System.currentTimeMillis());
                     }
                     return;
                 }
@@ -256,13 +257,13 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     if (unReadMsgCount > 0) {
                         view.updateAllStatus(true, unReadMessage, unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
                     } else {
-                        view.updateAllStatus(false, unReadMessage, unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
+                        view.updateAllStatus(false, unReadMessage , unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
 
                     }
                     if (unReadMsgConsultantCount > 0 && contactsConsultantBlock.size() > 0) {
                         view.updateConsultantStatus(true, unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
                     } else if (unReadMsgConsultantCount <= 0 && contactsConsultantBlock.size() > 0) {
-                        view.updateConsultantStatus(false, unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
+                        view.updateConsultantStatus(false,unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
                     }
 
                 }

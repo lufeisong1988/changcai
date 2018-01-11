@@ -71,7 +71,10 @@ public class ServerErrorCodeDispatch {
         Bundle bundle = new Bundle();
         bundle.putString("title",errorString);
         myAlertDialog.setArguments(bundle);
-        myAlertDialog.show( context.getSupportFragmentManager());
+        try{
+            myAlertDialog.show( context.getSupportFragmentManager());
+        }catch (Exception e){
+        }
     }
 
     public void showNetErrorDialog(Context context, String errorString){

@@ -3,10 +3,12 @@ package com.changcai.buyer.ui.news;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +32,7 @@ import com.changcai.buyer.ui.news.bean.RecommendNewsEntity;
 import com.changcai.buyer.ui.news.present.NewIndexPresent;
 import com.changcai.buyer.ui.news.present.NewIndexPresentInterface;
 import com.changcai.buyer.util.AndroidUtil;
+import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.ResUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
 import com.changcai.buyer.view.CustomFontTextView;
@@ -43,6 +46,7 @@ import com.changcai.buyer.view.banner.CBViewHolderCreator;
 import com.changcai.buyer.view.banner.ConvenientBanner;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +54,7 @@ import java.util.List;
 import java.util.Vector;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -113,6 +118,7 @@ public class NewIndexFragment extends BaseAbstraceFragment implements View.OnCli
 
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +144,20 @@ public class NewIndexFragment extends BaseAbstraceFragment implements View.OnCli
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(setResId(), null);
+        ButterKnife.bind(this, view);
+        if(savedInstanceState != null){
+            newsClassifys = (List<NewsClassify>) savedInstanceState.getSerializable("newsClassifys");
+        }
+        initView();
+        initListener();
+        initConfig();
+        initData();
+        return view;
+    }
+
+    @Override
     public int setResId() {
         return R.layout.fragment_new_index;
     }
@@ -149,12 +169,26 @@ public class NewIndexFragment extends BaseAbstraceFragment implements View.OnCli
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+//        present.init();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         present.destory();
         RxBus.get().unregister("inOrOutAction", logoutEvent);
         RxBus.get().unregister("backgroundToForeground", backgroundToForegroundEvent);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("newsClassifys", (Serializable) newsClassifys);
+        super.onSaveInstanceState(outState);
+    }
+
+
 
     @Override
     public void onDestroyView() {
@@ -173,6 +207,7 @@ public class NewIndexFragment extends BaseAbstraceFragment implements View.OnCli
         tv_morePrice = (CustomFontTextView) priceView.findViewById(R.id.tv_morePrice);
 
     }
+
 
     @Override
     protected void initConfig() {

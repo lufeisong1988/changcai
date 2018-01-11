@@ -24,6 +24,7 @@ import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
 import com.netease.nim.uikit.common.ui.drop.DropCover;
 import com.netease.nim.uikit.common.ui.drop.DropManager;
 import com.netease.nim.uikit.common.ui.recyclerview.listener.SimpleClickListener;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -57,7 +58,7 @@ import static com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog.onSeparat
  * <p/>
  * Created by huangjun on 2015/2/1.
  */
-public class  RecentContactsFragment extends TFragment {
+public class RecentContactsFragment extends TFragment {
 
     // 置顶功能可直接使用，也可作为思路，供开发者充分利用RecentContact的tag字段
     public static final long RECENT_TAG_STICKY = 1; // 联系人置顶tag
@@ -241,7 +242,8 @@ public class  RecentContactsFragment extends TFragment {
             public void onClick() {
                 // 删除会话，删除后，消息历史被一起删除
                 NIMClient.getService(MsgService.class).deleteRecentContact(recent);
-                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
+                //删除本地所有消息，暂时不用
+//                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
                 adapter.remove(position);
 
                 postRunnable(new Runnable() {
@@ -331,14 +333,21 @@ public class  RecentContactsFragment extends TFragment {
                             return;
                         }
                         loadedRecents = recents;
+                        //临时，第一次顾问发消息，不需要显示的会话
+                        List<RecentContact> tmpUnShowRecents = new ArrayList<RecentContact>();
                         // 初次加载，更新离线的消息中是否有@我的消息
                         for (RecentContact loadedRecent : loadedRecents) {
                             if (loadedRecent.getSessionType() == SessionTypeEnum.Team) {
                                 updateOfflineContactAited(loadedRecent);
                             }
+                            //获取最近一条消息的拓展ext，过滤到顾问默认发的消息
+                            if (fliteMessage(loadedRecent)) {
+                                tmpUnShowRecents.add(loadedRecent);
+                            }
                         }
+                        loadedRecents.removeAll(tmpUnShowRecents);
+                        tmpUnShowRecents = null;
                         // 此处如果是界面刚初始化，为了防止界面卡顿，可先在后台把需要显示的用户资料和群组资料在后台加载好，然后再刷新界面
-                        //
                         msgLoaded = true;
                         if (isAdded()) {
                             onRecentContactsLoaded();
@@ -504,8 +513,10 @@ public class  RecentContactsFragment extends TFragment {
             if (index >= 0) {
                 items.remove(index);
             }
-
-            items.add(r);
+            //过滤掉消息
+            if (!fliteMessage(r)) {
+                items.add(r);
+            }
             if (r.getSessionType() == SessionTypeEnum.Team && cacheMessages.get(r.getContactId()) != null) {
                 TeamMemberAitHelper.setRecentContactAited(r, cacheMessages.get(r.getContactId()));
             }
@@ -708,5 +719,25 @@ public class  RecentContactsFragment extends TFragment {
             }
         });
 
+    }
+
+    /**
+     * 是否过滤掉消息
+     *
+     * @param loadedRecent
+     * @return
+     */
+    private boolean fliteMessage(RecentContact loadedRecent) {
+        List<String> uuid = new ArrayList<>(1);
+        uuid.add(loadedRecent.getRecentMessageId());
+        List<IMMessage> messages = NIMClient.getService(MsgService.class).queryMessageListByUuidBlock(uuid);
+        if (messages != null && messages.size() > 0) {
+            Map<String, Object> extStr = messages.get(0).getRemoteExtension();
+            LogUtil.d("message","extStr = " + (extStr != null ? extStr.toString() : "null"));
+            if (extStr != null && extStr.containsKey("msgStatus") && extStr.get("msgStatus").equals("init")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

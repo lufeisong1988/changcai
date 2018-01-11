@@ -21,7 +21,7 @@
                 android:gravity="top|left"
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim336"
+                android:layout_height="@dimen/dim376"
                 android:textColor="@color/font_gray"
                 android:hint="请输入个人介绍..."
                 android:textSize="@dimen/txt34" />

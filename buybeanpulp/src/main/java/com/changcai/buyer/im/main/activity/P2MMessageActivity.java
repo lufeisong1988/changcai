@@ -418,9 +418,9 @@ public class P2MMessageActivity extends BaseMessageActivity {
             msg.what = 1;
             mHandler.sendMessage(msg);
             if (!finalStatusAble) {
-                tv_info.setText("该顾问当前不在线，请线下联系或咨询其他顾问");
+                tv_info.setText("该顾问当前不在线，请线下联系或咨询其他在线顾问");
             } else if (Integer.parseInt(UserDataUtil.getGrade()) < infoBean.getServiceLevel()) {
-                tv_info.setText("该顾问当前服务" + finalLevelStr + "，会员升级请咨询服务窗会员升级请咨询服务");
+                tv_info.setText("该顾问当前服务" + finalLevelStr + "，会员升级请咨询服务窗。");
             }
         } else {
             Message msg = new Message();

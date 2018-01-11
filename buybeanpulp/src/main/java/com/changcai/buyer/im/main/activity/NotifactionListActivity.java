@@ -112,10 +112,6 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
 
     private void initData() {
-
-//        ArrayList<String> accounts = new ArrayList<>();
-//        accounts.add("15201978559");
-//        List<IMMessage> messages = NIMClient.getService(MsgService.class).queryMessageListByUuidBlock(accounts);
         present = new NotifactionListPresentImp(this);
         present.getCounselorsModel(false);
         NimSessionHelper.getInstance().registerOnlineStatus(true);

@@ -21,6 +21,7 @@ import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nim.uikit.common.ui.recyclerview.adapter.BaseQuickAdapter;
 import com.netease.nim.uikit.common.ui.recyclerview.holder.BaseViewHolder;
 import com.netease.nim.uikit.common.ui.recyclerview.holder.RecyclerViewHolder;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.common.util.sys.TimeUtil;
 import com.netease.nimlib.sdk.msg.constant.MsgStatusEnum;
@@ -57,6 +58,8 @@ public abstract class RecentViewHolder extends RecyclerViewHolder<BaseQuickAdapt
     protected DropFake tvUnread;
 
     private ImageView imgUnreadExplosion;
+    //会员等级
+    private ImageView img_user_level;
 
     protected TextView tvOnlineState;
 
@@ -72,6 +75,7 @@ public abstract class RecentViewHolder extends RecyclerViewHolder<BaseQuickAdapt
     public void inflate(BaseViewHolder holder, final RecentContact recent) {
         this.portraitPanel = holder.getView(R.id.portrait_panel);
         this.imgHead = holder.getView(R.id.img_head);
+        this.img_user_level = holder.getView(R.id.img_user_level);
         this.tvNickname = holder.getView(R.id.tv_nickname);
         this.tvMessage = holder.getView(R.id.tv_message);
         this.tvUnread = holder.getView(R.id.unread_number_tip);
@@ -119,6 +123,7 @@ public abstract class RecentViewHolder extends RecyclerViewHolder<BaseQuickAdapt
 
         updateNewIndicator(recent);
 
+        updateLeve(recent);
         if (shouldBoom) {
             Object o = DropManager.getInstance().getCurrentId();
             if (o instanceof String && o.equals("0")) {
@@ -163,7 +168,29 @@ public abstract class RecentViewHolder extends RecyclerViewHolder<BaseQuickAdapt
         tvUnread.setVisibility(unreadNum > 0 ? View.VISIBLE : View.GONE);
         tvUnread.setText(unreadCountShowRule(unreadNum));
     }
+    private void updateLeve(RecentContact recent) {
+        String level = UserInfoHelper.getUserExtLevel(recent.getContactId());
+        LogUtil.d("level","level = " + level);
+        img_user_level.setVisibility(View.VISIBLE);
+        if (level.equals("0")) {
+            img_user_level.setImageResource(R.drawable.grade_qt);
+        } else if (level.equals("100")) {
+            img_user_level.setImageResource(R.drawable.grade_by);
+        } else if (level.equals("150")) {
+            img_user_level.setImageResource(R.drawable.grade_by_plus);
+        } else if (level.equals("200")) {
 
+            img_user_level.setImageResource(R.drawable.grade_hj);
+        } else if (level.equals("300")) {
+
+            img_user_level.setImageResource(R.drawable.grade_zs);
+        } else if (level.equals("400")) {
+
+            img_user_level.setImageResource(R.drawable.grade_vip);
+        } else {
+            img_user_level.setVisibility(View.GONE);
+        }
+    }
     private void updateMsgLabel(BaseViewHolder holder, RecentContact recent) {
         // 显示消息具体内容
         MoonUtil.identifyRecentVHFaceExpressionAndTags(holder.getContext(), tvMessage, getContent(recent), -1, 0.45f);

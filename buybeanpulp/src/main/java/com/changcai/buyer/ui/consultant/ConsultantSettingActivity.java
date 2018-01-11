@@ -120,7 +120,10 @@ public class ConsultantSettingActivity extends BaseCompatActivity implements Con
                 break;
             case R.id.cl_onlinestatus:
                 userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
-
+                if(userInfo.getServiceLevel().equals( "-1")){
+                    ToastUtil.showLong(ConsultantSettingActivity.this,"你没有权限修改！");
+                    return;
+                }
                 dialog = new ActionSheetListDialog(ConsultantSettingActivity.this).builder()
                         .setClickListener(new ActionSheetListDialog.ClickListener() {
                             @Override
@@ -138,7 +141,10 @@ public class ConsultantSettingActivity extends BaseCompatActivity implements Con
                 break;
             case R.id.cl_servicestatus:
                 userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
-
+                if(userInfo.getServiceLevel().equals( "-1")){
+                    ToastUtil.showLong(ConsultantSettingActivity.this,"你没有权限修改！");
+                    return;
+                }
                 dialog = new ActionSheetListDialog(ConsultantSettingActivity.this).builder()
                         .setClickListener(new ActionSheetListDialog.ClickListener() {
                             @Override
@@ -164,7 +170,7 @@ public class ConsultantSettingActivity extends BaseCompatActivity implements Con
         } else {
             if (CommonApplication.getInstance().getUserLevelBean() != null) {
                 int index = CommonApplication.getInstance().getUserLevelBean().getCode().indexOf(userInfo.getServiceLevel());
-                tvLevel.setText(index >= 0 ? CommonApplication.getInstance().getUserLevelBean().getName().get(index) : "");
+                tvLevel.setText(index >= 0 ? CommonApplication.getInstance().getUserLevelBean().getName().get(index) : "注册及以上会员");
             }
         }
         if (userInfo.getCounselorStatus() == null || userInfo.getCounselorStatus().equals("")) {
@@ -198,6 +204,10 @@ public class ConsultantSettingActivity extends BaseCompatActivity implements Con
         updateUI();
         if (toNext) {
             userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
+            if(userInfo.getServiceLevel() .equals( "-1")){
+                ToastUtil.showLong(ConsultantSettingActivity.this,"你没有权限修改！");
+                return;
+            }
             dialog = new ActionSheetListDialog(ConsultantSettingActivity.this).builder()
                     .setClickListener(new ActionSheetListDialog.ClickListener() {
                         @Override

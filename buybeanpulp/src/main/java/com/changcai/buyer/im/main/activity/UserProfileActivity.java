@@ -10,16 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.changcai.buyer.R;
-import com.changcai.buyer.bean.UserInfo;
-import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.PicassoImageLoader;
-import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.view.RoundImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.SimpleCallback;
 import com.netease.nim.uikit.business.session.constant.Extras;
+import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import butterknife.BindView;
@@ -149,8 +147,8 @@ public class UserProfileActivity extends BaseActivity {
             tvUserDetail.setText("暂无更多信息");
             tvUserDetail.setTextColor(getResources().getColor(R.color.font_gray));
         }
-        UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
-        switch (userInfo.getGrade()) {
+        String grade = UserInfoHelper.getUserExtLevel(account);
+        switch (grade) {
             case "-1":
                 ivGrade.setVisibility(View.INVISIBLE);
                 break;

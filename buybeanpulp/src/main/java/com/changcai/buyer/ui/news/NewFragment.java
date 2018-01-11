@@ -2,9 +2,11 @@ package com.changcai.buyer.ui.news;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,6 +51,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +61,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -166,7 +170,20 @@ public class NewFragment extends BaseAbstraceFragment implements View.OnClickLis
             }
         });
     }
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(setResId(), null);
+        ButterKnife.bind(this, view);
+        if(savedInstanceState != null){
+            newsClassify = (NewsClassify) savedInstanceState.getSerializable("newsClassify");
+            nowIndex = savedInstanceState.getInt("nowIndex");
+        }
+        initView();
+        initListener();
+        initConfig();
+        initData();
+        return view;
+    }
     @Override
     public int setResId() {
         return R.layout.fragment_new;
@@ -190,6 +207,13 @@ public class NewFragment extends BaseAbstraceFragment implements View.OnClickLis
         super.onDestroyView();
         destoryViewAble = true;
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("newsClassify", (Serializable) newsClassify);
+        outState.putInt("nowIndex",nowIndex);
+        super.onSaveInstanceState(outState);
+    }
+
 
 
     @Override
@@ -280,7 +304,7 @@ public class NewFragment extends BaseAbstraceFragment implements View.OnClickLis
     //针对viewpager滑动，主动检测
     //检测是否存在数据，如果不存在，再次刷新数据
     public  void checkData(){
-        if(rlReloadRootView.getVisibility() == View.VISIBLE && tvEmptyAction.getText().toString().equals(getActivity().getResources().getString(R.string.reload_text))){
+        if(rlReloadRootView != null && rlReloadRootView.getVisibility() == View.VISIBLE && tvEmptyAction.getText().toString().equals(getActivity().getResources().getString(R.string.reload_text))){
             getRefreshData();
         }
     }

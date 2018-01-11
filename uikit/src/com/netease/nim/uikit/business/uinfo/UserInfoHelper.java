@@ -2,9 +2,14 @@ package com.netease.nim.uikit.business.uinfo;
 
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.team.helper.TeamHelper;
+import com.netease.nim.uikit.common.util.log.LogUtil;
+import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 
 public class UserInfoHelper {
@@ -62,5 +67,22 @@ public class UserInfoHelper {
         }
 
         return getUserDisplayName(account);
+    }
+
+    /**
+     *
+     * @param account
+     * @return
+     */
+    public static String getUserExtLevel(String account){
+        LogUtil.d("level","account = " + account);
+        NimUserInfo nimUserInfo = NIMClient.getService(UserService.class).getUserInfo(account);
+        if (nimUserInfo != null && !TextUtils.isEmpty(nimUserInfo.getExtension())) {
+            JSONObject obj = JSONObject.parseObject(nimUserInfo.getExtension());
+            String grade = obj.getString("grade");
+            return grade == null ? "" : grade;
+        } else {
+            return "";
+        }
     }
 }

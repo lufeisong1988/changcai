@@ -1,20 +1,14 @@
 package com.changcai.buyer.ui.news;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -60,7 +54,6 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,7 +62,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import kr.co.namee.permissiongen.PermissionFail;
 import kr.co.namee.permissiongen.PermissionSuccess;
 import rx.Observable;
@@ -110,32 +102,29 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     private List<Fragment> fragments = new ArrayList<>();
     private Observable<Integer> switchPageEvent;
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("newsClassify", (Serializable) newsClassify);
+        super.onSaveInstanceState(outState);
+    }
+
+
 
     @Override
     public void onResume() {
+        getCMSData();
         model.getCounselorsModel();
         super.onResume();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         RxBus.get().unregister("switchPage", switchPageEvent);
         registerRecentContact(false);
+        super.onDestroy();
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(setResId(), null);
-        ButterKnife.bind(this, view);
-        initView();
-        initListener();
-        initConfig();
-        initData();
-
-        return view;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,7 +162,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
         model = new NotifactionListModelImp(this);
         registerRecentContact(true);
 
-        getCMSData();
+//        getCMSData();
         switchPageEvent = RxBus.get().register("switchPage", Integer.class);
         switchPageEvent.subscribe(new Action1<Integer>() {
             @Override
@@ -217,7 +206,9 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                     } else {
                         ((NewIndexFragment) fragments.get(0)).checkData();
                     }
-                    ServerErrorCodeDispatch.getInstance().showNetErrorDialog(getContext(), getString(R.string.net_error), errorCode);
+                    if(isAdded()){
+                        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(getContext(), getString(R.string.net_error), errorCode);
+                    }
                 }
 
             }
@@ -230,7 +221,9 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                 } else {
                     ((NewIndexFragment) fragments.get(0)).checkData();
                 }
-                ServerErrorCodeDispatch.getInstance().showNetErrorDialog(getContext(), getString(R.string.network_unavailable));
+                if(isAdded()){
+                    ServerErrorCodeDispatch.getInstance().showNetErrorDialog(getContext(), getString(R.string.network_unavailable));
+                }
             }
         }, false);
     }
