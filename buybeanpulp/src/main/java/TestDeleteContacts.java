@@ -46,6 +46,7 @@ public class TestDeleteContacts {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                callback.deleteFail();
                 LogUtil.d("NimIM", "account = " + account + " login onFailed i = " + i);
             }
 
@@ -56,6 +57,7 @@ public class TestDeleteContacts {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                callback.deleteFail();
                 LogUtil.d("NimIM", "login onException throwable = " + throwable.toString());
             }
         });
@@ -78,16 +80,18 @@ public class TestDeleteContacts {
                                          } catch (Exception e) {
                                              e.printStackTrace();
                                          }
+                                         callback.deleteFail();
                                          return;
                                      }
                                      LogUtil.d("NimIM", "account = " + account + " recents.size = " + recents.size() + "================================================");
                                      if(recents.size() == 0){
 
                                          try {
-                                             charOutStream("{'accid':'" + account +"','imToken':'"+ token + "'},",false);
+                                             charOutStream("{'accid':'" + account +"','imToken':'"+ token + "'},",true);
                                          } catch (Exception e) {
                                              e.printStackTrace();
                                          }
+                                         callback.deleteSucceed();
                                      }else{
                                          for (RecentContact recentContact : recents) {
                                              NIMClient.getService(MsgService.class).deleteRoamingRecentContact(recentContact.getContactId(), recentContact.getSessionType());
@@ -99,6 +103,7 @@ public class TestDeleteContacts {
                                              LogUtil.d("NimIM","e = " + e.toString());
                                              e.printStackTrace();
                                          }
+                                         callback.deleteSucceed();
                                      }
                                      NimUIKit.logout();
                                  }
@@ -130,11 +135,11 @@ public class TestDeleteContacts {
         byte[] bytes = str.getBytes();
         fileOutputStream.write(bytes);
         fileOutputStream.close();
-        if(clearSucceed){
-            callback.deleteSucceed();
-        }else{
-            callback.deleteFail();
-        }
+//        if(clearSucceed){
+//            callback.deleteSucceed();
+//        }else{
+//            callback.deleteFail();
+//        }
     }
     public void readStream(String path) throws Exception{
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + path);
