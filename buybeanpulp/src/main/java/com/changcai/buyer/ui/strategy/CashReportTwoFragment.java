@@ -98,7 +98,7 @@ public class CashReportTwoFragment extends BaseFragment implements CashReportTwo
         getSalesAmountItemPresent = new GetSalesAmountItemPresent(this);
 
         xlvCashreprotTwo.addHeaderView(LayoutInflater.from(activity).inflate(R.layout.adapter_salesamount_item, null));
-        xlvCashreprotTwo.setEnableOnRefreshWhileRefreshing(false);
+        xlvCashreprotTwo.setPullLoadEnable(true);
         xlvCashreprotTwo.setXListViewListener(new XListView.IXListViewListener() {
             @Override
             public void onPullRefresh() {

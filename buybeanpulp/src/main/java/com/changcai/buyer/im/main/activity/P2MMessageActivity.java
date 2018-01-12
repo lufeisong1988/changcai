@@ -92,7 +92,7 @@ public class P2MMessageActivity extends BaseMessageActivity {
 
     public static void start(Context context, ArrayList<GetCounselorsModel.InfoBean> infoBeens, SessionCustomization customization, IMMessage anchor) {
         Intent intent = new Intent();
-        intent.putExtra(Extras.EXTRA_ACCOUNT, infoBeens.size() > 0 ? infoBeens.get(0).getAccid() : 0);//第一次进入，显示第一个人的会话
+        intent.putExtra(Extras.EXTRA_ACCOUNT, infoBeens.size() > 0 ? infoBeens.get(0).getAccid() : "");//第一次进入，显示第一个人的会话
         intent.putExtra(Extras.EXTRA_CUSTOMIZATION, customization);
         if (anchor != null) {
             intent.putExtra(Extras.EXTRA_ANCHOR, anchor);

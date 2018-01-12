@@ -264,9 +264,11 @@ public class CashReportOneFragment extends BaseFragment implements CashReportOne
         YList = Ys;
         LogUtil.d("ReportThree", "updateSalesAmountData");
         dateStr = dateStrBean;
-//        if (currentMonthPosition == -1) {//第一次初始化，赋值当前月份
-        currentMonthPosition = currnetPosition;
-//        }
+        if (currnetPosition == -1) {//如果数据不存在就赋值第一个月份的
+            currentMonthPosition = 0;
+        }else{
+            currentMonthPosition = currnetPosition;
+        }
 //        if (currentMonthPosition == -1) {//数据不存在
 //            rlParentView.addView(emptyview);
 //        }

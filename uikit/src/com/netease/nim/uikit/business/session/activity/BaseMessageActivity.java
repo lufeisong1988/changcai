@@ -44,7 +44,9 @@ public abstract class BaseMessageActivity extends UI {
         initToolBar();
         parseIntent();
 
-        messageFragment = (MessageFragment) switchContent(fragment());
+        if(sessionId != null && !sessionId.equals("") ){
+            messageFragment = (MessageFragment) switchContent(fragment());
+        }
     }
 
 
