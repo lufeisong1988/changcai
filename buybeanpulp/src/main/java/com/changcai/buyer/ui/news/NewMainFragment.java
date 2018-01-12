@@ -27,6 +27,7 @@ import com.changcai.buyer.http.VolleyUtil;
 import com.changcai.buyer.im.main.activity.NotifactionListActivity;
 import com.changcai.buyer.im.main.model.NotifactionListModelInterface;
 import com.changcai.buyer.im.main.model.imp.NotifactionListModelImp;
+import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseAbstraceFragment;
 import com.changcai.buyer.ui.news.bean.NewsClassify;
@@ -413,6 +414,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     public void getCounselorsModelSucceed(List<GetCounselorsModel.InfoBean> info) {
         this.info = info;
         initMessageObserave();
+        SessionHelper.setInfo(info);
     }
 
     @Override

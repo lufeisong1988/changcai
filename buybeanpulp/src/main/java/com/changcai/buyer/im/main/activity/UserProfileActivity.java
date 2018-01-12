@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.changcai.buyer.R;
+import com.changcai.buyer.bean.GetCounselorsModel;
 import com.changcai.buyer.im.DemoCache;
+import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.PicassoImageLoader;
 import com.changcai.buyer.view.RoundImageView;
@@ -18,6 +20,7 @@ import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.SimpleCallback;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import butterknife.BindView;
@@ -147,47 +150,48 @@ public class UserProfileActivity extends BaseActivity {
             tvUserDetail.setText("暂无更多信息");
             tvUserDetail.setTextColor(getResources().getColor(R.color.font_gray));
         }
-        String grade = UserInfoHelper.getUserExtLevel(account);
-        switch (grade) {
-            case "-1":
-                ivGrade.setVisibility(View.INVISIBLE);
-                break;
-            case "0":
-                ivGrade.setVisibility(View.VISIBLE);
-                PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_qt,ivGrade);
-                break;
-            case "100":
-                ivGrade.setVisibility(View.VISIBLE);
-                PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_by,ivGrade);
-                break;
 
-            case "150":
-                ivGrade.setVisibility(View.VISIBLE);
-                PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_by_plus,ivGrade);
+        boolean showGrade = true;
+        for(GetCounselorsModel.InfoBean infoBean: SessionHelper.getInfo()){
+            if(infoBean.getAccid().equals(account)){
+                showGrade = false;
                 break;
-            case "200":
-                ivGrade.setVisibility(View.VISIBLE);
-                PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_hj,ivGrade);
-                break;
-            case "300":
-                ivGrade.setVisibility(View.VISIBLE);
-                PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_zs,ivGrade);
-
-                break;
-            case "400":
-                ivGrade.setVisibility(View.VISIBLE);
-                PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_vip,ivGrade);
-                break;
-            default:
-                ivGrade.setVisibility(View.INVISIBLE);
-                break;
+            }
         }
-//        if(!TextUtils.isEmpty(userInfo.getGradePic())){
-//            ivGrade.setVisibility(View.VISIBLE);
-//            PicassoImageLoader.getInstance().displayNetImage(this,userInfo.getGradePic(),ivGrade,defaultGradeDrawable);
-//        }else{
-//            ivGrade.setVisibility(View.INVISIBLE);
-//        }
+        if(showGrade){
+            ivGrade.setVisibility(View.VISIBLE);
+            String grade = UserInfoHelper.getUserExtLevel(account);
+            LogUtil.d("level","level = " + grade);
+            switch (grade) {
+                case "-1":
+                    ivGrade.setVisibility(View.INVISIBLE);
+                    break;
+                case "0":
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_qt,ivGrade);
+                    break;
+                case "100":
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_by,ivGrade);
+                    break;
+                case "150":
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_by_plus,ivGrade);
+                    break;
+                case "200":
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_hj,ivGrade);
+                    break;
+                case "300":
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_zs,ivGrade);
+                    break;
+                case "400":
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_vip,ivGrade);
+                    break;
+                default:
+                    ivGrade.setVisibility(View.INVISIBLE);
+                    break;
+            }
+        }else{
+            ivGrade.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 

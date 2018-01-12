@@ -11,6 +11,7 @@ import com.changcai.buyer.im.main.model.imp.NotifactionListModelImp;
 import com.changcai.buyer.im.main.present.NotifactionListPresentInterface;
 import com.changcai.buyer.im.main.viewmodel.NotifacitonListViewModel;
 import com.changcai.buyer.im.provider.LoginProvider;
+import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.NimSessionHelper;
 import com.changcai.buyer.util.SPUtil;
@@ -135,6 +136,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
             view.dismissLoading();
             view.getCounselorsModelSucceed(info);
         }
+        SessionHelper.setInfo(info);
         initMessageObserave();
     }
 

@@ -73,13 +73,13 @@ public class TestDeleteContacts {
                                  @Override
                                  public void onResult(int code, List<RecentContact> recents, Throwable exception) {
                                      if (code != ResponseCode.RES_SUCCESS || recents == null) {
-                                         NimUIKit.logout();
                                          LogUtil.d("NimIM", "account = " + account + " return");
                                          try {
                                              charOutStream("{'accid':'" + account +"','imToken':'"+ token + "'},",false);
                                          } catch (Exception e) {
                                              e.printStackTrace();
                                          }
+                                         NimUIKit.logout();
                                          callback.deleteFail();
                                          return;
                                      }
@@ -91,6 +91,7 @@ public class TestDeleteContacts {
                                          } catch (Exception e) {
                                              e.printStackTrace();
                                          }
+                                         NimUIKit.logout();
                                          callback.deleteSucceed();
                                      }else{
                                          for (RecentContact recentContact : recents) {
@@ -103,9 +104,10 @@ public class TestDeleteContacts {
                                              LogUtil.d("NimIM","e = " + e.toString());
                                              e.printStackTrace();
                                          }
+                                         NimUIKit.logout();
                                          callback.deleteSucceed();
                                      }
-                                     NimUIKit.logout();
+
                                  }
                              }
 

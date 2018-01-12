@@ -80,6 +80,16 @@ import java.util.List;
  */
 public class SessionHelper {
 
+    private static List<GetCounselorsModel.InfoBean> info = new ArrayList<>();
+
+    public static List<GetCounselorsModel.InfoBean> getInfo() {
+        return info;
+    }
+
+    public static void setInfo(List<GetCounselorsModel.InfoBean> info) {
+        SessionHelper.info = info;
+    }
+
     private static final int ACTION_HISTORY_QUERY = 0;
     private static final int ACTION_SEARCH_MESSAGE = 1;
     private static final int ACTION_CLEAR_MESSAGE = 2;
