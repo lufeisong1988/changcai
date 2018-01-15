@@ -549,18 +549,24 @@ public class P2MMessageActivity extends BaseMessageActivity {
     private void updateDot(List<RecentContact> recentContacts) {
         for (int i = 0; i < customVipViews.size(); i++) {
             String sessiondId = customVipViews.get(i).getInfoBean().getAccid();
+            boolean existAble = false;//该顾问是否在变化的列表中
             boolean haveUnReadMessage = false;
             for (int j = 0; j < recentContacts.size(); j++) {
                 RecentContact recentContact = recentContacts.get(j);
-                if (sessiondId.equals(recentContact.getContactId()) && recentContact.getUnreadCount() > 0) {
-                    haveUnReadMessage = true;
+                if (sessiondId.equals(recentContact.getContactId()) ) {
+                    existAble = true;
+                    if(recentContact.getUnreadCount() > 0){
+                        haveUnReadMessage = true;
+                    }
                     break;
                 }
             }
-            if (haveUnReadMessage) {
-                customVipViews.get(i).showDot();
-            } else {
-                customVipViews.get(i).hideDot();
+            if(existAble){
+                if (haveUnReadMessage) {
+                    customVipViews.get(i).showDot();
+                } else {
+                    customVipViews.get(i).hideDot();
+                }
             }
         }
     }

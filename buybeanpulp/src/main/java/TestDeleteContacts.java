@@ -31,11 +31,17 @@ public class TestDeleteContacts {
 //            LogUtil.d("NimIM", "上个账户未退出登录");
 //            NimUIKit.logout();
 //        }
+        LogUtil.d("NimIM", "login " + account  );
         final LoginInfo loginInfo = new LoginInfo(account, token);
         NimUIKit.login(loginInfo, new RequestCallback<LoginInfo>() {
             @Override
             public void onSuccess(LoginInfo loginInfo) {
                 LogUtil.d("NimIM", "account = " + account + " login onSuccess");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 getRecentContacts(loginInfo.getAccount(),loginInfo.getToken());
             }
 

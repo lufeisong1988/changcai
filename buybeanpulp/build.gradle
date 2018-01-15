@@ -10,8 +10,8 @@ android {
         applicationId "com.changcai.buyer"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 49
-        versionName "3.5.0"
+        versionCode 50
+        versionName "3.5.1"
 
 
         multiDexEnabled true
