@@ -33,5 +33,14 @@ public interface NotifacitonListViewModel {
 
     void updateAllStatus(boolean showDot, String message, long time);
 
+    void joinTeam(String teamId);
+
+    void unJoinTeam();
+
+    void unExistTeam();
+
+    void joinTeamFail(String fail);
+
+    void joinTeamError();
 
 }

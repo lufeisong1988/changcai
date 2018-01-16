@@ -107,6 +107,7 @@ public class TeamCreateHelper {
         TeamTypeEnum type = TeamTypeEnum.Advanced;
         HashMap<TeamFieldEnum, Serializable> fields = new HashMap<>();
         fields.put(TeamFieldEnum.Name, teamName);
+//        fields.put(TeamFieldEnum.BeInviteMode, TeamBeInviteModeEnum.NoAuth);
         NIMClient.getService(TeamService.class).createTeam(fields, type, "",
                 memberAccounts).setCallback(
                 new RequestCallback<CreateTeamResult>() {

@@ -3,6 +3,7 @@ package com.changcai.buyer.im.main.present.imp;
 import android.text.TextUtils;
 
 import com.changcai.buyer.bean.GetCounselorsModel;
+import com.changcai.buyer.bean.GetImTeamsBean;
 import com.changcai.buyer.bean.UserInfo;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.im.config.preference.Preferences;
@@ -18,9 +19,12 @@ import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.UserDataUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
+import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +38,8 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
     private NotifacitonListViewModel view;
     private int position = 0;
     private static final int VIP = 0;
-    private static final int NOTIFACTION = 1;
+    private static final int TEAM = 1;
+    private static final int NOTIFACTION = 2;
     private List<GetCounselorsModel.InfoBean> info;
     private boolean syncAble = false;//是否同步请求
 
@@ -51,7 +56,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         if (!UserDataUtil.isLogin()) {
             if (view != null) {
                 view.hideNOTIFACTION();
-                view.updateConsultantStatus(false,"登录后查看会话消息", System.currentTimeMillis());
+                view.updateConsultantStatus(false, "登录后查看会话消息", System.currentTimeMillis());
             }
         } else {
             UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
@@ -85,6 +90,17 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         position = VIP;
         if (checkLogin()) {
             getCounselorsModel(true);
+        }
+    }
+
+    /**
+     * 跳转产业联盟
+     */
+    @Override
+    public void toTeam() {
+        position = TEAM;
+        if (checkLogin()) {
+            getImTeams();
         }
     }
 
@@ -128,6 +144,13 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         registerRecentContact(false);
     }
 
+    private void getImTeams() {
+        if (view != null) {
+            view.showLoading();
+        }
+        model.getImTeams();
+    }
+
     //批量获取顾问信息 回调
     @Override
     public void getCounselorsModelSucceed(List<GetCounselorsModel.InfoBean> info) {
@@ -156,6 +179,73 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         }
     }
 
+    @Override
+    public void getImTeamsSucceed(final GetImTeamsBean getImTeamsBeen) {//暂时只有一个群
+        if (view != null) {
+            view.dismissLoading();
+            if(getImTeamsBeen != null && getImTeamsBeen.getInfo() != null &&getImTeamsBeen.getInfo().size()> 0){
+                NIMClient.getService(TeamService.class)
+                        .queryTeamList()
+                        .setCallback(new RequestCallback<List<Team>>() {
+                            @Override
+                            public void onSuccess(List<Team> teams) {
+                                String tid = getImTeamsBeen.getInfo().get(0).getTid();
+                                boolean joinAble = false;
+                                for(Team team :teams){
+                                    if(team.getId().equals(tid)){
+                                        joinAble = true;
+                                    }
+                                    break;
+                                }
+                                if(view != null){
+                                    if(joinAble){
+                                        view.joinTeam(tid);
+                                    }else{
+                                        view.unJoinTeam();
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailed(int i) {
+                                if(view != null){
+                                    view.joinTeamFail("进群失败 : " + i);
+                                }
+                            }
+
+                            @Override
+                            public void onException(Throwable throwable) {
+                                if(view != null){
+                                    view.joinTeamError();
+                                }
+                            }
+                        });
+            }else{//买豆粕 返回的群不存在
+                if(view != null){
+                    view.unExistTeam();
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void getImTeamsFail(String failStr) {
+        if (view != null) {
+            view.dismissLoading();
+            view.joinTeamFail(failStr);
+        }
+    }
+
+    @Override
+    public void getImTeamsError() {
+        if (view != null) {
+            view.dismissLoading();
+            view.joinTeamError();
+        }
+    }
+
     /**
      * 网易云信是否登录
      */
@@ -178,6 +268,8 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
             getCounselorsModel(true);
         } else if (position == NOTIFACTION) {
             toAnswers();
+        } else if(position == TEAM){
+            toTeam();
         }
     }
 
@@ -259,13 +351,13 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     if (unReadMsgCount > 0) {
                         view.updateAllStatus(true, unReadMessage, unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
                     } else {
-                        view.updateAllStatus(false, unReadMessage , unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
+                        view.updateAllStatus(false, unReadMessage, unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
 
                     }
                     if (unReadMsgConsultantCount > 0 && contactsConsultantBlock.size() > 0) {
                         view.updateConsultantStatus(true, unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
                     } else if (unReadMsgConsultantCount <= 0 && contactsConsultantBlock.size() > 0) {
-                        view.updateConsultantStatus(false,unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
+                        view.updateConsultantStatus(false, unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
                     }
 
                 }

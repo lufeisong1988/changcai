@@ -6,4 +6,5 @@ package com.changcai.buyer.im.main.model;
 
 public interface NotifactionListModelInterface {
     void getCounselorsModel();
+    void getImTeams();
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dim20"
+        android:paddingTop="@dimen/dim20">
+
+        <com.changcai.buyer.view.RoundImageView
+            android:id="@+id/iv_userIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_default_head"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:type="circle"
+            tools:layout_editor_absoluteY="10dp"></com.changcai.buyer.view.RoundImageView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/storm_gray"
+            android:textSize="@dimen/txt26"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_userIcon" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/icon_delete"
+            app:layout_constraintRight_toRightOf="@+id/iv_userIcon"
+            app:layout_constraintTop_toTopOf="@+id/iv_userIcon" />
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

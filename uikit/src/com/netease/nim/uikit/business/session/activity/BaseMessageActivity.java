@@ -26,7 +26,7 @@ public abstract class BaseMessageActivity extends UI {
 
     protected String sessionId;
 
-    private SessionCustomization customization;
+    protected SessionCustomization customization;
 
     public MessageFragment messageFragment;
 

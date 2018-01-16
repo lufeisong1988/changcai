@@ -67,6 +67,12 @@ public abstract class BaseCompatActivity extends AppCompatActivity  {
         super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        showKeyboard(false);
+    }
+
     /**
      * inject view
      */
@@ -88,6 +94,7 @@ public abstract class BaseCompatActivity extends AppCompatActivity  {
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });

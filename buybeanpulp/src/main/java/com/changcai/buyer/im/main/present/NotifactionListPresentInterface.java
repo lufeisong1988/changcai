@@ -8,6 +8,7 @@ public interface NotifactionListPresentInterface {
     void init();
     void getCounselorsModel(boolean syncAble);
     void toVip();
+    void toTeam();
     void toAnswers();
     void onDestory();
 }

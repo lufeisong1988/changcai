@@ -810,4 +810,5 @@
     <string name="user_profile_title">个人资料</string>
     <string name="user_profile_nickname">昵称</string>
     <string name="user_setting_choose">请选择</string>
+    <string name="add_group_member">添加联盟成员</string>
 </resources>

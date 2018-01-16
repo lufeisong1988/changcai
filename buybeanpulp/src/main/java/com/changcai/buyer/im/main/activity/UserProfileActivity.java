@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,16 +16,27 @@ import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.PicassoImageLoader;
+import com.changcai.buyer.util.ServerErrorCodeDispatch;
+import com.changcai.buyer.util.ToastUtil;
+import com.changcai.buyer.view.RotateDotsProgressView;
 import com.changcai.buyer.view.RoundImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.SimpleCallback;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.common.util.log.LogUtil;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lufeisong on 2017/12/25.
@@ -45,15 +57,25 @@ public class UserProfileActivity extends BaseActivity {
     TextView tvSetting;
     @BindView(R.id.iv_grade)
     ImageView ivGrade;
+    @BindView(R.id.btn_addFriend)
+    Button btnAddFriend;
+    @BindView(R.id.news_progress)
+    RotateDotsProgressView newsProgress;
 
-    private Drawable defaultDrawable,defaultGradeDrawable;
+    private Drawable defaultDrawable, defaultGradeDrawable;
     private String account;
     private NimUserInfo nimUserInfo;
+    private HashMap<String, Object> extMap;
+    private String teamId = "";
 
-    public static void start(Context context, String account) {
+    public static void start(Context context, String account, HashMap<String, Object> map) {
         Intent intent = new Intent();
         intent.setClass(context, UserProfileActivity.class);
         intent.putExtra(Extras.EXTRA_ACCOUNT, account);
+        if(map == null){
+            map = new HashMap<>();
+        }
+        intent.putExtra(Extras.EXTRA_EXT, map);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(intent);
     }
@@ -105,11 +127,17 @@ public class UserProfileActivity extends BaseActivity {
         } else {
             tvSetting.setVisibility(View.VISIBLE);
         }
-
     }
 
     void parseIntent() {
         account = getIntent().getStringExtra(Extras.EXTRA_ACCOUNT);
+        extMap = (HashMap<String, Object>) getIntent().getSerializableExtra(Extras.EXTRA_EXT);
+        if (extMap != null && extMap.containsKey(Extras.EXTRA_TEAM_ID)) {//存在teamid，进入拉群的逻辑
+            teamId = (String) extMap.get(Extras.EXTRA_TEAM_ID);
+            btnAddFriend.setVisibility(View.VISIBLE);
+        } else {
+            btnAddFriend.setVisibility(View.GONE);
+        }
     }
 
     void updateUserProfile() {
@@ -152,47 +180,96 @@ public class UserProfileActivity extends BaseActivity {
         }
 
         boolean showGrade = true;
-        for(GetCounselorsModel.InfoBean infoBean: SessionHelper.getInfo()){
-            if(infoBean.getAccid().equals(account)){
+        for (GetCounselorsModel.InfoBean infoBean : SessionHelper.getInfo()) {
+            if (infoBean.getAccid().equals(account)) {
                 showGrade = false;
                 break;
             }
         }
-        if(showGrade){
+        if (showGrade) {
             ivGrade.setVisibility(View.VISIBLE);
             String grade = UserInfoHelper.getUserExtLevel(account);
-            LogUtil.d("level","level = " + grade);
+            LogUtil.d("level", "level = " + grade);
             switch (grade) {
                 case "-1":
                     ivGrade.setVisibility(View.INVISIBLE);
                     break;
                 case "0":
-                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_qt,ivGrade);
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this, R.drawable.grade_qt, ivGrade);
                     break;
                 case "100":
-                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_by,ivGrade);
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this, R.drawable.grade_by, ivGrade);
                     break;
                 case "150":
-                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_by_plus,ivGrade);
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this, R.drawable.grade_by_plus, ivGrade);
                     break;
                 case "200":
-                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_hj,ivGrade);
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this, R.drawable.grade_hj, ivGrade);
                     break;
                 case "300":
-                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_zs,ivGrade);
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this, R.drawable.grade_zs, ivGrade);
                     break;
                 case "400":
-                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this,R.drawable.grade_vip,ivGrade);
+                    PicassoImageLoader.getInstance().displayResourceImageNoResize(this, R.drawable.grade_vip, ivGrade);
                     break;
                 default:
                     ivGrade.setVisibility(View.INVISIBLE);
                     break;
             }
-        }else{
+        } else {
             ivGrade.setVisibility(View.INVISIBLE);
         }
 
 
     }
 
+    public void showLoading() {
+        newsProgress.setVisibility(View.VISIBLE);
+        newsProgress.showAnimation(true);
+    }
+
+
+    public void dismissLoading() {
+        newsProgress.setVisibility(View.GONE);
+        newsProgress.refreshDone(true);
+    }
+
+    @OnClick(R.id.btn_addFriend)
+    public void onClick() {
+        showLoading();
+        List<String> members = new ArrayList<>();
+        members.add(account);
+        com.changcai.buyer.util.LogUtil.d("NimIM","teamId = " + teamId);
+        NIMClient.getService(TeamService.class)
+                .addMembers(teamId, members)
+                .setCallback(new RequestCallback<List<String>>() {
+            @Override
+            public void onSuccess(List<String> strings) {
+                com.changcai.buyer.util.LogUtil.d("NimIM","list.String = " + strings.toString());
+                if (!isFinishing()) {
+                    dismissLoading();
+                    ToastUtil.showLong(UserProfileActivity.this, "添加账号成功");
+                    UserProfileActivity.this.finish();
+                }
+            }
+
+            @Override
+            public void onFailed(int i) {
+                com.changcai.buyer.util.LogUtil.d("NimIM","onFailed = " + i);
+                if (!isFinishing()) {
+                    dismissLoading();
+                    ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
+                }
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                com.changcai.buyer.util.LogUtil.d("NimIM","onException = " + throwable.toString());
+                if (!isFinishing()) {
+                    dismissLoading();
+                    ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
+                }
+            }
+        });
+    }
 }

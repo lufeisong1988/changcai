@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.changcai.buyer.R;
 
-import rx.Observable;
-
 /**
  * @author zhoujun
  * @version 1.0
@@ -35,7 +33,9 @@ public class ConfirmDialog {
     public static void createConfirmDialog(Context context, String info) {
         createConfirmDialog(context, info, null, false);
     }
-
+    public static void createConfirmDialog(Context context, String info,String title,String leftText,String rightText,OnBtnConfirmListener listener1,OnBtnConfirmListener listener2) {
+        showAlertView(context,0,info,title,leftText,new String[]{rightText},listener1,listener2);
+    }
     public static void createConfirmDialog(Context context, String info,String leftText,String rightText,OnBtnConfirmListener listener1,OnBtnConfirmListener listener2) {
         showAlertView(context,0,info,"",leftText,new String[]{rightText},listener1,listener2);
     }

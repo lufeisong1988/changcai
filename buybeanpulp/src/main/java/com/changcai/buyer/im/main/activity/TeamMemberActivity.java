@@ -1,0 +1,174 @@
+package com.changcai.buyer.im.main.activity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.GridView;
+
+import com.changcai.buyer.CompatTouchBackActivity;
+import com.changcai.buyer.R;
+import com.changcai.buyer.im.main.adapter.TeamMemberItemAdapter;
+import com.changcai.buyer.im.main.present.TeamMemberPresent;
+import com.changcai.buyer.im.main.present.imp.TeamMemberPresentImp;
+import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
+import com.changcai.buyer.util.LogUtil;
+import com.changcai.buyer.util.ServerErrorCodeDispatch;
+import com.changcai.buyer.util.ToastUtil;
+import com.changcai.buyer.view.ConfirmDialog;
+import com.changcai.buyer.view.RotateDotsProgressView;
+import com.netease.nim.uikit.business.session.constant.Extras;
+import com.netease.nimlib.sdk.team.model.TeamMember;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+
+/**
+ * Created by lufeisong on 2018/1/15.
+ */
+
+public class TeamMemberActivity extends CompatTouchBackActivity implements TeamMemberViewModel,TeamMemberItemAdapter.TeamMemberItemAdapterCallback {
+    @BindView(R.id.gv_userIcon)
+    GridView gvUserIcon;
+    @BindView(R.id.news_progress)
+    RotateDotsProgressView newsProgress;
+    private TeamMemberPresent present;
+    private TeamMemberItemAdapter adapter;
+    private List<TeamMember> teamMembers = new ArrayList<>();
+    private String teamId;
+    public static void start(Context context, String teamId) {
+        Intent intent = new Intent();
+        intent.setClass(context, TeamMemberActivity.class);
+        intent.putExtra(Extras.EXTRA_TEAM_ID, teamId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void injectFragmentView() {
+        titleText.setText("");
+        teamId = getIntent().getExtras().getString(Extras.EXTRA_TEAM_ID);
+        adapter = new TeamMemberItemAdapter(teamMembers,this,this);
+        present = new TeamMemberPresentImp(teamId, this);
+        gvUserIcon.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected int getTitleTextColor() {
+        return getResources().getColor(R.color.black);
+    }
+
+    @Override
+    protected int getNavigationVisible() {
+        return View.VISIBLE;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    protected int getToolBarBackgroundColor() {
+        return getResources().getColor(R.color.white);
+    }
+
+    @Override
+    protected int getNavigationIcon() {
+        return R.drawable.icon_nav_back;
+    }
+
+    @Override
+    protected int getTitleText() {
+        return R.string.empty;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_teammember;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        present.queryMemberList();
+    }
+
+    @Override
+    protected void onDestroy() {
+        present.onDestory();
+        super.onDestroy();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+    @Override
+    public void showLoading() {
+        newsProgress.setVisibility(View.VISIBLE);
+        newsProgress.showAnimation(true);
+    }
+
+    @Override
+    public void dismissLoading() {
+        newsProgress.setVisibility(View.GONE);
+        newsProgress.refreshDone(true);
+    }
+
+    @Override
+    public void queryMemberListSucceed(List<TeamMember> teamMembers) {
+        adapter.customNotifyDataChange(teamMembers);
+    }
+
+    @Override
+    public void queryMemberListFail(String failStr) {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this,failStr);
+    }
+
+    @Override
+    public void queryMemberListError() {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this,"网络异常，获取信息失败");
+    }
+
+    @Override
+    public void removeMemberSucceed(String member) {
+        ToastUtil.showLong(this,"删除成员成功");
+        LogUtil.d("NimIM","delete account = " + member);
+        for(TeamMember teamMember : teamMembers){
+            if(teamMember.getAccount().equals(member)){
+                teamMembers.remove(teamMember);
+                break;
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void removeMemberFail(String failStr) {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this,failStr);
+    }
+
+    @Override
+    public void removeMemberError() {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this,"网络异常，获取信息失败");
+    }
+
+    @Override
+    public void showAddMember() {
+        TeamMemberAddActivity.start(this,teamId);
+    }
+
+    @Override
+    public void showDeleteMember(final String member) {
+        ConfirmDialog.createConfirmDialog(this,"提示", "确认删除该用户？",  "取消", "确认", new ConfirmDialog.OnBtnConfirmListener() {
+            @Override
+            public void onConfirmListener() {
+
+            }
+        }, new ConfirmDialog.OnBtnConfirmListener() {
+            @Override
+            public void onConfirmListener() {
+               present.removeMember(member);
+            }
+        });
+    }
+}

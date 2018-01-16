@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +16,9 @@ import com.netease.nim.uikit.api.model.contact.ContactChangedObserver;
 import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.api.model.team.TeamDataChangedObserver;
 import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
-import com.netease.nim.uikit.api.wrapper.NimToolBarOptions;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.session.fragment.TeamMessageFragment;
-import com.netease.nim.uikit.common.activity.ToolBarOptions;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.team.constant.TeamTypeEnum;
@@ -46,6 +45,10 @@ public class TeamMessageActivity extends BaseMessageActivity {
 
     private Class<? extends Activity> backToClass;
 
+
+    private ImageView btnBack,iv_btn_right;
+    private TextView tvTitle;
+
     public static void start(Context context, String tid, SessionCustomization customization,
                              Class<? extends Activity> backToClass, IMMessage anchor) {
         Intent intent = new Intent();
@@ -64,6 +67,14 @@ public class TeamMessageActivity extends BaseMessageActivity {
     protected void findViews() {
         invalidTeamTipView = findView(R.id.invalid_team_tip);
         invalidTeamTipText = findView(R.id.invalid_team_text);
+
+        btnBack = (ImageView) findViewById(R.id.btnBack);
+        iv_btn_right = (ImageView) findViewById(R.id.iv_btn_right);
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+
+        iv_btn_right.setVisibility(View.VISIBLE);
+        iv_btn_right.setImageResource(R.drawable.icon_group);
+        iv_btn_right.setScaleType(ImageView.ScaleType.CENTER);
     }
 
     @Override
@@ -72,7 +83,7 @@ public class TeamMessageActivity extends BaseMessageActivity {
 
         backToClass = (Class<? extends Activity>) getIntent().getSerializableExtra(Extras.EXTRA_BACK_TO_CLASS);
         findViews();
-
+        initListener();
         registerTeamUpdateObserver(true);
     }
 
@@ -88,7 +99,21 @@ public class TeamMessageActivity extends BaseMessageActivity {
         super.onResume();
         requestTeamInfo();
     }
-
+    private void initListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TeamMessageActivity.this.finish();
+                onBackPressed();
+            }
+        });
+        iv_btn_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customization.buttons.get(1).onClick(TeamMessageActivity.this,v,team.getId());
+            }
+        });
+    }
     /**
      * 请求群基本信息
      */
@@ -133,6 +158,8 @@ public class TeamMessageActivity extends BaseMessageActivity {
 
         invalidTeamTipText.setText(team.getType() == TeamTypeEnum.Normal ? R.string.normal_team_invalid_tip : R.string.team_invalid_tip);
         invalidTeamTipView.setVisibility(team.isMyTeam() ? View.GONE : View.VISIBLE);
+
+        tvTitle.setText(team.getName());
     }
 
     /**
@@ -229,9 +256,9 @@ public class TeamMessageActivity extends BaseMessageActivity {
 
     @Override
     protected void initToolBar() {
-        ToolBarOptions options = new NimToolBarOptions();
-        options.titleString = "群聊";
-        setToolBar(R.id.toolbar, options);
+//        ToolBarOptions options = new NimToolBarOptions();
+//        options.titleString = "群聊";
+//        setToolBar(R.id.toolbar, options);
     }
 
     @Override

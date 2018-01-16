@@ -12,6 +12,7 @@ import com.changcai.buyer.bean.GetCounselorsModel;
 import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.im.contact.activity.RobotProfileActivity;
 import com.changcai.buyer.im.main.activity.P2MMessageActivity;
+import com.changcai.buyer.im.main.activity.TeamMemberActivity;
 import com.changcai.buyer.im.main.activity.UserProfileActivity;
 import com.changcai.buyer.im.redpacket.NIMRedPacketClient;
 import com.changcai.buyer.im.session.action.TeamAVChatAction;
@@ -73,6 +74,7 @@ import com.netease.nimlib.sdk.robot.model.RobotAttachment;
 import com.netease.nimlib.sdk.team.model.Team;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -440,7 +442,8 @@ public class SessionHelper {
                 public void onClick(Context context, View view, String sessionId) {
                     Team team = NimUIKit.getTeamProvider().getTeamById(sessionId);
                     if (team != null && team.isMyTeam()) {
-                        NimUIKit.startTeamInfo(context, sessionId);
+//                        NimUIKit.startTeamInfo(context, sessionId);
+                        TeamMemberActivity.start(context,sessionId);
                     } else {
                         Toast.makeText(context, R.string.team_invalid_tip, Toast.LENGTH_SHORT).show();
                     }
@@ -492,7 +495,7 @@ public class SessionHelper {
                     }
                 }
 
-                UserProfileActivity.start(context, message.getFromAccount());
+                UserProfileActivity.start(context, message.getFromAccount(),new HashMap<String, Object>());
             }
 
             @Override

@@ -121,7 +121,7 @@
           如果 SDKOptions 中提供了，取 SDKOptions 中的值。 -->
         <meta-data
             android:name="com.netease.nim.appKey"
-            android:value="d2f74e86a99861a189a5a80cb13bde12" />
+            android:value="c4a6a3fa335adf3674a3922a7406e123" />
 
         <!-- 云信后台服务，请使用独立进程。 -->
         <service
@@ -498,6 +498,16 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".im.main.activity.NotifactionSessionListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.TeamMemberAddActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".im.main.activity.TeamMemberActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />

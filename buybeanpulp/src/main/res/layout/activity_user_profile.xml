@@ -1,99 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
 
-    android:orientation="vertical">
-
-
-    <RelativeLayout
-
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dim438">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <RelativeLayout
 
-        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/user_profile_bg" />
+            android:layout_height="@dimen/dim438">
 
-        <ImageView
-            android:id="@+id/iv_head_bg"
-            android:layout_width="@dimen/dim172"
-            android:layout_height="@dimen/dim172"
-            android:layout_centerInParent="true"
-            android:background="@drawable/user_header_bg" />
 
-        <com.changcai.buyer.view.RoundImageView
-            android:id="@+id/iv_user_header"
-            android:layout_width="@dimen/dim160"
-            android:layout_height="@dimen/dim160"
-            android:layout_centerInParent="true"
-            android:src="@drawable/icon_default_head"
-            app:type="circle" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/user_profile_bg" />
 
-        <ImageView
-            android:layout_marginTop="-12dp"
-            android:id="@+id/iv_grade"
-            android:layout_width="@dimen/dim64"
-            android:layout_height="@dimen/dim32"
-            android:layout_below="@+id/iv_head_bg"
-            android:layout_centerHorizontal="true" />
+            <ImageView
+                android:id="@+id/iv_head_bg"
+                android:layout_width="@dimen/dim172"
+                android:layout_height="@dimen/dim172"
+                android:layout_centerInParent="true"
+                android:background="@drawable/user_header_bg" />
+
+            <com.changcai.buyer.view.RoundImageView
+                android:id="@+id/iv_user_header"
+                android:layout_width="@dimen/dim160"
+                android:layout_height="@dimen/dim160"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_default_head"
+                app:type="circle" />
+
+            <ImageView
+                android:id="@+id/iv_grade"
+                android:layout_width="@dimen/dim64"
+                android:layout_height="@dimen/dim32"
+                android:layout_below="@+id/iv_head_bg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-12dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim60">
+
+                <TextView
+                    android:id="@+id/tv_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dim40"
+                    android:text="编辑"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/txt34" />
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dim36"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dim40"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/icon_goback"
+                    android:visibility="visible" />
+            </RelativeLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim60">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_setting"
+                android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dim40"
-                android:text="编辑"
-                android:textColor="@android:color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dim20"
+                android:text=""
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/txt42" />
+
+            <TextView
+                android:id="@+id/tv_user_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_user_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/dim75"
+                android:layout_marginRight="@dimen/dim75"
+                android:layout_marginTop="@dimen/dim20"
+                android:text=""
+                android:textColor="@color/font_black"
                 android:textSize="@dimen/txt34" />
 
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dim36"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+            <Button
+                android:id="@+id/btn_addFriend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim110"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dim40"
                 android:layout_marginLeft="@dimen/dim40"
-                android:clickable="true"
+                android:layout_marginRight="@dimen/dim40"
+                android:background="@drawable/confrim_bg"
                 android:gravity="center"
-                android:scaleType="centerInside"
-                android:src="@drawable/icon_goback"
-                android:visibility="visible" />
+                android:text="添加为联盟成员"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/txt40"
+                android:visibility="gone" />
         </RelativeLayout>
-    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dim20"
-        android:text=""
-        android:textColor="@color/font_black"
-        android:textSize="@dimen/txt42" />
-
-    <TextView
-        android:id="@+id/tv_user_detail"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/news_progress"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/dim75"
-        android:layout_marginRight="@dimen/dim75"
-        android:layout_marginTop="@dimen/dim20"
-        android:text=""
-        android:textColor="@color/font_black"
-        android:textSize="@dimen/txt34" />
-</LinearLayout>
+        android:background="@android:color/transparent"
+        android:visibility="gone" />
+</RelativeLayout>

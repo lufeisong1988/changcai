@@ -29,6 +29,7 @@ public interface Extras {
     String EXTRA_TYPE = "type";
     String EXTRA_ANCHOR = "anchor";
     String EXTRA_ONLINE ="online";
+    String EXTRA_EXT ="ext";
 
     String EXTRA_CUSTOMIZATION = "customization";
     String EXTRA_BACK_TO_CLASS = "backToClass";
@@ -45,4 +46,8 @@ public interface Extras {
     String EXTRA_SCALED_IMAGE_LIST = "scaled_image_list";
     String EXTRA_ORIG_IMAGE_LIST = "orig_image_list";
     String EXTRA_NEED_SHOW_SEND_ORIGINAL = "need_show_send_original_image";
+
+
+    String EXTRA_TEAM_ID = "teamId";
+
 }

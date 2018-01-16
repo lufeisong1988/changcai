@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.bean.GetCounselorsModel;
+import com.changcai.buyer.bean.GetImTeamsBean;
 import com.changcai.buyer.bean.UserInfo;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
@@ -427,6 +428,21 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     public void getCounselorsModelError() {
         this.info = null;
         initMessageObserave();
+    }
+
+    @Override
+    public void getImTeamsSucceed(GetImTeamsBean getImTeamsBeen) {
+
+    }
+
+    @Override
+    public void getImTeamsFail(String failStr) {
+
+    }
+
+    @Override
+    public void getImTeamsError() {
+
     }
 
 

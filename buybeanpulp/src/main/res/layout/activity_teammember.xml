@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_title_bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim1"
+            android:background="@color/color_E8E8E8"></LinearLayout>
+
+        <GridView
+            android:id="@+id/gv_userIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="5"></GridView>
+    </LinearLayout>
+    <com.changcai.buyer.view.RotateDotsProgressView
+        android:id="@+id/news_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone" />
+</RelativeLayout>

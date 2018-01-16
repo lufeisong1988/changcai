@@ -1,21 +1,26 @@
 package com.changcai.buyer.im.main.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.changcai.buyer.CompatTouchBackActivity;
 import com.changcai.buyer.R;
 import com.changcai.buyer.bean.GetCounselorsModel;
+import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.im.main.present.NotifactionListPresentInterface;
 import com.changcai.buyer.im.main.present.imp.NotifactionListPresentImp;
 import com.changcai.buyer.im.main.viewmodel.NotifacitonListViewModel;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.ui.login.LoginActivity;
 import com.changcai.buyer.util.NimSessionHelper;
+import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
+import com.changcai.buyer.view.ConfirmDialog;
 import com.changcai.buyer.view.RotateDotsProgressView;
 import com.netease.nim.uikit.common.util.sys.TimeUtil;
 
@@ -24,6 +29,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * Created by lufeisong on 2017/12/19.
@@ -50,9 +58,11 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     ConstraintLayout clConsultant;
     @BindView(R.id.news_progress)
     RotateDotsProgressView newsProgress;
+    @BindView(R.id.tv_team_time)
+    TextView tvTeamTime;
+    @BindView(R.id.cl_team)
+    ConstraintLayout clTeam;
     private NotifactionListPresentInterface present;
-
-
 
 
     @Override
@@ -206,8 +216,48 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     }
 
+    @Override
+    public void joinTeam(String teamId) {
+        SessionHelper.startTeamSession(this,teamId);
+//        TeamMemberActivity.start(NotifactionListActivity.this,"279340661");
+    }
 
-    @OnClick({R.id.cl_vip, R.id.cl_consultant})
+    @Override
+    public void unJoinTeam() {
+        ConfirmDialog.createConfirmDialog(this,"提示", "该功能仅开放给联盟成员，加入联盟等事宜请咨询买豆粕网客服。",  "取消", "拨打客服电话", new ConfirmDialog.OnBtnConfirmListener() {
+            @Override
+            public void onConfirmListener() {
+
+            }
+        }, new ConfirmDialog.OnBtnConfirmListener() {
+            @Override
+            public void onConfirmListener() {
+                PermissionGen.needPermission(NotifactionListActivity.this, 100,
+                        new String[] {
+                                Manifest.permission.CALL_PHONE,
+                        }
+                );
+            }
+        });
+    }
+
+    @Override
+    public void unExistTeam() {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this, "暂时无法加入此群");
+    }
+
+    @Override
+    public void joinTeamFail(String fail) {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this, fail);
+    }
+
+    @Override
+    public void joinTeamError() {
+        ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this, getString(R.string.network_unavailable));
+    }
+
+
+    @OnClick({R.id.cl_vip, R.id.cl_consultant,R.id.cl_team})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cl_vip:
@@ -216,7 +266,22 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
             case R.id.cl_consultant:
                 present.toAnswers();
                 break;
+            case R.id.cl_team:
+                present.toTeam();
+                break;
         }
+    }
+
+
+
+    @PermissionSuccess(requestCode = 100)
+    public void doSomethingSucceed(){
+        showPhoneChooseDialog(SPUtil.getString(Constants.KEY_CONTACT_PHONE));
+
+    }
+    @PermissionFail(requestCode = 100)
+    public void doSomethingFail(){
+        Toast.makeText(this, R.string.perssion_for_call, Toast.LENGTH_LONG).show();
     }
 
 }
