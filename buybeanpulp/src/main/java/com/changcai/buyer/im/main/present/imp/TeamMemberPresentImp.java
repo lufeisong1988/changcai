@@ -1,26 +1,34 @@
 package com.changcai.buyer.im.main.present.imp;
 
+import android.content.Context;
+
 import com.changcai.buyer.im.main.present.TeamMemberPresent;
 import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
 import com.changcai.buyer.util.LogUtil;
+import com.netease.nim.uikit.common.util.TeamMemberProvider;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by lufeisong on 2018/1/16.
  */
 
-public class TeamMemberPresentImp implements TeamMemberPresent {
+public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvider.TeamMemberOnlineCallback {
+    private Context context;
     private String teamId;
     private TeamMemberViewModel view;
 
-    public TeamMemberPresentImp(String teamId,TeamMemberViewModel view) {
+    public TeamMemberPresentImp(Context context, String teamId, TeamMemberViewModel view) {
+        this.context = context;
         this.teamId = teamId;
         this.view = view;
+        TeamMemberProvider.getInstance().addCallback(this);
     }
 
     @Override
@@ -38,6 +46,7 @@ public class TeamMemberPresentImp implements TeamMemberPresent {
                             view.dismissLoading();
                             if(teamMembers != null){
                                 view.queryMemberListSucceed(teamMembers);
+                                TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
                             }else{
                                 view.queryMemberListFail("获取群成员列表失败" );
                             }
@@ -99,5 +108,19 @@ public class TeamMemberPresentImp implements TeamMemberPresent {
     @Override
     public void onDestory() {
         view = null;
+        TeamMemberProvider.getInstance().removeCallback(this);
     }
+
+    /**
+     * 更新在线人数 回调
+     */
+    @Override
+    public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
+        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(teamId);
+        if(view != null && team != null){
+            view.updateOnlineMembers(onLineMap.size(),team.getMemberCount());
+            view.updateOnlineMembersAdapter(onLineMap,offLineMap);
+        }
+    }
+
 }

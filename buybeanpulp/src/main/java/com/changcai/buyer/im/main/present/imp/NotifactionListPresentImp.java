@@ -17,6 +17,7 @@ import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.NimSessionHelper;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.UserDataUtil;
+import com.netease.nim.uikit.common.util.TeamMemberProvider;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -25,28 +26,35 @@ import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.model.Team;
+import com.netease.nimlib.sdk.team.model.TeamMember;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by lufeisong on 2017/12/22.
  */
 
-public class NotifactionListPresentImp implements NotifactionListPresentInterface, NotifactionListModelImp.NotifactionListModelCallback, LoginProvider.LoginCallback {
+public class NotifactionListPresentImp implements NotifactionListPresentInterface, NotifactionListModelImp.NotifactionListModelCallback, LoginProvider.LoginCallback ,TeamMemberProvider.TeamMemberOnlineCallback
+{
     private NotifactionListModelInterface model;
     private NotifacitonListViewModel view;
     private int position = 0;
     private static final int VIP = 0;
     private static final int TEAM = 1;
     private static final int NOTIFACTION = 2;
+    private boolean isSyncGetImItemAble = false;//获取群组，是否需要响应view
     private List<GetCounselorsModel.InfoBean> info;
     private boolean syncAble = false;//是否同步请求
+
+    private String tid;
 
     public NotifactionListPresentImp(NotifacitonListViewModel view) {
         this.view = view;
         model = new NotifactionListModelImp(this);
         LoginProvider.getInstance().addLoginCallback(this);
+        TeamMemberProvider.getInstance().addCallback(this);
         registerRecentContact(true);
 
     }
@@ -69,6 +77,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     view.showNOTIFACTION();
                 }
             }
+            asyncUpdateOnlineMembers();
         }
         initMessageObserave();
     }
@@ -98,6 +107,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
      */
     @Override
     public void toTeam() {
+        isSyncGetImItemAble = true;
         position = TEAM;
         if (checkLogin()) {
             getImTeams();
@@ -115,6 +125,14 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                 view.toNOTIFACTION();
             }
         }
+    }
+
+    /**
+     * 更新产业联盟在线人数(异步)
+     */
+    private void asyncUpdateOnlineMembers() {
+        isSyncGetImItemAble = false;
+        model.getImTeams();
     }
 
     /**
@@ -140,7 +158,8 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
     @Override
     public void onDestory() {
         view = null;
-        LoginProvider.getInstance().deleteLoginCallback(this);
+        LoginProvider.getInstance().removeLoginCallback(this);
+        TeamMemberProvider.getInstance().removeCallback(this);
         registerRecentContact(false);
     }
 
@@ -184,45 +203,70 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         if (view != null) {
             view.dismissLoading();
             if(getImTeamsBeen != null && getImTeamsBeen.getInfo() != null &&getImTeamsBeen.getInfo().size()> 0){
-                NIMClient.getService(TeamService.class)
-                        .queryTeamList()
-                        .setCallback(new RequestCallback<List<Team>>() {
-                            @Override
-                            public void onSuccess(List<Team> teams) {
-                                String tid = getImTeamsBeen.getInfo().get(0).getTid();
-                                boolean joinAble = false;
-                                for(Team team :teams){
-                                    if(team.getId().equals(tid)){
-                                        joinAble = true;
+                tid = getImTeamsBeen.getInfo().get(0).getTid();
+                if(isSyncGetImItemAble){//跳转产业联盟
+                    NIMClient.getService(TeamService.class)
+                            .queryTeamList()
+                            .setCallback(new RequestCallback<List<Team>>() {
+                                @Override
+                                public void onSuccess(List<Team> teams) {
+
+                                    boolean joinAble = false;
+                                    for(Team team :teams){
+                                        if(team.getId().equals(tid)){
+                                            joinAble = true;
+                                            break;
+                                        }
+
                                     }
-                                    break;
+                                    if(view != null){
+                                        if(joinAble){
+                                            view.joinTeam(tid);
+                                        }else{
+                                            view.unJoinTeam();
+                                        }
+                                    }
+
                                 }
-                                if(view != null){
-                                    if(joinAble){
-                                        view.joinTeam(tid);
-                                    }else{
-                                        view.unJoinTeam();
+
+                                @Override
+                                public void onFailed(int i) {
+                                    if(view != null){
+                                        view.joinTeamFail("进群失败 : " + i);
                                     }
                                 }
 
-                            }
-
-                            @Override
-                            public void onFailed(int i) {
-                                if(view != null){
-                                    view.joinTeamFail("进群失败 : " + i);
+                                @Override
+                                public void onException(Throwable throwable) {
+                                    if(view != null){
+                                        view.joinTeamError();
+                                    }
                                 }
-                            }
-
-                            @Override
-                            public void onException(Throwable throwable) {
-                                if(view != null){
-                                    view.joinTeamError();
+                            });
+                }else{//获取产业联盟在线人数
+                    NIMClient.getService(TeamService.class)
+                            .queryMemberList(tid)
+                            .setCallback(new RequestCallback<List<TeamMember>>() {
+                                @Override
+                                public void onSuccess(List<TeamMember> teamMembers) {
+                                    LogUtil.d("NimIM","teamMembers.size = " + teamMembers.size());
+                                    if(teamMembers != null){
+                                        TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
+                                    }
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onFailed(int i) {
+                                }
+
+                                @Override
+                                public void onException(Throwable throwable) {
+                                }
+                            });
+                }
+
             }else{//买豆粕 返回的群不存在
-                if(view != null){
+                if(view != null && isSyncGetImItemAble){
                     view.unExistTeam();
                 }
             }
@@ -232,7 +276,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
 
     @Override
     public void getImTeamsFail(String failStr) {
-        if (view != null) {
+        if (view != null && isSyncGetImItemAble) {
             view.dismissLoading();
             view.joinTeamFail(failStr);
         }
@@ -240,7 +284,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
 
     @Override
     public void getImTeamsError() {
-        if (view != null) {
+        if (view != null && isSyncGetImItemAble) {
             view.dismissLoading();
             view.joinTeamError();
         }
@@ -365,4 +409,16 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         }).start();
 
     }
+    /**
+     * 更新在线人数 回调
+     */
+    @Override
+    public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
+        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(tid);
+        if(view != null && team != null){
+            view.updateOnlineMembers(onLineMap.size(),team.getMemberCount());
+        }
+    }
+
+
 }

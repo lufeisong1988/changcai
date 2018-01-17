@@ -110,4 +110,5 @@ public class NimSessionHelper {
         // 更新配置
         NIMClient.updateStatusBarNotificationConfig(statusBarNotificationConfig);
     }
+
 }

@@ -62,6 +62,7 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     TextView tvTeamTime;
     @BindView(R.id.cl_team)
     ConstraintLayout clTeam;
+
     private NotifactionListPresentInterface present;
 
 
@@ -218,13 +219,12 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     @Override
     public void joinTeam(String teamId) {
-        SessionHelper.startTeamSession(this,teamId);
-//        TeamMemberActivity.start(NotifactionListActivity.this,"279340661");
+        SessionHelper.startTeamSession(this, teamId);
     }
 
     @Override
     public void unJoinTeam() {
-        ConfirmDialog.createConfirmDialog(this,"提示", "该功能仅开放给联盟成员，加入联盟等事宜请咨询买豆粕网客服。",  "取消", "拨打客服电话", new ConfirmDialog.OnBtnConfirmListener() {
+        ConfirmDialog.createConfirmDialog(this, "提示", "该功能仅开放给联盟成员，加入联盟等事宜请咨询买豆粕网客服。", "取消", "拨打客服电话", new ConfirmDialog.OnBtnConfirmListener() {
             @Override
             public void onConfirmListener() {
 
@@ -233,7 +233,7 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
             @Override
             public void onConfirmListener() {
                 PermissionGen.needPermission(NotifactionListActivity.this, 100,
-                        new String[] {
+                        new String[]{
                                 Manifest.permission.CALL_PHONE,
                         }
                 );
@@ -256,8 +256,14 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
         ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this, getString(R.string.network_unavailable));
     }
 
+    @Override
+    public void updateOnlineMembers(int onLineMemberNums, int totalMemberNums) {
+        tvTeamTime.setText(onLineMemberNums + "/" + totalMemberNums + "人在线");
 
-    @OnClick({R.id.cl_vip, R.id.cl_consultant,R.id.cl_team})
+    }
+
+
+    @OnClick({R.id.cl_vip, R.id.cl_consultant, R.id.cl_team})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cl_vip:
@@ -273,14 +279,14 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     }
 
 
-
     @PermissionSuccess(requestCode = 100)
-    public void doSomethingSucceed(){
+    public void doSomethingSucceed() {
         showPhoneChooseDialog(SPUtil.getString(Constants.KEY_CONTACT_PHONE));
 
     }
+
     @PermissionFail(requestCode = 100)
-    public void doSomethingFail(){
+    public void doSomethingFail() {
         Toast.makeText(this, R.string.perssion_for_call, Toast.LENGTH_LONG).show();
     }
 

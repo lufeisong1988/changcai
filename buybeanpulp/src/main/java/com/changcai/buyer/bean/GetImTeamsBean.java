@@ -56,5 +56,14 @@ public class GetImTeamsBean implements Serializable,IKeepFromProguard {
         public void setTaccid(String taccid) {
             this.taccid = taccid;
         }
+
+        @Override
+        public String toString() {
+            return "InfoBean{" +
+                    "tname='" + tname + '\'' +
+                    ", tid='" + tid + '\'' +
+                    ", taccid='" + taccid + '\'' +
+                    '}';
+        }
     }
 }

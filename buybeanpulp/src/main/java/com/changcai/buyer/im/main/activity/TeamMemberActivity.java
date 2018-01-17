@@ -20,6 +20,7 @@ import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,9 +34,14 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
     GridView gvUserIcon;
     @BindView(R.id.news_progress)
     RotateDotsProgressView newsProgress;
+
     private TeamMemberPresent present;
+
     private TeamMemberItemAdapter adapter;
+
     private List<TeamMember> teamMembers = new ArrayList<>();
+    private HashMap<String,String> onLineMap = new HashMap<>();
+    private HashMap<String,String> offLineMap = new HashMap<>();
     private String teamId;
     public static void start(Context context, String teamId) {
         Intent intent = new Intent();
@@ -47,10 +53,10 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
 
     @Override
     protected void injectFragmentView() {
-        titleText.setText("");
+
         teamId = getIntent().getExtras().getString(Extras.EXTRA_TEAM_ID);
-        adapter = new TeamMemberItemAdapter(teamMembers,this,this);
-        present = new TeamMemberPresentImp(teamId, this);
+        adapter = new TeamMemberItemAdapter(teamMembers,this,this,onLineMap,offLineMap);
+        present = new TeamMemberPresentImp(this,teamId, this);
         gvUserIcon.setAdapter(adapter);
 
     }
@@ -133,13 +139,14 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
     public void removeMemberSucceed(String member) {
         ToastUtil.showLong(this,"删除成员成功");
         LogUtil.d("NimIM","delete account = " + member);
-        for(TeamMember teamMember : teamMembers){
-            if(teamMember.getAccount().equals(member)){
-                teamMembers.remove(teamMember);
-                break;
-            }
-        }
-        adapter.notifyDataSetChanged();
+//        for(TeamMember teamMember : teamMembers){
+//            if(teamMember.getAccount().equals(member)){
+//                teamMembers.remove(teamMember);
+//                break;
+//            }
+//        }
+//        adapter.notifyDataSetChanged();
+        present.queryMemberList();
     }
 
     @Override
@@ -150,6 +157,20 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
     @Override
     public void removeMemberError() {
         ServerErrorCodeDispatch.getInstance().showNetErrorDialog(this,"网络异常，获取信息失败");
+    }
+
+    @Override
+    public void updateOnlineMembers(int onLineMemberNums,int totalMemberNums) {
+        titleText.setText(onLineMemberNums + "/" + totalMemberNums + "人在线");
+    }
+
+    @Override
+    public void updateOnlineMembersAdapter(HashMap<String, String> onLineMap, HashMap<String, String> offLineMap) {
+        this.onLineMap.clear();
+        this.offLineMap.clear();
+        this.onLineMap.putAll(onLineMap);
+        this.offLineMap.putAll(offLineMap);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

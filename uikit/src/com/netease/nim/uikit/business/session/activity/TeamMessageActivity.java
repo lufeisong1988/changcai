@@ -19,12 +19,17 @@ import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.session.fragment.TeamMessageFragment;
+import com.netease.nim.uikit.common.util.TeamMemberProvider;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.constant.TeamTypeEnum;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,7 +37,7 @@ import java.util.List;
  * <p/>
  * Created by huangjun on 2015/3/5.
  */
-public class TeamMessageActivity extends BaseMessageActivity {
+public class TeamMessageActivity extends BaseMessageActivity implements TeamMemberProvider.TeamMemberOnlineCallback{
 
     // model
     private Team team;
@@ -80,7 +85,7 @@ public class TeamMessageActivity extends BaseMessageActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        TeamMemberProvider.getInstance().addCallback(this);
         backToClass = (Class<? extends Activity>) getIntent().getSerializableExtra(Extras.EXTRA_BACK_TO_CLASS);
         findViews();
         initListener();
@@ -90,7 +95,7 @@ public class TeamMessageActivity extends BaseMessageActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        TeamMemberProvider.getInstance().removeCallback(this);
         registerTeamUpdateObserver(false);
     }
 
@@ -134,6 +139,7 @@ public class TeamMessageActivity extends BaseMessageActivity {
                 }
             });
         }
+
     }
 
     private void onRequestTeamInfoFailed() {
@@ -160,8 +166,35 @@ public class TeamMessageActivity extends BaseMessageActivity {
         invalidTeamTipView.setVisibility(team.isMyTeam() ? View.GONE : View.VISIBLE);
 
         tvTitle.setText(team.getName());
+        updateOnlineInfo(d);
     }
 
+    /**
+     * 更新在线人数
+     * @param team
+     */
+    private void updateOnlineInfo(Team team){
+        NIMClient.getService(TeamService.class)
+                .queryMemberList(team.getId())
+                .setCallback(new RequestCallback<List<TeamMember>>() {
+                    @Override
+                    public void onSuccess(List<TeamMember> teamMembers) {
+                        if(teamMembers != null){
+                            TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int i) {
+
+                    }
+
+                    @Override
+                    public void onException(Throwable throwable) {
+
+                    }
+                });
+    }
     /**
      * 注册群信息更新监听
      *
@@ -272,4 +305,13 @@ public class TeamMessageActivity extends BaseMessageActivity {
             finish();
         }
     }
+
+    @Override
+    public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
+        if(team != null){
+            tvTitle.setText(team.getName() + "(" + onLineMap.size() + "/" + team.getMemberCount() + ")");
+        }
+    }
+
+
 }

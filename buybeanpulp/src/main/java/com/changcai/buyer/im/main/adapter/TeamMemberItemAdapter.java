@@ -2,6 +2,8 @@ package com.changcai.buyer.im.main.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.ta.utdid2.android.utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,11 +41,15 @@ public class TeamMemberItemAdapter extends BaseAdapter {
     private boolean showDeleteAble = false;
     private boolean managerAble = false;//是否是管理员
 
+    private HashMap<String,String> onLineMap,offLineMap;
 
-    public TeamMemberItemAdapter(List<TeamMember> teamMembers, Context context,TeamMemberItemAdapterCallback callback) {
+
+    public TeamMemberItemAdapter(List<TeamMember> teamMembers, Context context,TeamMemberItemAdapterCallback callback,HashMap<String,String> onLineMap,HashMap<String,String> offLineMap) {
         this.teamMembers = teamMembers;
         this.context = context;
         this.callback = callback;
+        this.onLineMap = onLineMap;
+        this.offLineMap = offLineMap;
         defaultDrawable = ContextCompat.getDrawable(context, R.drawable.icon_default_head);
         checkManager();
     }
@@ -82,6 +89,11 @@ public class TeamMemberItemAdapter extends BaseAdapter {
         }
         if (position < teamMembers.size()) {
             final TeamMember teamMember = teamMembers.get(position);
+            if(offLineMap.containsKey(teamMember.getAccount())){
+                vh.iv_userIcon.setColorFilter(setColorMatrix(0));
+            }else{
+                vh.iv_userIcon.setColorFilter(null);
+            }
             if (teamMember.getType().getValue() != TeamMemberType.Manager.getValue() && teamMember.getType().getValue() != TeamMemberType.Owner.getValue() && showDeleteAble) {
                 vh.iv_delete.setVisibility(View.VISIBLE);
             } else {
@@ -194,5 +206,11 @@ public class TeamMemberItemAdapter extends BaseAdapter {
                 }
             }
         }
+    }
+    private ColorMatrixColorFilter setColorMatrix(float saturation){
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(saturation);//饱和度 0灰色 100过度彩色，50正常
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        return filter;
     }
 }

@@ -27,7 +27,7 @@ public class LoginProvider {
             list.add(callback);
         }
     }
-    public void deleteLoginCallback(LoginCallback callback){
+    public void removeLoginCallback(LoginCallback callback){
         if(list.contains(callback)){
             list.remove(callback);
         }

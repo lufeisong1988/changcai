@@ -2,6 +2,7 @@ package com.changcai.buyer.im.main.viewmodel;
 
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,4 +26,8 @@ public interface TeamMemberViewModel {
     void removeMemberFail(String failStr);
 
     void removeMemberError();
+
+    void updateOnlineMembers(int onLineMemberNums,int totalMemberNums);
+
+    void updateOnlineMembersAdapter(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap);
 }
