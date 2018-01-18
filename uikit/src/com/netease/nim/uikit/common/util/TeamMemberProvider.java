@@ -1,6 +1,8 @@
 package com.netease.nim.uikit.common.util;
 
+import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.main.OnlineStateChangeObserver;
+import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.team.model.TeamMember;
@@ -21,7 +23,6 @@ public class TeamMemberProvider {
 
     private ArrayList<TeamMemberOnlineCallback> calls ;
 
-    private List<TeamMember> members;//需要观察的成员
 
     private HashMap<String,String> onLineMap;//在线人
     private HashMap<String,String> offLineMap;//离线人
@@ -31,10 +32,10 @@ public class TeamMemberProvider {
     public TeamMemberProvider() {
 
         calls = new ArrayList<>();
-        members = new ArrayList<>();
         onLineMap = new HashMap<>();
         offLineMap = new HashMap<>();
         registerOnlineStateChangeListener(true);
+        registerTeamMemberDataChangedObserver(true);
     }
 
     public static TeamMemberProvider getInstance() {
@@ -56,6 +57,7 @@ public class TeamMemberProvider {
     }
 
     private void updateCallback(){
+        LogUtil.d("NimIM","onLineMap = " + onLineMap.toString());
         for (TeamMemberOnlineCallback callback:calls){
             callback.updateOnline(onLineMap,offLineMap);
         }
@@ -64,33 +66,57 @@ public class TeamMemberProvider {
     public void setTeamMembers(List<TeamMember> members){
         onLineMap.clear();
         offLineMap.clear();
-        this.members.clear();
-        this.members.addAll(members);
-        for(TeamMember member : this.members){
+        for(TeamMember member : members){
             updateOnlineStatus(member.getAccount());
         }
         updateCallback();
     }
     private void updateOnlineStatus(String account){
         String detailContent = NimUIKitImpl.getOnlineStateContentProvider().getDetailDisplay(account);
-        if(detailContent == null || detailContent.isEmpty() || detailContent.equals("离线")){
+        if("".equals(detailContent)){//剔除自己
+            if(NimUIKit.getAccount() != null && account.equals(NimUIKit.getAccount())){//观察的账号是自己，返回在线
+                onLine(account,"自己");
+            }else{
+                offLine(account,detailContent);
+            }
+        }else if("离线".equals(detailContent)){
             //暂未关注她的状态，获取离线
-            if(onLineMap.containsKey(account)){
-                onLineMap.remove(account);
-            }
-            if(!offLineMap.containsKey(account)){
-                offLineMap.put(account,OFFLINE);
-            }
+            offLine(account,detailContent);
         }else{
             //在线
-            if(!onLineMap.containsKey(account)){
-                onLineMap.put(account,ONLINE);
-            }
-            if(offLineMap.containsKey(account)){
-                offLineMap.remove(account);
-            }
+            onLine(account,detailContent);
         }
     }
+    private void removeOnlineStatus(String account){
+        if(onLineMap.containsKey(account)){
+            onLineMap.remove(account);
+        }
+        if(offLineMap.containsKey(account)){
+            offLineMap.remove(account);
+        }
+    }
+    //在线
+    private void onLine(String account, String detailContent){
+        if(!onLineMap.containsKey(account)){
+            onLineMap.put(account,detailContent);
+        }
+        if(offLineMap.containsKey(account)){
+            offLineMap.remove(account);
+        }
+    }
+    //离线
+    private void offLine(String account, String detailContent){
+        if(onLineMap.containsKey(account)){
+            onLineMap.remove(account);
+        }
+        if(!offLineMap.containsKey(account)){
+            offLineMap.put(account,detailContent);
+        }
+    }
+    /**
+     * 通知在线状态事件变化
+     * @param register
+     */
     private void registerOnlineStateChangeListener(boolean register) {
         if (!NimUIKitImpl.enableOnlineState()) {
             return;
@@ -100,9 +126,33 @@ public class TeamMemberProvider {
     OnlineStateChangeObserver onlineStateChangeObserver = new OnlineStateChangeObserver() {
         @Override
         public void onlineStateChange(Set<String> accounts) {
-            LogUtil.d("contactId",accounts.toString());
             for(String account : accounts){
                 updateOnlineStatus(account);
+            }
+            updateCallback();
+        }
+    };
+
+    private void registerTeamMemberDataChangedObserver(boolean register){
+        NimUIKit.getTeamChangedObservable().registerTeamMemberDataChangedObserver(teamMemberDataChangedObserver, register);
+    }
+    /**
+     * 群成员资料变动通知和移除群成员通知
+     */
+    TeamMemberDataChangedObserver teamMemberDataChangedObserver = new TeamMemberDataChangedObserver() {
+
+        @Override
+        public void onUpdateTeamMember(List<TeamMember> members) {
+            for(TeamMember member : members){
+                updateOnlineStatus(member.getAccount());
+            }
+            updateCallback();
+        }
+
+        @Override
+        public void onRemoveTeamMember(List<TeamMember> members) {
+            for(TeamMember member : members){
+                removeOnlineStatus(member.getAccount());
             }
             updateCallback();
         }

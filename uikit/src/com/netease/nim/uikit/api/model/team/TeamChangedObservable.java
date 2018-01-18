@@ -3,6 +3,7 @@ package com.netease.nim.uikit.api.model.team;
 import android.content.Context;
 import android.os.Handler;
 
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
@@ -84,6 +85,7 @@ public class TeamChangedObservable {
         uiHandler.post(new Runnable() {
             @Override
             public void run() {
+                LogUtil.d("NimIM","memberObservers.size = " + memberObservers.size());
                 for (TeamMemberDataChangedObserver o : memberObservers) {
                     o.onRemoveTeamMember(members);
                 }

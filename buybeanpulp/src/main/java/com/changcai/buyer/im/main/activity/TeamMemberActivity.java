@@ -3,6 +3,7 @@ package com.changcai.buyer.im.main.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.changcai.buyer.CompatTouchBackActivity;
@@ -58,7 +59,17 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
         adapter = new TeamMemberItemAdapter(teamMembers,this,this,onLineMap,offLineMap);
         present = new TeamMemberPresentImp(this,teamId, this);
         gvUserIcon.setAdapter(adapter);
-
+        gvUserIcon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == teamMembers.size()){//增加按钮
+                    adapter.addMember();
+                    TeamMemberAddActivity.start(TeamMemberActivity.this,teamId);
+                }else if(position == teamMembers.size() + 1  ){//减少按妞
+                    adapter.removeMember();
+                }
+            }
+        });
     }
 
     @Override
@@ -122,6 +133,8 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
 
     @Override
     public void queryMemberListSucceed(List<TeamMember> teamMembers) {
+        this.teamMembers.clear();
+        this.teamMembers.addAll(teamMembers);
         adapter.customNotifyDataChange(teamMembers);
     }
 
@@ -171,11 +184,6 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
         this.onLineMap.putAll(onLineMap);
         this.offLineMap.putAll(offLineMap);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showAddMember() {
-        TeamMemberAddActivity.start(this,teamId);
     }
 
     @Override

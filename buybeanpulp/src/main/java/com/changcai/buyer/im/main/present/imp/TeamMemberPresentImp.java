@@ -9,7 +9,6 @@ import com.netease.nim.uikit.common.util.TeamMemberProvider;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
-import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
 import java.util.HashMap;
@@ -81,6 +80,7 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
                 .setCallback(new RequestCallback<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        LogUtil.d("NimIM","removeMember succeed");
                         if(view != null){
                             view.dismissLoading();
                             view.removeMemberSucceed(member);
@@ -116,9 +116,9 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
      */
     @Override
     public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
-        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(teamId);
-        if(view != null && team != null){
-            view.updateOnlineMembers(onLineMap.size(),team.getMemberCount());
+        if(view != null ){
+            LogUtil.d("NimIM","TeamMember updateOnline :" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()));
+            view.updateOnlineMembers(onLineMap.size(),onLineMap.size() + offLineMap.size());
             view.updateOnlineMembersAdapter(onLineMap,offLineMap);
         }
     }

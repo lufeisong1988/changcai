@@ -414,9 +414,9 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
      */
     @Override
     public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
-        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(tid);
-        if(view != null && team != null){
-            view.updateOnlineMembers(onLineMap.size(),team.getMemberCount());
+        if(view != null){
+            LogUtil.d("NimIM","Notifaction updateOnline :" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()));
+            view.updateOnlineMembers(onLineMap.size(),onLineMap.size() + offLineMap.size());
         }
     }
 

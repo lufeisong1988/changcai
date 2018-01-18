@@ -165,7 +165,6 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
         invalidTeamTipText.setText(team.getType() == TeamTypeEnum.Normal ? R.string.normal_team_invalid_tip : R.string.team_invalid_tip);
         invalidTeamTipView.setVisibility(team.isMyTeam() ? View.GONE : View.VISIBLE);
 
-        tvTitle.setText(team.getName());
         updateOnlineInfo(d);
     }
 
@@ -309,7 +308,7 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
     @Override
     public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
         if(team != null){
-            tvTitle.setText(team.getName() + "(" + onLineMap.size() + "/" + team.getMemberCount() + ")");
+            tvTitle.setText(team.getName() + "(" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()) + ")");
         }
     }
 

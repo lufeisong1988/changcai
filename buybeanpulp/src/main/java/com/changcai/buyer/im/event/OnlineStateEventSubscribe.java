@@ -149,7 +149,6 @@ public class OnlineStateEventSubscribe {
                     if (result != null) {
                         // 部分订阅失败的账号。。。
                         OnlineStateEventCache.removeSubsAccounts(result);
-                        LogUtil.d("NimIM","未订阅的账号: " + result.toString() +  "  code = " + code);
                     }
                 } else {
                     LogUtil.d("NimIM","订阅失败: " + accounts.toString() + "  code = " + code );

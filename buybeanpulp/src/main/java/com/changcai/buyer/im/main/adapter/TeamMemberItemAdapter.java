@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.im.DemoCache;
+import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.PicassoImageLoader;
 import com.changcai.buyer.view.RoundImageView;
 import com.netease.nimlib.sdk.NIMClient;
@@ -132,6 +133,7 @@ public class TeamMemberItemAdapter extends BaseAdapter {
             vh.iv_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LogUtil.d("NimIM","account = " + teamMember.getAccount() );
                     callback.showDeleteMember(teamMember.getAccount());
                 }
             });
@@ -140,29 +142,12 @@ public class TeamMemberItemAdapter extends BaseAdapter {
             vh.tv_name.setText("添加成员");
             vh.tv_name.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             vh.iv_delete.setVisibility(View.GONE);
-            vh.iv_userIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (showDeleteAble) {
-                        showDeleteAble = !showDeleteAble;
-                        notifyDataSetChanged();
-                    }
-                    callback.showAddMember();
-                }
-            });
 
         } else if (position < teamMembers.size() + 2) {
             PicassoImageLoader.getInstance().displayNetImage((Activity) context, "i am not empty", vh.iv_userIcon,ContextCompat.getDrawable(context,R.drawable.icon_delete_teammember));
             vh.tv_name.setText("删除成员");
             vh.tv_name.setTextColor(context.getResources().getColor(R.color.color_F43531));
             vh.iv_delete.setVisibility(View.GONE);
-            vh.iv_userIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDeleteAble = !showDeleteAble;
-                    notifyDataSetChanged();
-                }
-            });
 
         }
 
@@ -187,7 +172,6 @@ public class TeamMemberItemAdapter extends BaseAdapter {
         ImageView iv_delete;
     }
     public interface TeamMemberItemAdapterCallback{
-        void showAddMember();
         void showDeleteMember(String member);
     }
 
@@ -212,5 +196,16 @@ public class TeamMemberItemAdapter extends BaseAdapter {
         matrix.setSaturation(saturation);//饱和度 0灰色 100过度彩色，50正常
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
         return filter;
+    }
+
+    public void addMember(){
+        if (showDeleteAble) {
+            showDeleteAble = !showDeleteAble;
+            notifyDataSetChanged();
+        }
+    }
+    public void removeMember(){
+        showDeleteAble = !showDeleteAble;
+        notifyDataSetChanged();
     }
 }
