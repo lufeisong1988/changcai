@@ -62,6 +62,8 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     TextView tvTeamTime;
     @BindView(R.id.cl_team)
     ConstraintLayout clTeam;
+    @BindView(R.id.iv_team_dot)
+    ImageView ivTeamDot;
 
     private NotifactionListPresentInterface present;
 
@@ -215,6 +217,21 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
             }
         });
 
+    }
+
+    @Override
+    public void updateTeamStatus(final boolean showDot, final String message, final long time) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (showDot) {
+                    ivTeamDot.setVisibility(View.VISIBLE);
+                } else {
+                    ivTeamDot.setVisibility(View.GONE);
+                }
+
+            }
+        });
     }
 
     @Override

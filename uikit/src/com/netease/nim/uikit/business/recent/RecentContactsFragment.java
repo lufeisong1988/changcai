@@ -724,10 +724,15 @@ public class RecentContactsFragment extends TFragment {
     /**
      * 是否过滤掉消息
      *
+     * 1.消息ext有msgStatus 未 init
+     * 2.过滤掉群消息
      * @param loadedRecent
      * @return
      */
     private boolean fliteMessage(RecentContact loadedRecent) {
+        if(loadedRecent.getSessionType().getValue() != SessionTypeEnum.P2P.getValue()){
+            return true;
+        }
         List<String> uuid = new ArrayList<>(1);
         uuid.add(loadedRecent.getRecentMessageId());
         List<IMMessage> messages = NIMClient.getService(MsgService.class).queryMessageListByUuidBlock(uuid);

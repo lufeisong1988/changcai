@@ -23,6 +23,7 @@ import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.model.Team;
@@ -50,6 +51,10 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
 
     private String tid;
 
+    private List<RecentContact> contactsAllBlock = new ArrayList<>();//所有人集合（P2P）
+    private List<RecentContact> contactsConsultantBlock = new ArrayList<>();//顾问集合 (P2P）
+    private List<RecentContact> contactsTeamBlock = new ArrayList<>();//产业联盟集合 (Team）
+
     public NotifactionListPresentImp(NotifacitonListViewModel view) {
         this.view = view;
         model = new NotifactionListModelImp(this);
@@ -61,6 +66,9 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
 
     @Override
     public void init() {
+        contactsAllBlock.clear();
+        contactsConsultantBlock .clear();
+        contactsTeamBlock.clear();
         if (!UserDataUtil.isLogin()) {
             if (view != null) {
                 view.hideNOTIFACTION();
@@ -350,11 +358,14 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
             public void run() {
                 int unReadMsgCount = 0;
                 int unReadMsgConsultantCount = 0;//顾问未读数目
+                int unReadMsgTeamCount = 0;//产业联盟未读数目
                 long unReadMsgTime = 0;
-                long unReadMsgConsultantTime = 0;
+                long unReadMsgConsultantTime = 0;//顾问最新一条消息时间
+                long unReadMsgTeamTime = 0;//产业联盟最新一条消息时间
                 String unReadMessage = "";
                 String unReadConsultantMessage = "";//顾问最新一条信息
-                List<RecentContact> contactsConsultantBlock = new ArrayList<>();//顾问集合
+                String unReadTeamMessage = "";//产业联盟最新一条信息
+
                 if (contactsBlock == null) {
                     if (view != null) {
                         view.updateAllStatus(false, "", System.currentTimeMillis());
@@ -363,18 +374,69 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     return;
                 }
                 //遍历所有未读消息数量，最近一条消息
+                //遍历出所有人集合
                 //遍历出顾问集合
+                //遍历出产业联盟集合
                 for (int i = 0; i < contactsBlock.size(); i++) {//遍历出所有未读消息数目和message
                     RecentContact recentContact = contactsBlock.get(i);
-                    LogUtil.d("NimIM", "所有 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
-                    if (info != null) {
-                        for (int j = 0; j < info.size(); j++) {//遍历出顾问
-                            if (info.get(j).getAccid().equals(recentContact.getContactId())) {
-                                contactsConsultantBlock.add(recentContact);
+                    int position = -1;
+                    LogUtil.d("NimIM", "最近联系 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                    if(recentContact.getSessionType().getValue() == SessionTypeEnum.P2P.getValue()){//P2P
+
+                        //遍历出所有人
+                        for(int j = 0; j < contactsAllBlock.size();j++){
+                            if(contactsAllBlock.get(j).getContactId().equals(recentContact.getContactId())){
+                                position = j;
                                 break;
                             }
                         }
+                        if(position != -1){
+                            contactsAllBlock.remove(position);
+                            contactsAllBlock.add(position,recentContact);
+                        }else{
+                            contactsAllBlock.add(recentContact);
+                        }
+                        position = -1;
+                        if (info != null) {//遍历出顾问
+                            for (int j = 0; j < info.size(); j++) {
+                                if (info.get(j).getAccid().equals(recentContact.getContactId())) {
+                                    for(int n = 0; n < contactsConsultantBlock.size();n++){
+                                        if(contactsConsultantBlock.get(n).getContactId().equals(recentContact.getContactId())){
+                                            position = n;
+                                            break;
+                                        }
+                                    }
+                                    if(position != -1){
+                                        contactsConsultantBlock.remove(position);
+                                        contactsConsultantBlock.add(position,recentContact);
+                                    }else{
+                                        contactsConsultantBlock.add(recentContact);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        position = -1;
+                    }else if(recentContact.getSessionType().getValue() == SessionTypeEnum.Team.getValue()){//Team
+                        for(int j = 0; j < contactsTeamBlock.size();j++){
+                            if(contactsTeamBlock.get(j).getContactId().equals(recentContact.getContactId())){
+                                position = j;
+                                break;
+                            }
+                        }
+                        if(position != -1){
+                            contactsTeamBlock.remove(position);
+                            contactsTeamBlock.add(position,recentContact);
+                        }else{
+                            contactsTeamBlock.add(recentContact);
+                        }
+                        position = -1;
                     }
+                }
+                //遍历所有人未读消息数量，最近一条消息
+                for(int i = 0;i < contactsAllBlock.size();i++ ){
+                    RecentContact recentContact = contactsAllBlock.get(i);
+                    LogUtil.d("NimIM", "所有人 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
                     unReadMsgCount += recentContact.getUnreadCount();
                     if (i == 0) {
                         unReadMsgTime = recentContact.getTime();
@@ -391,6 +453,16 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                         unReadMsgConsultantTime = recentContact.getTime();
                     }
                 }
+                //遍历产业联盟未读消息数量，最近一条消息
+                for (int i = 0; i < contactsTeamBlock.size(); i++) {
+                    RecentContact recentContact = contactsTeamBlock.get(i);
+                    LogUtil.d("NimIM", "产业联盟 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                    unReadMsgTeamCount += recentContact.getUnreadCount();
+                    if (i == 0) {
+                        unReadTeamMessage = recentContact.getContent();
+                        unReadMsgTeamTime = recentContact.getTime();
+                    }
+                }
                 if (view != null) {
                     if (unReadMsgCount > 0) {
                         view.updateAllStatus(true, unReadMessage, unReadMsgTime == 0 ? System.currentTimeMillis() : unReadMsgTime);
@@ -403,7 +475,12 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     } else if (unReadMsgConsultantCount <= 0 && contactsConsultantBlock.size() > 0) {
                         view.updateConsultantStatus(false, unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
                     }
+                    if(unReadMsgTeamCount > 0){
+                        view.updateTeamStatus(true, unReadTeamMessage, unReadMsgTeamTime == 0 ? System.currentTimeMillis() : unReadMsgTeamTime);
+                    } else {
+                        view.updateTeamStatus(false, unReadTeamMessage, unReadMsgTeamTime == 0 ? System.currentTimeMillis() : unReadMsgTeamTime);
 
+                    }
                 }
             }
         }).start();
