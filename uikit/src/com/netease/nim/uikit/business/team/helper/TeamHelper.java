@@ -321,7 +321,7 @@ public class TeamHelper {
             return memberNick;
         }
 
-        return UserInfoHelper.getUserName(account);
+        return UserInfoHelper.getUserNameWithHiden(account);
     }
 
     public static String getTeamNick(String tid, String account) {

@@ -129,7 +129,7 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
             public void run() {
                 etSearchAccount.setIconified(false);
             }
-        },1000);
+        },500);
         super.onResume();
     }
 

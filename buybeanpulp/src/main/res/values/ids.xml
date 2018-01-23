@@ -14,4 +14,6 @@
 
     <!--首页banner-->
     <item name="cb_item_tag" type="id"></item>
+
+	<item type="id" name="show_delete_able"></item>
 </resources>

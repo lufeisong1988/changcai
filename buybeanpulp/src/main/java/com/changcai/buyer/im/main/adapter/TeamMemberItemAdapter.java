@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.im.DemoCache;
-import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.PicassoImageLoader;
 import com.changcai.buyer.view.RoundImageView;
 import com.netease.nimlib.sdk.NIMClient;
@@ -88,6 +87,7 @@ public class TeamMemberItemAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
+        convertView.setTag(R.id.show_delete_able,showDeleteAble);
         if (position < teamMembers.size()) {
             final TeamMember teamMember = teamMembers.get(position);
             if(offLineMap.containsKey(teamMember.getAccount())){
@@ -130,13 +130,13 @@ public class TeamMemberItemAdapter extends BaseAdapter {
                             }
                         });
             }
-            vh.iv_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LogUtil.d("NimIM","account = " + teamMember.getAccount() );
-                    callback.showDeleteMember(teamMember.getAccount());
-                }
-            });
+//            vh.iv_delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    LogUtil.d("NimIM","account = " + teamMember.getAccount() );
+//                    callback.showDeleteMember(teamMember.getAccount());
+//                }
+//            });
         } else if (position < teamMembers.size() + 1) {
             PicassoImageLoader.getInstance().displayNetImage((Activity) context, "i am not empty", vh.iv_userIcon,ContextCompat.getDrawable(context,R.drawable.icon_add_teammember));
             vh.tv_name.setText("添加成员");

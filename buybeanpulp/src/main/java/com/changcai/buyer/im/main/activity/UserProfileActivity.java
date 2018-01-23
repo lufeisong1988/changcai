@@ -183,17 +183,18 @@ public class UserProfileActivity extends BaseActivity {
         if (nimUserInfo.getAvatar() != null && !nimUserInfo.getAvatar().equals("")) {
             PicassoImageLoader.getInstance().displayNetImage(UserProfileActivity.this, nimUserInfo.getAvatar(), ivUserHeader, defaultDrawable);
         }
-        if (nimUserInfo.getName() != null && !nimUserInfo.getName().equals("")) {
-            tvUserName.setText(nimUserInfo.getName());
-        } else {
-            if (nimUserInfo.getMobile() != null && !nimUserInfo.getMobile().equals("")) {
-                tvUserName.setText(nimUserInfo.getMobile());
-            } else {
-                if (nimUserInfo.getAccount() != null && !nimUserInfo.getAccount().equals("")) {
-                    tvUserName.setText(nimUserInfo.getAccount());
-                }
-            }
-        }
+        tvUserName.setText(UserInfoHelper.getUserNameWithHiden(account));
+//        if (nimUserInfo.getName() != null && !nimUserInfo.getName().equals("")) {
+//            tvUserName.setText(nimUserInfo.getName());
+//        } else {
+//            if (nimUserInfo.getMobile() != null && !nimUserInfo.getMobile().equals("")) {
+//                tvUserName.setText(nimUserInfo.getMobile());
+//            } else {
+//                if (nimUserInfo.getAccount() != null && !nimUserInfo.getAccount().equals("")) {
+//                    tvUserName.setText(nimUserInfo.getAccount());
+//                }
+//            }
+//        }
         if (nimUserInfo.getSignature() != null && !nimUserInfo.getSignature().equals("")) {
             tvUserDetail.setText(nimUserInfo.getSignature().replace("\\n", "\n"));
             tvUserDetail.setTextColor(getResources().getColor(R.color.font_black));
@@ -380,10 +381,15 @@ public class UserProfileActivity extends BaseActivity {
 
                     @Override
                     public void onFailed(int i) {
-                        if (!isFinishing()) {
-                            dismissLoading();
-                            ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试 : " + i);
+                        if(i == 404){//该成员不在群内
+                            addToTeam(account);
+                        }else{
+                            if (!isFinishing()) {
+                                dismissLoading();
+                                ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试 : " + i);
+                            }
                         }
+
 
                     }
 
