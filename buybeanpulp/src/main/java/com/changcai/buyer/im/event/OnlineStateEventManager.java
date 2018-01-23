@@ -266,7 +266,7 @@ public class OnlineStateEventManager {
                 changed.add(event.getPublisherAccount());
                 // 将事件缓存
                 OnlineStateEventCache.cacheOnlineState(event.getPublisherAccount(), state);
-                LogUtil.ui("received and cached onlineState of account " + event.getPublisherAccount());
+
             }
         }
         // 如果 UIKit 使用在线状态功能，则通知在线状态变化
@@ -430,7 +430,6 @@ public class OnlineStateEventManager {
         if (!OnlineStateEventCache.hasSubscribed(account)) {
             List<String> accounts = new ArrayList<>(1);
             accounts.add(account);
-            LogUtil.ui("display online state but not subscribe " + account);
             OnlineStateEventSubscribe.subscribeOnlineStateEvent(accounts, OnlineStateEventSubscribe.SUBSCRIBE_EXPIRY);
         }
     }

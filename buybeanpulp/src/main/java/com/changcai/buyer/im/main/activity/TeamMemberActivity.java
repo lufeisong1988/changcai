@@ -2,6 +2,7 @@ package com.changcai.buyer.im.main.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -12,9 +13,9 @@ import com.changcai.buyer.im.main.adapter.TeamMemberItemAdapter;
 import com.changcai.buyer.im.main.present.TeamMemberPresent;
 import com.changcai.buyer.im.main.present.imp.TeamMemberPresentImp;
 import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
+import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
-import com.changcai.buyer.util.ToastUtil;
 import com.changcai.buyer.view.ConfirmDialog;
 import com.changcai.buyer.view.RotateDotsProgressView;
 import com.netease.nim.uikit.business.session.constant.Extras;
@@ -25,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * Created by lufeisong on 2018/1/15.
@@ -40,6 +43,8 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
 
     private TeamMemberItemAdapter adapter;
 
+    private Observable<Boolean> teamMemberEvent;
+
     private List<TeamMember> teamMembers = new ArrayList<>();
     private HashMap<String,String> onLineMap = new HashMap<>();
     private HashMap<String,String> offLineMap = new HashMap<>();
@@ -54,7 +59,21 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
 
     @Override
     protected void injectFragmentView() {
+        teamMemberEvent = RxBus.get().register("teamMember",Boolean.class);
+        teamMemberEvent.subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                if(aBoolean){
 
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ServerErrorCodeDispatch.getInstance().showDialog(TeamMemberActivity.this,"添加成员成功",R.drawable.artboard);
+                        }
+                    },500);
+                }
+            }
+        });
         teamId = getIntent().getExtras().getString(Extras.EXTRA_TEAM_ID);
         adapter = new TeamMemberItemAdapter(teamMembers,this,this,onLineMap,offLineMap);
         present = new TeamMemberPresentImp(this,teamId, this);
@@ -112,6 +131,7 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
     @Override
     protected void onDestroy() {
         present.onDestory();
+        RxBus.get().unregister("teamMember", teamMemberEvent);
         super.onDestroy();
     }
     @Override
@@ -150,15 +170,8 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
 
     @Override
     public void removeMemberSucceed(String member) {
-        ToastUtil.showLong(this,"删除成员成功");
+        ServerErrorCodeDispatch.getInstance().showDialog(TeamMemberActivity.this,"删除成员成功",R.drawable.artboard);
         LogUtil.d("NimIM","delete account = " + member);
-//        for(TeamMember teamMember : teamMembers){
-//            if(teamMember.getAccount().equals(member)){
-//                teamMembers.remove(teamMember);
-//                break;
-//            }
-//        }
-//        adapter.notifyDataSetChanged();
         present.queryMemberList();
     }
 

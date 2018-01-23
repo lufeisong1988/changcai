@@ -62,6 +62,9 @@ public class ConfirmDialog {
      * @param info
      * @param listener 确定按钮监听
      */
+    public static void createConfirmDialog(Context context,int titleIcon, String info, final OnBtnConfirmListener listener) {
+        showAlertView(context, titleIcon, info, null, "确定", null, listener, null);
+    }
     public static void createConfirmDialog(Context context, String info, final OnBtnConfirmListener listener, boolean isOneButton) {
         showAlertView(context, 0, info, null, "确定", null, listener, null);
     }

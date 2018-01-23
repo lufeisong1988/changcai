@@ -86,8 +86,9 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                 }
             }
             asyncUpdateOnlineMembers();
+            getCounselorsModel(false);
         }
-        initMessageObserave();
+//        initMessageObserave();
     }
 
     /**
@@ -257,18 +258,21 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                             .setCallback(new RequestCallback<List<TeamMember>>() {
                                 @Override
                                 public void onSuccess(List<TeamMember> teamMembers) {
-                                    LogUtil.d("NimIM","teamMembers.size = " + teamMembers.size());
-                                    if(teamMembers != null){
+                                    LogUtil.d("NimIM","queryMemberList.asy teamMembers.size = " + teamMembers.size());
+                                    if(teamMembers != null && teamMembers.size() > 0){
                                         TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
                                     }
+
                                 }
 
                                 @Override
                                 public void onFailed(int i) {
+                                    LogUtil.d("NimIM","queryMemberList.asy Failed = " + i);
                                 }
 
                                 @Override
                                 public void onException(Throwable throwable) {
+                                    LogUtil.d("NimIM","queryMemberList.asy Exception = " + throwable.toString());
                                 }
                             });
                 }
@@ -370,6 +374,8 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     if (view != null) {
                         view.updateAllStatus(false, "", System.currentTimeMillis());
                         view.updateConsultantStatus(false, UserDataUtil.isLogin() ? "" : "登录后查看会话消息", System.currentTimeMillis());
+                        view.updateTeamStatus(false,"",0);
+                        view.updateOnlineMembers(false,0,0);
                     }
                     return;
                 }
@@ -493,7 +499,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
     public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
         if(view != null){
             LogUtil.d("NimIM","Notifaction updateOnline :" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()));
-            view.updateOnlineMembers(onLineMap.size(),onLineMap.size() + offLineMap.size());
+            view.updateOnlineMembers(true,onLineMap.size(),onLineMap.size() + offLineMap.size());
         }
     }
 

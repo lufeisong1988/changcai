@@ -172,13 +172,13 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
      * 更新在线人数
      * @param team
      */
-    private void updateOnlineInfo(Team team){
+    private void updateOnlineInfo(final Team team){
         NIMClient.getService(TeamService.class)
                 .queryMemberList(team.getId())
                 .setCallback(new RequestCallback<List<TeamMember>>() {
                     @Override
                     public void onSuccess(List<TeamMember> teamMembers) {
-                        if(teamMembers != null){
+                        if(teamMembers != null && teamMembers.size() > 0){
                             TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
                         }
                     }

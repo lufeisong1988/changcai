@@ -43,7 +43,7 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
                         LogUtil.d("NimIM","teamMembers.size = " + teamMembers.size());
                         if(view != null){
                             view.dismissLoading();
-                            if(teamMembers != null){
+                            if(teamMembers != null && teamMembers.size() > 0){
                                 view.queryMemberListSucceed(teamMembers);
                                 TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
                             }else{

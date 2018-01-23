@@ -62,14 +62,17 @@ public class ServerErrorCodeDispatch {
 
     public void showNetErrorDialog(Context context, String errorString,@Nullable String errorCode){
         if (tokenEfficacy(context, errorCode)) return;
-        showAlert((FragmentActivity) context, errorString);
+        showAlert((FragmentActivity) context, errorString,0);
     }
 
-    private void showAlert(FragmentActivity context, String errorString) {
+    private void showAlert(FragmentActivity context, String errorString,int titleIcon) {
         if (context.isFinishing())return;
         MyAlertDialog myAlertDialog = new MyAlertDialog();
         Bundle bundle = new Bundle();
         bundle.putString("title",errorString);
+        if(titleIcon != 0){
+            bundle.putInt("icon",titleIcon);
+        }
         myAlertDialog.setArguments(bundle);
         try{
             myAlertDialog.show( context.getSupportFragmentManager());
@@ -78,9 +81,12 @@ public class ServerErrorCodeDispatch {
     }
 
     public void showNetErrorDialog(Context context, String errorString){
-        showAlert((FragmentActivity) context, errorString);
+        showAlert((FragmentActivity) context, errorString,0);
     }
 
+    public void showDialog(Context context,String message,int titleIcon){
+        showAlert((FragmentActivity) context, message,titleIcon);
+    }
     private boolean tokenEfficacy(Context context, String errorCode) {
         if (!TextUtils.isEmpty(errorCode) && errorCode.contentEquals("101")){
             UserDataUtil.clearUserData();

@@ -86,12 +86,14 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.myConfig
+            manifestPlaceholders = [AMAP_KEY: "6ec8fc16ab051991a3fe2c7e1457c99c"]
         }
         release {
             signingConfig signingConfigs.myConfig
             minifyEnabled true
             zipAlignEnabled true
             proguardFile 'proguard-rules.pro'
+            manifestPlaceholders = [AMAP_KEY: "6ec8fc16ab051991a3fe2c7e1457c99c"]
         }
     }
 

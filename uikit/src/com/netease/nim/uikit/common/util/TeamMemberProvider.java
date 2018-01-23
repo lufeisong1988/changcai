@@ -17,12 +17,11 @@ import java.util.Set;
  */
 
 public class TeamMemberProvider {
-    private static final String OFFLINE = "offline";
-    private static final String ONLINE = "online";
     private static TeamMemberProvider instance;
 
-    private ArrayList<TeamMemberOnlineCallback> calls ;
+    private boolean registerAble = false;
 
+    private ArrayList<TeamMemberOnlineCallback> calls ;
 
     private HashMap<String,String> onLineMap;//在线人
     private HashMap<String,String> offLineMap;//离线人
@@ -34,8 +33,7 @@ public class TeamMemberProvider {
         calls = new ArrayList<>();
         onLineMap = new HashMap<>();
         offLineMap = new HashMap<>();
-        registerOnlineStateChangeListener(true);
-        registerTeamMemberDataChangedObserver(true);
+
     }
 
     public static TeamMemberProvider getInstance() {
@@ -66,12 +64,18 @@ public class TeamMemberProvider {
     public void setTeamMembers(List<TeamMember> members){
         onLineMap.clear();
         offLineMap.clear();
+
         for(TeamMember member : members){
             updateOnlineStatus(member.getAccount());
         }
         updateCallback();
     }
     private void updateOnlineStatus(String account){
+        if(!registerAble){
+            registerAble = true;
+            registerOnlineStateChangeListener(registerAble);
+            registerTeamMemberDataChangedObserver(registerAble);
+        }
         String detailContent = NimUIKitImpl.getOnlineStateContentProvider().getDetailDisplay(account);
         if("".equals(detailContent)){//剔除自己
             if(NimUIKit.getAccount() != null && account.equals(NimUIKit.getAccount())){//观察的账号是自己，返回在线
@@ -157,4 +161,13 @@ public class TeamMemberProvider {
             updateCallback();
         }
     };
+
+    public void clear(){
+        calls = new ArrayList<>();
+        onLineMap = new HashMap<>();
+        offLineMap = new HashMap<>();
+        registerAble = false;
+        registerOnlineStateChangeListener(registerAble);
+        registerTeamMemberDataChangedObserver(registerAble);
+    }
 }

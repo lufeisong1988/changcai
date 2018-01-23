@@ -24,10 +24,11 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.bean.GetCounselorsModel;
 import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.im.session.SessionHelper;
+import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.PicassoImageLoader;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
-import com.changcai.buyer.util.ToastUtil;
+import com.changcai.buyer.view.ConfirmDialog;
 import com.changcai.buyer.view.RotateDotsProgressView;
 import com.changcai.buyer.view.RoundImageView;
 import com.netease.nim.uikit.api.NimUIKit;
@@ -38,6 +39,7 @@ import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.model.TeamMember;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import java.util.ArrayList;
@@ -137,10 +139,16 @@ public class UserProfileActivity extends BaseActivity {
         defaultDrawable = this.getResources().getDrawable(R.drawable.icon_default_head);
         defaultGradeDrawable = ContextCompat.getDrawable(this, R.mipmap.no_network_2);
         parseIntent();
-        if (!DemoCache.getAccount().equals(account)) {
-            tvSetting.setVisibility(View.GONE);
-        } else {
+        if(!teamId.isEmpty() && !DemoCache.getAccount().equals(account)){
+            btnAddFriend.setVisibility(View.VISIBLE);
+        }else{
+            btnAddFriend.setVisibility(View.INVISIBLE);
+        }
+
+        if (teamId.isEmpty() && DemoCache.getAccount().equals(account)) {
             tvSetting.setVisibility(View.VISIBLE);
+        } else {
+            tvSetting.setVisibility(View.GONE);
         }
     }
 
@@ -149,10 +157,9 @@ public class UserProfileActivity extends BaseActivity {
         extMap = (HashMap<String, Object>) getIntent().getSerializableExtra(Extras.EXTRA_EXT);
         if (extMap != null && extMap.containsKey(Extras.EXTRA_TEAM_ID)) {//存在teamid，进入拉群的逻辑
             teamId = (String) extMap.get(Extras.EXTRA_TEAM_ID);
-            btnAddFriend.setVisibility(View.VISIBLE);
-        } else {
-            btnAddFriend.setVisibility(View.GONE);
         }
+
+
     }
 
     void updateUserProfile() {
@@ -172,6 +179,7 @@ public class UserProfileActivity extends BaseActivity {
     }
 
     void updateUI() {
+
         if (nimUserInfo.getAvatar() != null && !nimUserInfo.getAvatar().equals("")) {
             PicassoImageLoader.getInstance().displayNetImage(UserProfileActivity.this, nimUserInfo.getAvatar(), ivUserHeader, defaultDrawable);
         }
@@ -271,41 +279,8 @@ public class UserProfileActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_addFriend:
-                showLoading();
-                List<String> members = new ArrayList<>();
-                members.add(account);
-                com.changcai.buyer.util.LogUtil.d("NimIM", "teamId = " + teamId);
-                NIMClient.getService(TeamService.class)
-                        .addMembers(teamId, members)
-                        .setCallback(new RequestCallback<List<String>>() {
-                            @Override
-                            public void onSuccess(List<String> strings) {
-                                com.changcai.buyer.util.LogUtil.d("NimIM", "list.String = " + strings.toString());
-                                if (!isFinishing()) {
-                                    dismissLoading();
-                                    ToastUtil.showLong(UserProfileActivity.this, "添加账号成功");
-                                    UserProfileActivity.this.finish();
-                                }
-                            }
 
-                            @Override
-                            public void onFailed(int i) {
-                                com.changcai.buyer.util.LogUtil.d("NimIM", "onFailed = " + i);
-                                if (!isFinishing()) {
-                                    dismissLoading();
-                                    ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
-                                }
-                            }
-
-                            @Override
-                            public void onException(Throwable throwable) {
-                                com.changcai.buyer.util.LogUtil.d("NimIM", "onException = " + throwable.toString());
-                                if (!isFinishing()) {
-                                    dismissLoading();
-                                    ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
-                                }
-                            }
-                        });
+                requestTeammember(teamId,account);
                 break;
             case R.id.btn_call:
                 PermissionGen.needPermission(UserProfileActivity.this, 100,
@@ -374,5 +349,90 @@ public class UserProfileActivity extends BaseActivity {
     private void callPhone(String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
         startActivity(intent);
+    }
+
+    /**
+     * 请求群成员
+     * @param account
+     */
+    private void requestTeammember(final String teamId, final String account){
+        if (!isFinishing()) {
+            showLoading();
+        }
+        NIMClient.getService(TeamService.class).queryTeamMember(teamId,account)
+                .setCallback(new RequestCallback<TeamMember>() {
+                    @Override
+                    public void onSuccess(TeamMember teamMember) {
+                        if(teamMember != null && teamMember.isInTeam()){
+                            if (!isFinishing()) {
+                                dismissLoading();
+                                ConfirmDialog.createConfirmDialog(UserProfileActivity.this, "该账号已是联盟成员", "提示", "确定", new ConfirmDialog.OnBtnConfirmListener() {
+                                    @Override
+                                    public void onConfirmListener() {
+
+                                    }
+                                });
+                            }
+                        }else{
+                            addToTeam(account);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int i) {
+                        if (!isFinishing()) {
+                            dismissLoading();
+                            ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试 : " + i);
+                        }
+
+                    }
+
+                    @Override
+                    public void onException(Throwable throwable) {
+                        if (!isFinishing()) {
+                            dismissLoading();
+                            ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
+                        }
+                    }
+                });
+    }
+
+    private void addToTeam(String account){
+        if (!isFinishing()) {
+            showLoading();
+        }
+        List<String> members = new ArrayList<>();
+        members.add(account);
+        NIMClient.getService(TeamService.class)
+                .addMembers(teamId, members)
+                .setCallback(new RequestCallback<List<String>>() {
+                    @Override
+                    public void onSuccess(List<String> strings) {
+                        com.changcai.buyer.util.LogUtil.d("NimIM", "list.String = " + strings.toString());
+                        if (!isFinishing()) {
+                            dismissLoading();
+                            UserProfileActivity.this.finish();
+                            RxBus.get().post("addTeamMember",true);
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int i) {
+                        com.changcai.buyer.util.LogUtil.d("NimIM", "onFailed = " + i);
+                        if (!isFinishing()) {
+                            dismissLoading();
+                            ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
+                        }
+                    }
+
+                    @Override
+                    public void onException(Throwable throwable) {
+                        com.changcai.buyer.util.LogUtil.d("NimIM", "onException = " + throwable.toString());
+                        if (!isFinishing()) {
+                            dismissLoading();
+                            ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试");
+                        }
+                    }
+                });
     }
 }

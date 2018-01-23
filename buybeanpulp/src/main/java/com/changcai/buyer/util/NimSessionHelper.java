@@ -7,6 +7,7 @@ import com.changcai.buyer.im.config.preference.Preferences;
 import com.changcai.buyer.im.config.preference.UserPreferences;
 import com.changcai.buyer.im.provider.LoginProvider;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.util.TeamMemberProvider;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -69,6 +70,7 @@ public class NimSessionHelper {
         DemoCache.clear();
         clearLoginInfo();
 //        registerOnlineStatus(false);
+        TeamMemberProvider.getInstance().clear();
     }
     private void saveLoginInfo(final String account, final String token) {
         Preferences.saveUserAccount(account);

@@ -111,18 +111,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim10"
                 android:background="@color/color_F9FAFB"/>
-            <TextView
-                android:id="@+id/tv_user_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/view_line"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/dim75"
-                android:layout_marginRight="@dimen/dim75"
-                android:layout_marginTop="@dimen/dim40"
-                android:text=""
-                android:textColor="@color/font_black"
-                android:textSize="@dimen/txt34" />
+
+
 
             <Button
                 android:id="@+id/btn_addFriend"
@@ -138,6 +128,24 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/txt40"
                 android:visibility="gone" />
+            <ScrollView
+                android:layout_below="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/dim75"
+                android:layout_marginRight="@dimen/dim75"
+                android:layout_marginTop="@dimen/dim40"
+                android:layout_above="@+id/btn_addFriend"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_user_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+
+                    android:text=""
+                    android:textColor="@color/font_black"
+                    android:textSize="@dimen/txt34" />
+            </ScrollView>
         </RelativeLayout>
 
     </LinearLayout>

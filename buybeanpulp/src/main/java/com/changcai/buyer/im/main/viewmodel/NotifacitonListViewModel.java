@@ -45,5 +45,5 @@ public interface NotifacitonListViewModel {
 
     void joinTeamError();
 
-    void updateOnlineMembers(int onLineMemberNums,int totalMemberNums);
+    void updateOnlineMembers(boolean showAble,int onLineMemberNums,int totalMemberNums);
 }

@@ -67,6 +67,7 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     private NotifactionListPresentInterface present;
 
+    private boolean showCallPhoneAble = true;//是否显示拨打客服电话dialog
 
     @Override
     protected void onResume() {
@@ -241,21 +242,26 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     @Override
     public void unJoinTeam() {
-        ConfirmDialog.createConfirmDialog(this, "提示", "该功能仅开放给联盟成员，加入联盟等事宜请咨询买豆粕网客服。", "取消", "拨打客服电话", new ConfirmDialog.OnBtnConfirmListener() {
-            @Override
-            public void onConfirmListener() {
+        if(showCallPhoneAble){
+            showCallPhoneAble = false;
+            ConfirmDialog.createConfirmDialog(this, "提示", "该功能仅开放给联盟成员，加入联盟等事宜请咨询买豆粕网客服。", "取消", "拨打客服电话", new ConfirmDialog.OnBtnConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    showCallPhoneAble = true;
+                }
+            }, new ConfirmDialog.OnBtnConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    showCallPhoneAble = true;
+                    PermissionGen.needPermission(NotifactionListActivity.this, 100,
+                            new String[]{
+                                    Manifest.permission.CALL_PHONE,
+                            }
+                    );
+                }
+            });
+        }
 
-            }
-        }, new ConfirmDialog.OnBtnConfirmListener() {
-            @Override
-            public void onConfirmListener() {
-                PermissionGen.needPermission(NotifactionListActivity.this, 100,
-                        new String[]{
-                                Manifest.permission.CALL_PHONE,
-                        }
-                );
-            }
-        });
     }
 
     @Override
@@ -274,8 +280,19 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     }
 
     @Override
-    public void updateOnlineMembers(int onLineMemberNums, int totalMemberNums) {
-        tvTeamTime.setText(onLineMemberNums + "/" + totalMemberNums + "人在线");
+    public void updateOnlineMembers(final boolean showAble, final int onLineMemberNums, final int totalMemberNums) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(showAble){
+                    tvTeamTime.setVisibility(View.VISIBLE);
+                }else{
+                    tvTeamTime.setVisibility(View.INVISIBLE);
+                }
+                tvTeamTime.setText(onLineMemberNums + "/" + totalMemberNums + "人在线");
+
+            }
+        });
 
     }
 

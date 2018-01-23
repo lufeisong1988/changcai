@@ -2,6 +2,7 @@ package com.changcai.buyer.im.main.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 
@@ -10,6 +11,8 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.im.main.present.TeamMemberAddPresent;
 import com.changcai.buyer.im.main.present.imp.TeamMemberAddPresentImp;
 import com.changcai.buyer.im.main.viewmodel.TeamMemberAddViewModel;
+import com.changcai.buyer.rx.RxBus;
+import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
 import com.changcai.buyer.util.ToastUtil;
 import com.changcai.buyer.view.ConfirmDialog;
@@ -19,6 +22,8 @@ import com.netease.nim.uikit.business.session.constant.Extras;
 import java.util.HashMap;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * Created by lufeisong on 2018/1/15.
@@ -34,6 +39,8 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
     private TeamMemberAddPresent present;
 
     private String teamId = "";
+    private Observable<Boolean> addTeamMemberEvent;
+
     public static void start(Context context, String teamId) {
         Intent intent = new Intent();
         intent.setClass(context, TeamMemberAddActivity.class);
@@ -43,6 +50,17 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
     }
     @Override
     protected void injectFragmentView() {
+        LogUtil.d("NimIM","injectFragmentView");
+        addTeamMemberEvent = RxBus.get().register("addTeamMember",Boolean.class);
+        addTeamMemberEvent.subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                if(aBoolean){
+                    TeamMemberAddActivity.this.finish();
+                    RxBus.get().post("teamMember",true);
+                }
+            }
+        });
         teamId = getIntent().getExtras().getString(Extras.EXTRA_TEAM_ID);
         present = new TeamMemberAddPresentImp(this);
         etSearchAccount.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -62,6 +80,7 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
             }
         });
     }
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -96,8 +115,29 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
     }
 
     @Override
+    protected void onPause() {
+        //取消焦点，隐藏软键盘
+        etSearchAccount.clearFocus();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        //展示软键盘需要延迟处理
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                etSearchAccount.setIconified(false);
+            }
+        },1000);
+        super.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
+
         present.onDestory();
+        RxBus.get().unregister("addTeamMember", addTeamMemberEvent);
         super.onDestroy();
     }
 

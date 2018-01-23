@@ -129,7 +129,6 @@ public class OnlineStateEventSubscribe {
             return;
         }
         filter(accounts);
-        LogUtil.ui("do subscribe onlineStateEvent accounts = " + accounts);
         EventSubscribeRequest eventSubscribeRequest = new EventSubscribeRequest();
         eventSubscribeRequest.setEventType(NimOnlineStateEvent.EVENT_TYPE);
         eventSubscribeRequest.setPublishers(accounts);

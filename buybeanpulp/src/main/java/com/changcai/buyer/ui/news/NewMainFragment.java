@@ -481,7 +481,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
         }
     };
 
-    //刷新UI
+    //刷新UI （复杂化了，只要读出有未读消息即可）
     private void updateUI(final List<RecentContact> contactsBlock) {
         new Thread(new Runnable() {
             @Override
