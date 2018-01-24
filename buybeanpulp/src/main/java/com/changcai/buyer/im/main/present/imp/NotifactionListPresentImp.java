@@ -73,6 +73,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
             if (view != null) {
                 view.hideNOTIFACTION();
                 view.updateConsultantStatus(false, "登录后查看会话消息", System.currentTimeMillis());
+                view.updateTeamStatus(false,"登录后查看会话消息",0);
             }
         } else {
             UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
@@ -374,7 +375,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                     if (view != null) {
                         view.updateAllStatus(false, "", System.currentTimeMillis());
                         view.updateConsultantStatus(false, UserDataUtil.isLogin() ? "" : "登录后查看会话消息", System.currentTimeMillis());
-                        view.updateTeamStatus(false,"",0);
+                        view.updateTeamStatus(false,"登录后查看会话消息",0);
                         view.updateOnlineMembers(false,0,0);
                     }
                     return;
@@ -482,9 +483,9 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                         view.updateConsultantStatus(false, unReadConsultantMessage, unReadMsgConsultantTime == 0 ? System.currentTimeMillis() : unReadMsgConsultantTime);
                     }
                     if(unReadMsgTeamCount > 0){
-                        view.updateTeamStatus(true, unReadTeamMessage, unReadMsgTeamTime == 0 ? System.currentTimeMillis() : unReadMsgTeamTime);
+                        view.updateTeamStatus(true, "联盟成员交流群", unReadMsgTeamTime == 0 ? System.currentTimeMillis() : unReadMsgTeamTime);
                     } else {
-                        view.updateTeamStatus(false, unReadTeamMessage, unReadMsgTeamTime == 0 ? System.currentTimeMillis() : unReadMsgTeamTime);
+                        view.updateTeamStatus(false, "联盟成员交流群", unReadMsgTeamTime == 0 ? System.currentTimeMillis() : unReadMsgTeamTime);
 
                     }
                 }

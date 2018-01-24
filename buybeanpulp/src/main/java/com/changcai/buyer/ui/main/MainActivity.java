@@ -48,6 +48,7 @@ import com.changcai.buyer.ui.resource.ResourceMainFragment;
 import com.changcai.buyer.ui.strategy.StrategyFragment;
 import com.changcai.buyer.util.AppManager;
 import com.changcai.buyer.util.LogUtil;
+import com.changcai.buyer.util.NimSessionHelper;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
 import com.changcai.buyer.util.SwichLayoutInterFace;
@@ -154,6 +155,7 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
         setContentView(R.layout.activity_main);
         LogUtil.d("TAG","onCreate");
 
+        NimSessionHelper.getInstance().registerOnlineStatus(true);
         AppManager.getAppManager().addActivity(this);
         initView();
         if (!SPUtil.getBoolean(Constants.KEY_NOT_FIRST_GUIDE)) {
@@ -596,6 +598,7 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
 
     @Override
     protected void onDestroy() {
+        NimSessionHelper.getInstance().registerOnlineStatus(false);
         AppManager.getAppManager().finishActivity(this);
         saveArticleId(CommonApplication.getInstance().articleId);
         RxBus.get().unregister("inOrOutAction", logOrOutObservableEvent);

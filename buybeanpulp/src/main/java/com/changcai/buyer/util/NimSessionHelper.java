@@ -6,6 +6,9 @@ import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.im.config.preference.Preferences;
 import com.changcai.buyer.im.config.preference.UserPreferences;
 import com.changcai.buyer.im.provider.LoginProvider;
+import com.changcai.buyer.interface_api.ApiServiceGenerator;
+import com.changcai.buyer.interface_api.BaseApiModel;
+import com.changcai.buyer.interface_api.InitImMsgService;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.util.TeamMemberProvider;
 import com.netease.nimlib.sdk.NIMClient;
@@ -16,6 +19,12 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+
+import java.util.Map;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by lufeisong on 2017/12/25.
@@ -95,6 +104,25 @@ public class NimSessionHelper {
 
         @Override
         public void onEvent(StatusCode code) {
+            if(code == StatusCode.LOGINED){
+                Map<String, String> map = SPUtil.getObjectFromShare(Constants.REQUEST_BASE_PARAMETERS);
+                map.put("tokenId", SPUtil.getString(Constants.KEY_TOKEN_ID));
+                InitImMsgService service = ApiServiceGenerator.createService(InitImMsgService.class);
+                service.InitImMsg(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<BaseApiModel>() {
+                    @Override
+                    public void call(BaseApiModel baseApiModel) {
+                        LogUtil.d("NimIM", "InitImMsgService code = " + baseApiModel.getErrorCode());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        LogUtil.d("NimIM", "InitImMsgService throwable = " + throwable.toString());
+                    }
+                });
+            }
             LogUtil.d("NimIM","statusCode = " + code.getValue());
         }
     };

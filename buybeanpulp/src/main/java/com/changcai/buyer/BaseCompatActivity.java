@@ -38,6 +38,7 @@ public abstract class BaseCompatActivity extends AppCompatActivity  {
      *back image button
      */
     protected ImageView backImage;
+    protected ImageView rightImage;
 
     protected TextView tv_right;
     protected ImmersionBar immersionBar;
@@ -105,7 +106,9 @@ public abstract class BaseCompatActivity extends AppCompatActivity  {
                 toolBarRightBtnListener();
             }
         });
+        rightImage = (ImageView) findViewById(R.id.iv_btn_right);
     }
+
     public void toolBarRightBtnListener(){
 
 

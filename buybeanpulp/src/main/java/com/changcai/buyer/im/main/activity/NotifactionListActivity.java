@@ -17,7 +17,6 @@ import com.changcai.buyer.im.main.present.imp.NotifactionListPresentImp;
 import com.changcai.buyer.im.main.viewmodel.NotifacitonListViewModel;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.ui.login.LoginActivity;
-import com.changcai.buyer.util.NimSessionHelper;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
 import com.changcai.buyer.view.ConfirmDialog;
@@ -64,6 +63,9 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     ConstraintLayout clTeam;
     @BindView(R.id.iv_team_dot)
     ImageView ivTeamDot;
+    @BindView(R.id.tv_team_content)
+    TextView tvTeamContent;
+
 
     private NotifactionListPresentInterface present;
 
@@ -80,6 +82,7 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
         super.onDestroy();
         present.onDestory();
 
+
     }
 
     @Override
@@ -90,7 +93,18 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     @Override
     protected void injectFragmentView() {
-
+        rightImage.setVisibility(View.VISIBLE);
+        rightImage.setImageResource(R.drawable.icon_nav_call);
+        rightImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PermissionGen.needPermission(NotifactionListActivity.this, 100,
+                        new String[] {
+                                Manifest.permission.CALL_PHONE,
+                        }
+                );
+            }
+        });
         initData();
     }
 
@@ -128,7 +142,6 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
     private void initData() {
         present = new NotifactionListPresentImp(this);
         present.getCounselorsModel(false);
-        NimSessionHelper.getInstance().registerOnlineStatus(true);
     }
 
 
@@ -230,6 +243,7 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
                 } else {
                     ivTeamDot.setVisibility(View.GONE);
                 }
+                tvTeamContent.setText(message);
 
             }
         });
@@ -242,7 +256,7 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     @Override
     public void unJoinTeam() {
-        if(showCallPhoneAble){
+        if (showCallPhoneAble) {
             showCallPhoneAble = false;
             ConfirmDialog.createConfirmDialog(this, "提示", "该功能仅开放给联盟成员，加入联盟等事宜请咨询买豆粕网客服。", "取消", "拨打客服电话", new ConfirmDialog.OnBtnConfirmListener() {
                 @Override
@@ -284,9 +298,9 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(showAble){
+                if (showAble) {
                     tvTeamTime.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     tvTeamTime.setVisibility(View.INVISIBLE);
                 }
                 tvTeamTime.setText(onLineMemberNums + "/" + totalMemberNums + "人在线");
