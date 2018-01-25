@@ -266,7 +266,6 @@ public class OnlineStateEventManager {
                 changed.add(event.getPublisherAccount());
                 // 将事件缓存
                 OnlineStateEventCache.cacheOnlineState(event.getPublisherAccount(), state);
-
             }
         }
         // 如果 UIKit 使用在线状态功能，则通知在线状态变化

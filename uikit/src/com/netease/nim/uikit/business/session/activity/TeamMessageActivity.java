@@ -16,10 +16,11 @@ import com.netease.nim.uikit.api.model.contact.ContactChangedObserver;
 import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.api.model.team.TeamDataChangedObserver;
 import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
+import com.netease.nim.uikit.api.model.team.TeamMemberOnlineProvider;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.session.fragment.TeamMessageFragment;
-import com.netease.nim.uikit.common.util.TeamMemberProvider;
+import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
@@ -37,7 +38,7 @@ import java.util.List;
  * <p/>
  * Created by huangjun on 2015/3/5.
  */
-public class TeamMessageActivity extends BaseMessageActivity implements TeamMemberProvider.TeamMemberOnlineCallback{
+public class TeamMessageActivity extends BaseMessageActivity implements TeamMemberOnlineProvider.TeamMemberOnlineCallback{
 
     // model
     private Team team;
@@ -85,7 +86,7 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TeamMemberProvider.getInstance().addCallback(this);
+        NimUIKitImpl.getTeamMemberOnlineProvider().addCallback(this);
         backToClass = (Class<? extends Activity>) getIntent().getSerializableExtra(Extras.EXTRA_BACK_TO_CLASS);
         findViews();
         initListener();
@@ -95,7 +96,7 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        TeamMemberProvider.getInstance().removeCallback(this);
+        NimUIKitImpl.getTeamMemberOnlineProvider().removeCallback(this);
         registerTeamUpdateObserver(false);
     }
 
@@ -178,8 +179,9 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
                 .setCallback(new RequestCallback<List<TeamMember>>() {
                     @Override
                     public void onSuccess(List<TeamMember> teamMembers) {
+
                         if(teamMembers != null && teamMembers.size() > 0){
-                            TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
+                            NimUIKitImpl.getTeamMemberOnlineProvider().setTeamMembers(teamMembers);
                         }
                     }
 
@@ -309,6 +311,13 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
     public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
         if(team != null){
             tvTitle.setText(team.getName() + "(" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()) + ")");
+        }
+    }
+
+    @Override
+    public void exitTeamByManager() {
+        if(team != null){
+            tvTitle.setText(team.getName());
         }
     }
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.changcai.buyer.im.main.present.TeamMemberPresent;
 import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
 import com.changcai.buyer.util.LogUtil;
-import com.netease.nim.uikit.common.util.TeamMemberProvider;
+import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by lufeisong on 2018/1/16.
  */
 
-public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvider.TeamMemberOnlineCallback {
+public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberOnlineProviderImp.TeamMemberOnlineCallback {
     private Context context;
     private String teamId;
     private TeamMemberViewModel view;
@@ -27,7 +27,7 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
         this.context = context;
         this.teamId = teamId;
         this.view = view;
-        TeamMemberProvider.getInstance().addCallback(this);
+        TeamMemberOnlineProviderImp.getInstance().addCallback(this);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
                             view.dismissLoading();
                             if(teamMembers != null && teamMembers.size() > 0){
                                 view.queryMemberListSucceed(teamMembers);
-                                TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
+                                TeamMemberOnlineProviderImp.getInstance().setTeamMembers(teamMembers);
                             }else{
                                 view.queryMemberListFail("获取群成员列表失败" );
                             }
@@ -108,7 +108,7 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
     @Override
     public void onDestory() {
         view = null;
-        TeamMemberProvider.getInstance().removeCallback(this);
+        TeamMemberOnlineProviderImp.getInstance().removeCallback(this);
     }
 
     /**
@@ -120,6 +120,13 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberProvide
             LogUtil.d("NimIM","TeamMember updateOnline :" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()));
             view.updateOnlineMembers(onLineMap.size(),onLineMap.size() + offLineMap.size());
             view.updateOnlineMembersAdapter(onLineMap,offLineMap);
+        }
+    }
+
+    @Override
+    public void exitTeamByManager() {
+        if(view != null){
+            view.exitTeamByManager();
         }
     }
 

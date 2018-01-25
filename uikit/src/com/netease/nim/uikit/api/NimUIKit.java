@@ -18,6 +18,7 @@ import com.netease.nim.uikit.api.model.robot.RobotInfoProvider;
 import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.api.model.session.SessionEventListener;
 import com.netease.nim.uikit.api.model.team.TeamChangedObservable;
+import com.netease.nim.uikit.api.model.team.TeamMemberOnlineProvider;
 import com.netease.nim.uikit.api.model.team.TeamProvider;
 import com.netease.nim.uikit.api.model.user.IUserInfoProvider;
 import com.netease.nim.uikit.api.model.user.UserInfoObservable;
@@ -536,6 +537,9 @@ public class NimUIKit {
         NimUIKitImpl.setOnlineStateContentProvider(onlineStateContentProvider);
     }
 
+    public static void setTeamMemberOnlineProvider(TeamMemberOnlineProvider teamMemberOnlineProvider){
+        NimUIKitImpl.setTeamMemberOnlineProvider(teamMemberOnlineProvider);
+    }
     /**
      * 获取配置的用户在线状态文案提供者
      *

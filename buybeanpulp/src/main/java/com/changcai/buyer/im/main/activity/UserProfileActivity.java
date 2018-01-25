@@ -259,7 +259,7 @@ public class UserProfileActivity extends BaseActivity {
         if (isCounselor && userAccount != null && !userAccount.equals(account)) {
             btnCall.setVisibility(View.VISIBLE);
         } else {
-            btnCall.setVisibility(View.INVISIBLE);
+            btnCall.setVisibility(View.GONE);
         }
     }
 

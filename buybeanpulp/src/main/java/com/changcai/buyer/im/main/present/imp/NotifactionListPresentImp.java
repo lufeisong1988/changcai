@@ -17,7 +17,8 @@ import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.NimSessionHelper;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.UserDataUtil;
-import com.netease.nim.uikit.common.util.TeamMemberProvider;
+import com.netease.nim.uikit.common.util.MsgUtil;
+import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by lufeisong on 2017/12/22.
  */
 
-public class NotifactionListPresentImp implements NotifactionListPresentInterface, NotifactionListModelImp.NotifactionListModelCallback, LoginProvider.LoginCallback ,TeamMemberProvider.TeamMemberOnlineCallback
+public class NotifactionListPresentImp implements NotifactionListPresentInterface, NotifactionListModelImp.NotifactionListModelCallback, LoginProvider.LoginCallback ,TeamMemberOnlineProviderImp.TeamMemberOnlineCallback
 {
     private NotifactionListModelInterface model;
     private NotifacitonListViewModel view;
@@ -59,7 +60,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         this.view = view;
         model = new NotifactionListModelImp(this);
         LoginProvider.getInstance().addLoginCallback(this);
-        TeamMemberProvider.getInstance().addCallback(this);
+        TeamMemberOnlineProviderImp.getInstance().addCallback(this);
         registerRecentContact(true);
 
     }
@@ -169,7 +170,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
     public void onDestory() {
         view = null;
         LoginProvider.getInstance().removeLoginCallback(this);
-        TeamMemberProvider.getInstance().removeCallback(this);
+        TeamMemberOnlineProviderImp.getInstance().removeCallback(this);
         registerRecentContact(false);
     }
 
@@ -261,7 +262,7 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                                 public void onSuccess(List<TeamMember> teamMembers) {
                                     LogUtil.d("NimIM","queryMemberList.asy teamMembers.size = " + teamMembers.size());
                                     if(teamMembers != null && teamMembers.size() > 0){
-                                        TeamMemberProvider.getInstance().setTeamMembers(teamMembers);
+                                        TeamMemberOnlineProviderImp.getInstance().setTeamMembers(teamMembers);
                                     }
 
                                 }
@@ -387,24 +388,31 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                 for (int i = 0; i < contactsBlock.size(); i++) {//遍历出所有未读消息数目和message
                     RecentContact recentContact = contactsBlock.get(i);
                     int position = -1;
-                    LogUtil.d("NimIM", "最近联系 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                    LogUtil.d("NimIM", "最近联系 ： 第" + i + "位: contactId = " + recentContact.getContactId() + "; fromAccount = " + recentContact.getFromAccount() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent() + " ext = "+ (recentContact.getExtension() == null ? " null" :recentContact.getExtension() .toString() ) + " ; time = " + recentContact.getTime());
                     if(recentContact.getSessionType().getValue() == SessionTypeEnum.P2P.getValue()){//P2P
 
-                        //遍历出所有人
+                        //遍历出所有人（剔除掉顾问发的初始化信息）
                         for(int j = 0; j < contactsAllBlock.size();j++){
-                            if(contactsAllBlock.get(j).getContactId().equals(recentContact.getContactId())){
+                            RecentContact contactsAll =  contactsAllBlock.get(j);
+                            if(contactsAll.getContactId().equals(recentContact.getContactId())){
                                 position = j;
                                 break;
                             }
                         }
-                        if(position != -1){
+                        if(position != -1 ){
                             contactsAllBlock.remove(position);
-                            contactsAllBlock.add(position,recentContact);
-                        }else{
-                            contactsAllBlock.add(recentContact);
+                            if(!MsgUtil.fliteMessage(recentContact)){
+                                contactsAllBlock.add(position,recentContact);
+                            }
+                        }else {
+                            if(!MsgUtil.fliteMessage(recentContact)){
+                                contactsAllBlock.add(recentContact);
+                            }
                         }
+
                         position = -1;
-                        if (info != null) {//遍历出顾问
+                        //遍历出顾问
+                        if (info != null) {
                             for (int j = 0; j < info.size(); j++) {
                                 if (info.get(j).getAccid().equals(recentContact.getContactId())) {
                                     for(int n = 0; n < contactsConsultantBlock.size();n++){
@@ -431,11 +439,16 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                                 break;
                             }
                         }
+                        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(recentContact.getContactId());
                         if(position != -1){
                             contactsTeamBlock.remove(position);
-                            contactsTeamBlock.add(position,recentContact);
+                            if(team.isMyTeam()){
+                                contactsTeamBlock.add(position,recentContact);
+                            }
                         }else{
-                            contactsTeamBlock.add(recentContact);
+                            if(team.isMyTeam()){
+                                contactsTeamBlock.add(recentContact);
+                            }
                         }
                         position = -1;
                     }
@@ -501,6 +514,16 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         if(view != null){
             LogUtil.d("NimIM","Notifaction updateOnline :" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()));
             view.updateOnlineMembers(true,onLineMap.size(),onLineMap.size() + offLineMap.size());
+        }
+    }
+
+    /**
+     * 被管理员清出群
+     */
+    @Override
+    public void exitTeamByManager() {
+        if(view != null){
+            view.exitTeamByManager();
         }
     }
 

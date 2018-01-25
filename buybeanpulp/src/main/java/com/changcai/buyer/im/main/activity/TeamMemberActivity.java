@@ -205,6 +205,11 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
     }
 
     @Override
+    public void exitTeamByManager() {
+        titleText.setText("您已退出该群");
+    }
+
+    @Override
     public void updateOnlineMembersAdapter(HashMap<String, String> onLineMap, HashMap<String, String> offLineMap) {
         this.onLineMap.clear();
         this.offLineMap.clear();

@@ -310,6 +310,17 @@ public class NotifactionListActivity extends CompatTouchBackActivity implements 
 
     }
 
+    @Override
+    public void exitTeamByManager() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvTeamTime.setText("");
+
+            }
+        });
+    }
+
 
     @OnClick({R.id.cl_vip, R.id.cl_consultant, R.id.cl_team})
     public void onClick(View view) {

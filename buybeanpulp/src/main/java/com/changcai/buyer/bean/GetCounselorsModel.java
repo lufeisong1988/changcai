@@ -119,5 +119,17 @@ public class GetCounselorsModel implements Serializable, IKeepFromProguard {
             result = 31 * result + (counselorStatus != null ? counselorStatus.hashCode() : 0);
             return result;
         }
+
+        @Override
+        public String toString() {
+            return "InfoBean{" +
+                    "counselorName='" + counselorName + '\'' +
+                    ", serviceStatus='" + serviceStatus + '\'' +
+                    ", accid='" + accid + '\'' +
+                    ", serviceLevelDesc='" + serviceLevelDesc + '\'' +
+                    ", serviceLevel=" + serviceLevel +
+                    ", counselorStatus='" + counselorStatus + '\'' +
+                    '}';
+        }
     }
 }

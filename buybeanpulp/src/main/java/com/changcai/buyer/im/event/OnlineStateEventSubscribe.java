@@ -147,6 +147,7 @@ public class OnlineStateEventSubscribe {
                     SubscribeExpiryManager.subscribeSuccess();
                     if (result != null) {
                         // 部分订阅失败的账号。。。
+                        LogUtil.d("NimIM","订阅失败: " + result.toString() + "  code = " + code );
                         OnlineStateEventCache.removeSubsAccounts(result);
                     }
                 } else {

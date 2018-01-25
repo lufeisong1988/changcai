@@ -28,6 +28,7 @@ import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.AppInfo;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.SPUtil;
+import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.UIKitOptions;
 import com.netease.nim.uikit.business.contact.core.query.PinYin;
@@ -358,6 +359,7 @@ public class CommonApplication extends MultiDexApplication {
         //NimUIKit.setCustomPushContentProvider(new DemoPushContentProvider());
 
         NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
+        NimUIKit.setTeamMemberOnlineProvider(TeamMemberOnlineProviderImp.getInstance());
     }
 
     private UIKitOptions buildUIKitOptions() {

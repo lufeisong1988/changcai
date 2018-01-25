@@ -24,7 +24,7 @@ import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
 import com.netease.nim.uikit.common.ui.drop.DropCover;
 import com.netease.nim.uikit.common.ui.drop.DropManager;
 import com.netease.nim.uikit.common.ui.recyclerview.listener.SimpleClickListener;
-import com.netease.nim.uikit.common.util.log.LogUtil;
+import com.netease.nim.uikit.common.util.MsgUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -341,7 +341,7 @@ public class RecentContactsFragment extends TFragment {
                                 updateOfflineContactAited(loadedRecent);
                             }
                             //获取最近一条消息的拓展ext，过滤到顾问默认发的消息
-                            if (fliteMessage(loadedRecent)) {
+                            if (MsgUtil.fliteMessage(loadedRecent)) {
                                 tmpUnShowRecents.add(loadedRecent);
                             }
                         }
@@ -514,7 +514,7 @@ public class RecentContactsFragment extends TFragment {
                 items.remove(index);
             }
             //过滤掉消息
-            if (!fliteMessage(r)) {
+            if (!MsgUtil.fliteMessage(r)) {
                 items.add(r);
             }
             if (r.getSessionType() == SessionTypeEnum.Team && cacheMessages.get(r.getContactId()) != null) {
@@ -721,28 +721,5 @@ public class RecentContactsFragment extends TFragment {
 
     }
 
-    /**
-     * 是否过滤掉消息
-     *
-     * 1.消息ext有msgStatus 未 init
-     * 2.过滤掉群消息
-     * @param loadedRecent
-     * @return
-     */
-    private boolean fliteMessage(RecentContact loadedRecent) {
-        if(loadedRecent.getSessionType().getValue() != SessionTypeEnum.P2P.getValue()){
-            return true;
-        }
-        List<String> uuid = new ArrayList<>(1);
-        uuid.add(loadedRecent.getRecentMessageId());
-        List<IMMessage> messages = NIMClient.getService(MsgService.class).queryMessageListByUuidBlock(uuid);
-        if (messages != null && messages.size() > 0) {
-            Map<String, Object> extStr = messages.get(0).getRemoteExtension();
-            LogUtil.d("message","extStr = " + (extStr != null ? extStr.toString() : "null"));
-            if (extStr != null && extStr.containsKey("msgStatus") && extStr.get("msgStatus").equals("init")) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

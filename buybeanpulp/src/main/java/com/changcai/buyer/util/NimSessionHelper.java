@@ -10,7 +10,6 @@ import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.BaseApiModel;
 import com.changcai.buyer.interface_api.InitImMsgService;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.common.util.TeamMemberProvider;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -79,7 +78,7 @@ public class NimSessionHelper {
         DemoCache.clear();
         clearLoginInfo();
 //        registerOnlineStatus(false);
-        TeamMemberProvider.getInstance().clear();
+        TeamMemberOnlineProviderImp.getInstance().clear();
     }
     private void saveLoginInfo(final String account, final String token) {
         Preferences.saveUserAccount(account);

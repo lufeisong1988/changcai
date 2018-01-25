@@ -29,5 +29,7 @@ public interface TeamMemberViewModel {
 
     void updateOnlineMembers(int onLineMemberNums,int totalMemberNums);
 
+    void exitTeamByManager();
+
     void updateOnlineMembersAdapter(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap);
 }

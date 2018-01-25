@@ -48,11 +48,15 @@ import com.changcai.buyer.view.indicator.commonnavigator.titles.SimplePagerTitle
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.netease.nim.uikit.common.util.MsgUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
+import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.model.Team;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
@@ -155,7 +159,9 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
      * 刷新消息红点
      */
     public void updateDot() {
-
+        contactsAllBlock.clear();
+        contactsConsultantBlock .clear();
+        contactsTeamBlock.clear();
         model.getCounselorsModel();
     }
 
@@ -481,11 +487,23 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
         }
     };
 
+    private List<RecentContact> contactsAllBlock = new ArrayList<>();//所有人集合（P2P）
+    private List<RecentContact> contactsConsultantBlock = new ArrayList<>();//顾问集合 (P2P）
+    private List<RecentContact> contactsTeamBlock = new ArrayList<>();//产业联盟集合 (Team）
     //刷新UI （复杂化了，只要读出有未读消息即可）
     private void updateUI(final List<RecentContact> contactsBlock) {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                int unReadMsgCount = 0;
+                int unReadMsgConsultantCount = 0;//顾问未读数目
+                int unReadMsgTeamCount = 0;//产业联盟未读数目
+                long unReadMsgTime = 0;
+                long unReadMsgConsultantTime = 0;//顾问最新一条消息时间
+                long unReadMsgTeamTime = 0;//产业联盟最新一条消息时间
+                String unReadMessage = "";
+                String unReadConsultantMessage = "";//顾问最新一条信息
+                String unReadTeamMessage = "";//产业联盟最新一条信息
                 if (contactsBlock == null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -495,35 +513,113 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                     });
                     return;
                 }
-                int unReadMsgCount = 0;
-                int unReadMsgConsultantCount = 0;//顾问未读数目
-                List<RecentContact> contactsConsultantBlock = new ArrayList<>();//顾问集合
-                UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
+
                 //遍历所有未读消息数量，最近一条消息
+                //遍历出所有人集合
                 //遍历出顾问集合
+                //遍历出产业联盟集合
                 for (int i = 0; i < contactsBlock.size(); i++) {//遍历出所有未读消息数目和message
                     RecentContact recentContact = contactsBlock.get(i);
-                    LogUtil.d("NimIM", "所有 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
-                    if (info != null) {
-                        for (int j = 0; j < info.size(); j++) {//遍历出顾问
-                            if (info.get(j).getAccid().equals(recentContact.getContactId())) {
-                                contactsConsultantBlock.add(recentContact);
+                    int position = -1;
+                    LogUtil.d("NimIM", "最近联系 ： 第" + i + "位: contactId = " + recentContact.getContactId() + "; fromAccount = " + recentContact.getFromAccount() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent() + " ext = "+ (recentContact.getExtension() == null ? " null" :recentContact.getExtension() .toString() ) + " ; time = " + recentContact.getTime());
+                    if(recentContact.getSessionType().getValue() == SessionTypeEnum.P2P.getValue()){//P2P
+
+                        //遍历出所有人（剔除掉顾问发的初始化信息）
+                        for(int j = 0; j < contactsAllBlock.size();j++){
+                            RecentContact contactsAll =  contactsAllBlock.get(j);
+                            if(contactsAll.getContactId().equals(recentContact.getContactId())){
+                                position = j;
                                 break;
                             }
                         }
-                    }
-                    unReadMsgCount += recentContact.getUnreadCount();
+                        if(position != -1 ){
+                            contactsAllBlock.remove(position);
+                            if(!MsgUtil.fliteMessage(recentContact)){
+                                contactsAllBlock.add(position,recentContact);
+                            }
+                        }else {
+                            if(!MsgUtil.fliteMessage(recentContact)){
+                                contactsAllBlock.add(recentContact);
+                            }
+                        }
 
+                        position = -1;
+                        //遍历出顾问
+                        if (info != null) {
+                            for (int j = 0; j < info.size(); j++) {
+                                if (info.get(j).getAccid().equals(recentContact.getContactId())) {
+                                    for(int n = 0; n < contactsConsultantBlock.size();n++){
+                                        if(contactsConsultantBlock.get(n).getContactId().equals(recentContact.getContactId())){
+                                            position = n;
+                                            break;
+                                        }
+                                    }
+                                    if(position != -1){
+                                        contactsConsultantBlock.remove(position);
+                                        contactsConsultantBlock.add(position,recentContact);
+                                    }else{
+                                        contactsConsultantBlock.add(recentContact);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        position = -1;
+                    }else if(recentContact.getSessionType().getValue() == SessionTypeEnum.Team.getValue()){//Team
+                        for(int j = 0; j < contactsTeamBlock.size();j++){
+                            if(contactsTeamBlock.get(j).getContactId().equals(recentContact.getContactId())){
+                                position = j;
+                                break;
+                            }
+                        }
+                        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(recentContact.getContactId());
+                        if(position != -1){
+                            contactsTeamBlock.remove(position);
+                            if(team.isMyTeam()){
+                                contactsTeamBlock.add(position,recentContact);
+                            }
+                        }else{
+                            if(team.isMyTeam()){
+                                contactsTeamBlock.add(recentContact);
+                            }
+                        }
+                        position = -1;
+                    }
+                }
+                //遍历所有人未读消息数量，最近一条消息
+                for(int i = 0;i < contactsAllBlock.size();i++ ){
+                    RecentContact recentContact = contactsAllBlock.get(i);
+                    LogUtil.d("NimIM", "所有人 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                    unReadMsgCount += recentContact.getUnreadCount();
+                    if (i == 0) {
+                        unReadMsgTime = recentContact.getTime();
+                        unReadMessage = recentContact.getContent();
+                    }
                 }
                 //遍历顾问未读消息数量，最近一条消息
                 for (int i = 0; i < contactsConsultantBlock.size(); i++) {
                     RecentContact recentContact = contactsConsultantBlock.get(i);
                     LogUtil.d("NimIM", "顾问团 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
                     unReadMsgConsultantCount += recentContact.getUnreadCount();
+                    if (i == 0) {
+                        unReadConsultantMessage = recentContact.getContent();
+                        unReadMsgConsultantTime = recentContact.getTime();
+                    }
                 }
-                //不是顾问,筛选顾问团未读信息
+                //遍历产业联盟未读消息数量，最近一条消息
+                for (int i = 0; i < contactsTeamBlock.size(); i++) {
+                    RecentContact recentContact = contactsTeamBlock.get(i);
+                    LogUtil.d("NimIM", "产业联盟 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                    unReadMsgTeamCount += recentContact.getUnreadCount();
+                    if (i == 0) {
+                        unReadTeamMessage = recentContact.getContent();
+                        unReadMsgTeamTime = recentContact.getTime();
+                    }
+                }
+                UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
+                //不是顾问,筛选顾问团未读信息 + 群
                 if (userInfo.getServiceLevel() == null && userInfo.getServiceStatus() == null && userInfo.getCounselorStatus() == null) {
-                    final int finalUnReadMsgConsultantCount = unReadMsgConsultantCount;
+                    final int finalUnReadMsgConsultantCount = unReadMsgConsultantCount + unReadMsgTeamCount;
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -535,8 +631,8 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                         }
                     });
 
-                } else {//是顾问,获取所有未读信息
-                    final int finalUnReadMsgCount = unReadMsgCount;
+                } else {//是顾问,获取所有未读信息 + 群
+                    final int finalUnReadMsgCount = unReadMsgCount + unReadMsgTeamCount;
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -548,7 +644,6 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                         }
                     });
                 }
-
 
             }
         }).start();

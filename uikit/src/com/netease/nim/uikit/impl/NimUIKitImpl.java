@@ -24,6 +24,7 @@ import com.netease.nim.uikit.api.model.robot.RobotInfoProvider;
 import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.api.model.session.SessionEventListener;
 import com.netease.nim.uikit.api.model.team.TeamChangedObservable;
+import com.netease.nim.uikit.api.model.team.TeamMemberOnlineProvider;
 import com.netease.nim.uikit.api.model.team.TeamProvider;
 import com.netease.nim.uikit.api.model.user.IUserInfoProvider;
 import com.netease.nim.uikit.api.model.user.UserInfoObservable;
@@ -158,9 +159,14 @@ public final class NimUIKitImpl {
     //初始化状态监听
     private static UIKitInitStateListener initStateListener;
 
+    //群在线人数变化监听
+
+    private static TeamMemberOnlineProvider teamMemberOnlineProvider;
+
+
     /*
-     * ****************************** 初始化 ******************************
-     */
+         * ****************************** 初始化 ******************************
+         */
     public static void init(Context context) {
         init(context, new UIKitOptions(), null, null);
     }
@@ -565,6 +571,15 @@ public final class NimUIKitImpl {
 
     public static boolean getEarPhoneModeEnable() {
         return UserPreferences.isEarPhoneModeEnable();
+    }
+
+
+    public static TeamMemberOnlineProvider getTeamMemberOnlineProvider() {
+        return teamMemberOnlineProvider;
+    }
+
+    public static void setTeamMemberOnlineProvider(TeamMemberOnlineProvider teamMemberOnlineProvider) {
+        NimUIKitImpl.teamMemberOnlineProvider = teamMemberOnlineProvider;
     }
 
     /*
