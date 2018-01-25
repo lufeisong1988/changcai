@@ -16,9 +16,9 @@ import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.NimSessionHelper;
 import com.changcai.buyer.util.SPUtil;
+import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
 import com.changcai.buyer.util.UserDataUtil;
 import com.netease.nim.uikit.common.util.MsgUtil;
-import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -221,7 +221,12 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                             .setCallback(new RequestCallback<List<Team>>() {
                                 @Override
                                 public void onSuccess(List<Team> teams) {
-
+                                    if(teams == null){
+                                        if(view != null){
+                                            view.unJoinTeam();
+                                        }
+                                        return;
+                                    }
                                     boolean joinAble = false;
                                     for(Team team :teams){
                                         if(team.getId().equals(tid)){
@@ -440,16 +445,19 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                             }
                         }
                         Team team = NIMClient.getService(TeamService.class).queryTeamBlock(recentContact.getContactId());
-                        if(position != -1){
-                            contactsTeamBlock.remove(position);
-                            if(team.isMyTeam()){
-                                contactsTeamBlock.add(position,recentContact);
-                            }
-                        }else{
-                            if(team.isMyTeam()){
-                                contactsTeamBlock.add(recentContact);
+                        if(team != null){
+                            if(position != -1){
+                                contactsTeamBlock.remove(position);
+                                if(team.isMyTeam()){
+                                    contactsTeamBlock.add(position,recentContact);
+                                }
+                            }else{
+                                if(team.isMyTeam()){
+                                    contactsTeamBlock.add(recentContact);
+                                }
                             }
                         }
+
                         position = -1;
                     }
                 }

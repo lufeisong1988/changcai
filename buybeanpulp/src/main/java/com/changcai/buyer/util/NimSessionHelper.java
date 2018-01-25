@@ -121,6 +121,8 @@ public class NimSessionHelper {
                         LogUtil.d("NimIM", "InitImMsgService throwable = " + throwable.toString());
                     }
                 });
+            }else if(code.shouldReLogin()){
+                login();
             }
             LogUtil.d("NimIM","statusCode = " + code.getValue());
         }

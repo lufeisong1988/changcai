@@ -76,7 +76,6 @@ public class TeamMemberOnlineProviderImp implements TeamMemberOnlineProvider {
         offLineMap.clear();
 
         for(TeamMember member : members){
-            LogUtil.d("NimIM","member = " + member.getAccount());
             updateOnlineStatus(member.getAccount());
         }
         LogUtil.d("NimIM","updateCallback setTeamMembers");
@@ -89,13 +88,6 @@ public class TeamMemberOnlineProviderImp implements TeamMemberOnlineProvider {
             registerTeamMemberDataChangedObserver(registerAble);
         }
         String detailContent = NimUIKitImpl.getOnlineStateContentProvider().getDetailDisplay(account);
-        LogUtil.d("NimIM","test");
-        if(detailContent == null){
-            LogUtil.d("NimIM","updateOnlineStatus account = " + account + " online = is null " );
-        }else{
-            LogUtil.d("NimIM","updateOnlineStatus account = " + account + " online =  " + detailContent);
-        }
-
         if("".equals(detailContent)){//剔除自己
             if(NimUIKit.getAccount() != null && account.equals(NimUIKit.getAccount())){//观察的账号是自己，返回在线
                 changeLineData(account,"自己",MODE_ONLINE);

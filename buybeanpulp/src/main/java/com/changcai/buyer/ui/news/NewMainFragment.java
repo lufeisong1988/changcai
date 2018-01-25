@@ -573,16 +573,20 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                             }
                         }
                         Team team = NIMClient.getService(TeamService.class).queryTeamBlock(recentContact.getContactId());
-                        if(position != -1){
-                            contactsTeamBlock.remove(position);
-                            if(team.isMyTeam()){
-                                contactsTeamBlock.add(position,recentContact);
-                            }
-                        }else{
-                            if(team.isMyTeam()){
-                                contactsTeamBlock.add(recentContact);
+                        LogUtil.d("NimIM","contactId = " + recentContact.getContactId() + " team = " + (team == null ? "null" : team.isMyTeam()));
+                        if(team != null){
+                            if(position != -1){
+                                contactsTeamBlock.remove(position);
+                                if(team.isMyTeam()){
+                                    contactsTeamBlock.add(position,recentContact);
+                                }
+                            }else{
+                                if(team.isMyTeam()){
+                                    contactsTeamBlock.add(recentContact);
+                                }
                             }
                         }
+
                         position = -1;
                     }
                 }
