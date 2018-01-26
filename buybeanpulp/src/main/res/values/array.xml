@@ -36,7 +36,7 @@
     <string-array name="resource">
         <item>报价地图</item>
         <item>报价趋势</item>
-        <item>景气指数</item>
+
     </string-array>
 
     <string-array name="cash_report">

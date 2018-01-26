@@ -12,6 +12,7 @@ public class LoginProvider {
     public interface LoginCallback{
         void nimLoginSucceed();
         void nimLoginFail(String failStr);
+        void nimKicked();
     }
     public LoginProvider() {
     }
@@ -42,5 +43,9 @@ public class LoginProvider {
             list.get(i).nimLoginFail(failStr);
         }
     }
-
+    public void updateKicked(){
+        for (int i = 0;i < list.size();i++){
+            list.get(i).nimKicked();
+        }
+    }
 }

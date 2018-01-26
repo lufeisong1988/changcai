@@ -28,6 +28,7 @@ import com.changcai.buyer.http.VolleyUtil;
 import com.changcai.buyer.im.main.activity.NotifactionListActivity;
 import com.changcai.buyer.im.main.model.NotifactionListModelInterface;
 import com.changcai.buyer.im.main.model.imp.NotifactionListModelImp;
+import com.changcai.buyer.im.provider.LoginProvider;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseAbstraceFragment;
@@ -77,7 +78,7 @@ import rx.functions.Action1;
  * Created by lufeisong on 2017/10/12.
  */
 
-public class NewMainFragment extends BaseAbstraceFragment implements View.OnClickListener, NotifactionListModelImp.NotifactionListModelCallback {
+public class NewMainFragment extends BaseAbstraceFragment implements View.OnClickListener, NotifactionListModelImp.NotifactionListModelCallback ,LoginProvider.LoginCallback{
 
 
     @BindView(R.id.navigation_indicator)
@@ -127,6 +128,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     public void onDestroy() {
         RxBus.get().unregister("switchPage", switchPageEvent);
         registerRecentContact(false);
+        LoginProvider.getInstance().removeLoginCallback(this);
         super.onDestroy();
     }
 
@@ -169,6 +171,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     public void initData() {
         model = new NotifactionListModelImp(this);
         registerRecentContact(true);
+        LoginProvider.getInstance().addLoginCallback(this);
 
 //        getCMSData();
         switchPageEvent = RxBus.get().register("switchPage", Integer.class);
@@ -449,6 +452,21 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     @Override
     public void getImTeamsError() {
 
+    }
+
+    @Override
+    public void nimLoginSucceed() {
+        model.getCounselorsModel();
+    }
+
+    @Override
+    public void nimLoginFail(String failStr) {
+
+    }
+
+    @Override
+    public void nimKicked() {
+        model.getCounselorsModel();
     }
 
 

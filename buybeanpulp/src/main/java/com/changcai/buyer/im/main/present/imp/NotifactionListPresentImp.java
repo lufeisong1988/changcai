@@ -344,6 +344,11 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
         }
     }
 
+    @Override
+    public void nimKicked() {
+        getCounselorsModel(false);
+    }
+
     //主动获取未读消息和message
     private void initMessageObserave() {
         List<RecentContact> contactsBlock = NIMClient.getService(MsgService.class).queryRecentContactsBlock();
@@ -379,8 +384,8 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
 
                 if (contactsBlock == null) {
                     if (view != null) {
-                        view.updateAllStatus(false, "", System.currentTimeMillis());
-                        view.updateConsultantStatus(false, UserDataUtil.isLogin() ? "" : "登录后查看会话消息", System.currentTimeMillis());
+                        view.updateAllStatus(false, "登录后查看会话消息", System.currentTimeMillis());
+                        view.updateConsultantStatus(false, "登录后查看会话消息", System.currentTimeMillis());
                         view.updateTeamStatus(false,"登录后查看会话消息",0);
                         view.updateOnlineMembers(false,0,0);
                     }

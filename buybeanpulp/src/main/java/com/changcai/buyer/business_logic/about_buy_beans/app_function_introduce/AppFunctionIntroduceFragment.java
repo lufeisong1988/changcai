@@ -169,14 +169,12 @@ public class AppFunctionIntroduceFragment extends BaseFragment implements AppFun
                     "        <div class=\"content\">\n" +
                     "            <h3> 本次更新：</h3>\n" +
                     "            <p>\n" +
-                    "            1）合并资源报价和商城报价相关功能;<br>\n" +
+                    "            1）“消息中心”新增“产业联盟”群;<br>\n" +
+                    "            2）优化“会员顾问”;<br>\n" +
                     "            </p>\n" +
                     "            <h3> 最近更新：</h3>\n" +
                     "            <p>\n" +
-                    "            1）优化买豆粕首页内容和布局;<br>\n" +
-                    "            2）新增推荐栏目;<br>\n" +
-                    "            3）调整头寸管理栏目;<br>\n" +
-                    "            4）增加首页客服电话;<br>\n" +
+                    "             1）合并资源报价和商城报价相关功能;<br>\n" +
                     "            </p>\n" +
                     "        </div>\n" +
                     "    </body>\n" +

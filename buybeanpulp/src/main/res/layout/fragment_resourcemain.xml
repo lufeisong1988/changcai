@@ -12,7 +12,7 @@
 
         <com.changcai.buyer.view.NavigationTabStrip
             android:id="@+id/navigation_resource_indicator"
-            android:layout_width="@dimen/dim520"
+            android:layout_width="@dimen/dim340"
             android:layout_height="@dimen/dim91"
             android:layout_marginLeft="@dimen/dim40"
             app:nts_active_color="@color/membership_color"

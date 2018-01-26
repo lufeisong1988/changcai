@@ -46,7 +46,7 @@ public class ResourceMainFragment extends BaseFragment {
 
     private final int PAGE_QUOTEMAP = 0;
     private final int PAGE_QUOTREND = 1;
-    private final int PAGE_QUOTEINDEX = 2;
+
     private final String TGA_PAGE_ONE = "PAGE_ONE";
 
     private android.support.v4.app.FragmentManager fm;
@@ -200,73 +200,24 @@ public class ResourceMainFragment extends BaseFragment {
                 }
                 ft.commit();
                 break;
-            case PAGE_QUOTEINDEX:
-                if(fragment_quoteindex == null){
-                    fragment_quoteindex = new QuoteIndexFragment();
-                    ft.add(R.id.fl_resource_container, fragment_quoteindex);
-                }else{
-                    ft.show(fragment_quoteindex);
-
-                }
-
-                if (fragment_quotemap != null) {
-                    ft.hide(fragment_quotemap);
-                }
-                if(fragment_quotetrend != null){
-                    ft.hide(fragment_quotetrend);
-                }
-                ft.commit();
-                break;
+//            case PAGE_QUOTEINDEX:
+//                if(fragment_quoteindex == null){
+//                    fragment_quoteindex = new QuoteIndexFragment();
+//                    ft.add(R.id.fl_resource_container, fragment_quoteindex);
+//                }else{
+//                    ft.show(fragment_quoteindex);
+//
+//                }
+//
+//                if (fragment_quotemap != null) {
+//                    ft.hide(fragment_quotemap);
+//                }
+//                if(fragment_quotetrend != null){
+//                    ft.hide(fragment_quotetrend);
+//                }
+//                ft.commit();
+//                break;
         }
     }
 
-//    /**
-//     * 显示拨打电话的dialog
-//     */
-//    private void showChooseDialog(final String phone) {
-//        View view = getActivity().getLayoutInflater().inflate(R.layout.layout_quoto_phone, null);
-//        final Dialog dialog = new Dialog(getActivity(), R.style.whiteFrameWindowStyle);
-//        dialog.setContentView(view);
-//
-//        TextView tvPhone = (TextView) view.findViewById(R.id.phone);
-//        tvPhone.setText("拨打交易热线" + phone);
-//        tvPhone.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE);
-//                    return;
-//                }
-//                try {
-//                    callPhone(phone);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        TextView tvCancel = (TextView) view.findViewById(R.id.cancel);
-//        tvCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        Window window = dialog.getWindow();
-//        window.setWindowAnimations(R.style.choosed_menu_animstyle);
-//        WindowManager.LayoutParams wl = window.getAttributes();
-//        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-//        wl.gravity = Gravity.BOTTOM;
-//        dialog.onWindowAttributesChanged(wl);
-//        dialog.setCanceledOnTouchOutside(true);
-//        dialog.show();
-//    }
-//
-//    private void callPhone(String phone) {
-//        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-//        startActivity(intent);
-//    }
 }

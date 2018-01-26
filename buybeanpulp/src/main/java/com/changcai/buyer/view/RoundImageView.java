@@ -21,6 +21,7 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.changcai.buyer.R;
+import com.changcai.buyer.util.LogUtil;
 
 
 /**
@@ -167,8 +168,12 @@ public class RoundImageView extends ImageView
 
 		if (type == TYPE_ROUND)
 		{
-			canvas.drawRoundRect(mRoundRect, mBorderRadius, mBorderRadius,
-					mBitmapPaint);
+			if(mRoundRect != null){
+				canvas.drawRoundRect(mRoundRect, mBorderRadius, mBorderRadius,
+						mBitmapPaint);
+			}else{
+				LogUtil.d("RoundImageView","is null");
+			}
 		} else
 		{
 			canvas.drawCircle(mRadius, mRadius, mRadius, mBitmapPaint);

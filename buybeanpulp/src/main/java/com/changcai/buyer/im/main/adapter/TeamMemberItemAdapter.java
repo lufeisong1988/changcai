@@ -138,12 +138,14 @@ public class TeamMemberItemAdapter extends BaseAdapter {
 //                }
 //            });
         } else if (position < teamMembers.size() + 1) {
+            vh.iv_userIcon.setColorFilter(null);
             PicassoImageLoader.getInstance().displayNetImage((Activity) context, "i am not empty", vh.iv_userIcon,ContextCompat.getDrawable(context,R.drawable.icon_add_teammember));
             vh.tv_name.setText("添加成员");
             vh.tv_name.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             vh.iv_delete.setVisibility(View.GONE);
 
         } else if (position < teamMembers.size() + 2) {
+            vh.iv_userIcon.setColorFilter(null);
             PicassoImageLoader.getInstance().displayNetImage((Activity) context, "i am not empty", vh.iv_userIcon,ContextCompat.getDrawable(context,R.drawable.icon_delete_teammember));
             vh.tv_name.setText("删除成员");
             vh.tv_name.setTextColor(context.getResources().getColor(R.color.color_F43531));

@@ -123,6 +123,8 @@ public class NimSessionHelper {
                 });
             }else if(code.shouldReLogin()){
                 login();
+            }else if(code == StatusCode.KICKOUT || code == StatusCode.KICK_BY_OTHER_CLIENT){
+                LoginProvider.getInstance().updateKicked();
             }
             LogUtil.d("NimIM","statusCode = " + code.getValue());
         }
