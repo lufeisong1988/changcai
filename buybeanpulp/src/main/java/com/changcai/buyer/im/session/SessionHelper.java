@@ -84,12 +84,21 @@ public class SessionHelper {
 
     private static List<GetCounselorsModel.InfoBean> info = new ArrayList<>();
 
+    public static List<String> mamager = new ArrayList<>();
     public static List<GetCounselorsModel.InfoBean> getInfo() {
         return info;
     }
 
     public static void setInfo(List<GetCounselorsModel.InfoBean> info) {
         SessionHelper.info = info;
+    }
+
+    public static List<String> getMamager() {
+        return mamager;
+    }
+
+    public static void setMamager(List<String> mamager) {
+        SessionHelper.mamager = mamager;
     }
 
     private static final int ACTION_HISTORY_QUERY = 0;

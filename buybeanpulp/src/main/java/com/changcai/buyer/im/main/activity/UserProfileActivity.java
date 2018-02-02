@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,13 +140,14 @@ public class UserProfileActivity extends BaseActivity {
         defaultDrawable = this.getResources().getDrawable(R.drawable.icon_default_head);
         defaultGradeDrawable = ContextCompat.getDrawable(this, R.mipmap.no_network_2);
         parseIntent();
-        if(!teamId.isEmpty() && !DemoCache.getAccount().equals(account)){
+
+        if(!TextUtils.isEmpty(teamId) && !DemoCache.getAccount().equals(account)){
             btnAddFriend.setVisibility(View.VISIBLE);
         }else{
             btnAddFriend.setVisibility(View.INVISIBLE);
         }
 
-        if (teamId.isEmpty() && DemoCache.getAccount().equals(account)) {
+        if (TextUtils.isEmpty(teamId) && DemoCache.getAccount().equals(account)) {
             tvSetting.setVisibility(View.VISIBLE);
         } else {
             tvSetting.setVisibility(View.GONE);
@@ -183,7 +185,12 @@ public class UserProfileActivity extends BaseActivity {
         if (nimUserInfo.getAvatar() != null && !nimUserInfo.getAvatar().equals("")) {
             PicassoImageLoader.getInstance().displayNetImage(UserProfileActivity.this, nimUserInfo.getAvatar(), ivUserHeader, defaultDrawable);
         }
-        tvUserName.setText(UserInfoHelper.getUserNameWithHiden(account));
+        if(TextUtils.isEmpty(teamId)){
+            tvUserName.setText(UserInfoHelper.getUserNameWithHiden(account));
+        }else{
+            tvUserName.setText(UserInfoHelper.getUserName(account));
+
+        }
 //        if (nimUserInfo.getName() != null && !nimUserInfo.getName().equals("")) {
 //            tvUserName.setText(nimUserInfo.getName());
 //        } else {
@@ -209,6 +216,11 @@ public class UserProfileActivity extends BaseActivity {
                 showGrade = false;
                 break;
             }
+        }
+        int manager_index = SessionHelper.getMamager().indexOf(account);
+
+        if(manager_index >= 0){
+            showGrade = false;
         }
         if (showGrade) {
             ivGrade.setVisibility(View.VISIBLE);

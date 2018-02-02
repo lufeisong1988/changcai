@@ -66,6 +66,7 @@ public class UserProfileIntroductionActivity extends CompatTouchBackActivity {
     @Override
     public void onBackPressed() {
         showKeyboard(false);
+        this.finish();
         super.onBackPressed();
     }
     @Override

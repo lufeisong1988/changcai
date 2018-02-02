@@ -289,7 +289,9 @@
 #竖滑viewpager
 -keep class fr.castorflex.android.verticalviewpage.**{*;}
 -dontwarn fr.castorflex.android.verticalviewpage.**
-
+#百度统计
+-keep class com.baidu.**{*;}
+-dontwarn com.baidu.**
 
 #x5 webview start
 

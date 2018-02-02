@@ -184,7 +184,7 @@ public class TeamMemberItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
     private void checkManager(){
-        for(TeamMember teamMember : teamMembers){//判断是否是管理员
+        for(TeamMember teamMember : teamMembers){//判断自己是否是管理员
             if(teamMember.getType().getValue() == TeamMemberType.Owner.getValue() || teamMember.getType().getValue() == TeamMemberType.Manager.getValue()){
                 if(DemoCache.getAccount() != null && DemoCache.getAccount().equals(teamMember.getAccount())){
                     managerAble = true;

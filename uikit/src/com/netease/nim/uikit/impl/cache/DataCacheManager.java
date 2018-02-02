@@ -4,6 +4,10 @@ import com.netease.nim.uikit.api.UIKitOptions;
 import com.netease.nim.uikit.common.framework.NimSingleThreadExecutor;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import java.util.List;
 
@@ -115,5 +119,30 @@ public class DataCacheManager {
         sb.append(", total size=" + accounts.size());
 
         LogUtil.i(logTag, sb.toString());
+    }
+
+    /**
+     * 去服务器获取最新的用户数据sdk会自动保存到本地数据库，
+     * @param accounts  用户
+     */
+    public static void fetchUsers(List<String> accounts){
+        NIMClient.getService(UserService.class)
+                .fetchUserInfo(accounts)
+                .setCallback(new RequestCallback<List<NimUserInfo>>() {
+                    @Override
+                    public void onSuccess(List<NimUserInfo> userInfos) {
+
+                    }
+
+                    @Override
+                    public void onFailed(int i) {
+
+                    }
+
+                    @Override
+                    public void onException(Throwable throwable) {
+
+                    }
+                });
     }
 }

@@ -522,7 +522,7 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
                                            @NonNull int[] grantResults) {
         switch (requestCode) {
             case Constants.REQUEST_PERMISSION_CALL_PHONE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showChooseDialog(SPUtil.getString(Constants.KEY_CONTACT_PHONE));
                 } else {
                     Toast.makeText(this, R.string.perssion_for_call, Toast.LENGTH_LONG).show();

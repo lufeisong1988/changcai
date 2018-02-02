@@ -66,7 +66,9 @@ public class UserProfileNicknameActivity extends CompatTouchBackActivity {
     @Override
     public void onBackPressed() {
         showKeyboard(false);
+        this.finish();
         super.onBackPressed();
+
     }
     @Override
     protected void injectFragmentView() {

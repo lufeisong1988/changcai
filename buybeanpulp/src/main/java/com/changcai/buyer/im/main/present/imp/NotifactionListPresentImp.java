@@ -27,6 +27,7 @@ import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.constant.TeamMemberType;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
@@ -267,6 +268,15 @@ public class NotifactionListPresentImp implements NotifactionListPresentInterfac
                                 public void onSuccess(List<TeamMember> teamMembers) {
                                     LogUtil.d("NimIM","queryMemberList.asy teamMembers.size = " + teamMembers.size());
                                     if(teamMembers != null && teamMembers.size() > 0){
+                                        //更新管理员数据
+                                        List<String> manager = new ArrayList<String>();
+                                        for(TeamMember teamMember:teamMembers){
+                                            if(teamMember.getType().getValue() == TeamMemberType.Owner.getValue() || teamMember.getType().getValue() == TeamMemberType.Manager.getValue()){
+                                                manager.add(teamMember.getAccount());
+                                            }
+                                        }
+                                        SessionHelper.setMamager(manager);
+                                        //更新在线人数
                                         TeamMemberOnlineProviderImp.getInstance().setTeamMembers(teamMembers);
                                     }
 

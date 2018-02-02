@@ -21,6 +21,7 @@ import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.session.fragment.TeamMessageFragment;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
+import com.netease.nim.uikit.impl.cache.DataCacheManager;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
@@ -30,6 +31,7 @@ import com.netease.nimlib.sdk.team.constant.TeamTypeEnum;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -182,6 +184,7 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
 
                         if(teamMembers != null && teamMembers.size() > 0){
                             NimUIKitImpl.getTeamMemberOnlineProvider().setTeamMembers(teamMembers);
+                            fecthMembers(teamMembers);
                         }
                     }
 
@@ -320,6 +323,13 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
             tvTitle.setText(team.getName());
         }
     }
-
+    //去服务器获取最新的用户数据sdk会自动保存到本地数据库，
+    private void fecthMembers(List<TeamMember> members){
+        List<String> accounts = new ArrayList<>(members.size());
+        for(TeamMember teamMember:members){
+            accounts.add(teamMember.getAccount());
+        }
+        DataCacheManager.fetchUsers(accounts);
+    }
 
 }

@@ -4,13 +4,16 @@ import android.content.Context;
 
 import com.changcai.buyer.im.main.present.TeamMemberPresent;
 import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
+import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.constant.TeamMemberType;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,15 +44,31 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberOnlineP
                     @Override
                     public void onSuccess(List<TeamMember> teamMembers) {
                         LogUtil.d("NimIM","teamMembers.size = " + teamMembers.size());
-                        if(view != null){
-                            view.dismissLoading();
+
+
                             if(teamMembers != null && teamMembers.size() > 0){
-                                view.queryMemberListSucceed(teamMembers);
+                                if(view != null){
+                                    view.dismissLoading();
+                                    view.queryMemberListSucceed(teamMembers);
+                                }
+                                //更新管理员数据
+                                List<String> manager = new ArrayList<String>();
+                                for(TeamMember teamMember:teamMembers){
+                                    if(teamMember.getType().getValue() == TeamMemberType.Owner.getValue() || teamMember.getType().getValue() == TeamMemberType.Manager.getValue()){
+                                        manager.add(teamMember.getAccount());
+                                    }
+                                }
+                                SessionHelper.setMamager(manager);
+                                //更新在线人数
                                 TeamMemberOnlineProviderImp.getInstance().setTeamMembers(teamMembers);
                             }else{
-                                view.queryMemberListFail("获取群成员列表失败" );
+                                if(view != null){
+                                    view.dismissLoading();
+                                    view.queryMemberListFail("获取群成员列表失败" );
+                                }
                             }
-                        }
+
+
                     }
 
                     @Override

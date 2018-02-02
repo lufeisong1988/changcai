@@ -26,6 +26,7 @@ import com.netease.nim.uikit.common.ui.drop.DropManager;
 import com.netease.nim.uikit.common.ui.recyclerview.listener.SimpleClickListener;
 import com.netease.nim.uikit.common.util.MsgUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
+import com.netease.nim.uikit.impl.cache.DataCacheManager;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
@@ -333,6 +334,7 @@ public class RecentContactsFragment extends TFragment {
                             return;
                         }
                         loadedRecents = recents;
+                        fecthContacts(recents);
                         //临时，第一次顾问发消息，不需要显示的会话
                         List<RecentContact> tmpUnShowRecents = new ArrayList<RecentContact>();
                         // 初次加载，更新离线的消息中是否有@我的消息
@@ -719,6 +721,17 @@ public class RecentContactsFragment extends TFragment {
             }
         });
 
+    }
+    //去服务器获取最新的用户数据sdk会自动保存到本地数据库，
+    private void fecthContacts( List<RecentContact> recents){
+        if(recents.size() == 0){
+            return;
+        }
+        List<String> accounts = new ArrayList<>(recents.size());
+        for(RecentContact recentContact:recents){
+            accounts.add(recentContact.getContactId());
+        }
+        DataCacheManager.fetchUsers(accounts);
     }
 
 

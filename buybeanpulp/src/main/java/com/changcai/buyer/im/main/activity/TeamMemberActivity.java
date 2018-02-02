@@ -80,7 +80,7 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
         adapter = new TeamMemberItemAdapter(teamMembers, this, this, onLineMap, offLineMap);
         present = new TeamMemberPresentImp(this, teamId, this);
         gvUserIcon.setAdapter(adapter);
-        gvUserIcon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                gvUserIcon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position < teamMembers.size()) {
@@ -90,7 +90,7 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
                             showDeleteMember(teamMember.getAccount());
                         }
                     } else {
-                        UserProfileActivity.start(TeamMemberActivity.this, teamMember.getAccount(), new HashMap<String, Object>());
+                        UserProfileActivity.start(TeamMemberActivity.this, teamMember.getAccount(),new HashMap<String, Object>() );
                     }
                 } else if (position == teamMembers.size()) {//增加按钮
                     adapter.addMember();

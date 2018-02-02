@@ -87,6 +87,12 @@ public class UserProfileSettingActivity extends CompatTouchBackActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    @Override
     protected void injectFragmentView() {
         defaultDrawable = this.getResources().getDrawable(R.drawable.icon_default_head);
         parseIntent();

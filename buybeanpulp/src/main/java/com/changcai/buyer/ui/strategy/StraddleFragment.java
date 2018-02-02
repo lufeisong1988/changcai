@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.changcai.buyer.BaseFragment;
 import com.changcai.buyer.R;
 import com.changcai.buyer.bean.StraddleModel;
 import com.changcai.buyer.listener.CustomListener;
-import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.view.AutoEmptyView;
 import com.changcai.buyer.view.CustomFontTextView;
@@ -169,18 +167,18 @@ public class StraddleFragment extends BaseFragment implements StraddleContract.V
         straddleListAdapter.setCustomListener(new CustomListener() {
             @Override
             public void onCustomerListener(View v, int position) {
-                StraddleModel straddleModel = straddleModelList.get(position);
-                if (!TextUtils.isEmpty(straddleModel.getArticleUrl())) {
-                    Bundle b = new Bundle();
-                    b.putString("url", straddleModel.getArticleUrl());
-                    if (!TextUtils.isEmpty(straddleModel.getTitle())) {
-                        b.putString("title", straddleModel.getTitle());
-                    } else {
-                        b.putString("title", "资讯详情");
-                    }
-                    b.putString("info", straddleModel.getContent());
-                    AndroidUtil.startBrowser(activity, b, false);
-                }
+//                StraddleModel straddleModel = straddleModelList.get(position);
+//                if (!TextUtils.isEmpty(straddleModel.getArticleUrl())) {
+//                    Bundle b = new Bundle();
+//                    b.putString("url", straddleModel.getArticleUrl());
+//                    if (!TextUtils.isEmpty(straddleModel.getTitle())) {
+//                        b.putString("title", straddleModel.getTitle());
+//                    } else {
+//                        b.putString("title", "资讯详情");
+//                    }
+//                    b.putString("info", straddleModel.getContent());
+//                    AndroidUtil.startBrowser(activity, b, false);
+//                }
             }
         });
     }

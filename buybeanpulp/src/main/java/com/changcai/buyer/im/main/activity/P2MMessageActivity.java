@@ -27,6 +27,7 @@ import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
+import com.netease.nim.uikit.impl.cache.DataCacheManager;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -146,6 +147,7 @@ public class P2MMessageActivity extends BaseMessageActivity {
     private void parseIntent() {
         ArrayList<GetCounselorsModel.InfoBean> infoBeens = (ArrayList<GetCounselorsModel.InfoBean>) getIntent().getExtras().getSerializable(EXTRA_ACCOUNTS);
         initHeader(infoBeens);
+        fecthContacts(infoBeens);
     }
 
     private void requestBuddyInfo() {
@@ -570,4 +572,13 @@ public class P2MMessageActivity extends BaseMessageActivity {
             }
         }
     }
+    //去服务器获取最新的用户数据sdk会自动保存到本地数据库，
+    private void fecthContacts( ArrayList<GetCounselorsModel.InfoBean> infoBeens){
+        List<String> accounts = new ArrayList<>(infoBeens.size());
+        for(GetCounselorsModel.InfoBean infoBean:infoBeens){
+            accounts.add(infoBean.getAccid());
+        }
+        DataCacheManager.fetchUsers(accounts);
+    }
+
 }
