@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -280,7 +281,6 @@ public class CommonWebViewActivity extends BaseActivity implements ShareFragment
             cookieManager.setCookie(eachEveryUrl, "MAIDOUPO_TOKEN" + "=" + SPUtil.getString(Constants.KEY_TOKEN_ID));
         }
         String CookieStr = cookieManager.getCookie(url);
-        LogUtil.d("CookieStr",CookieStr);
     }
 
     /**
@@ -538,6 +538,10 @@ public class CommonWebViewActivity extends BaseActivity implements ShareFragment
 
     @Override
     public void finish() {
+        //解决webviewbug start
+        ViewGroup view = (ViewGroup) getWindow().getDecorView();
+        view.removeAllViews();
+        //解决webviewbug end
         if (webView != null) {
             if (webView.canGoBack()) {
                 webView.goBack();
@@ -828,6 +832,18 @@ public class CommonWebViewActivity extends BaseActivity implements ShareFragment
         MobclickAgent.onEvent(this,"dailyInfo",stringStringMap);
         UMShareAPI.get(this).release();
         if(webView != null){
+//            //1.解决魅族审核不通过
+//            webView.getSettings().setBuiltInZoomControls(true);
+//            webView.setVisibility(View.GONE);// 把destroy()延后
+//            long timeout = ViewConfiguration.getZoomControlsTimeout();
+//            new Timer().schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    // TODO Auto-generated method stub
+//                    webView.destroy();
+//                }
+//            }, timeout);
+            //2.一般方法
             webView.destroy();
         }
 //        webView.loadUrl("http://www.maidoupo.com");//防止关闭页面，h5页面的音乐仍在播放
@@ -837,6 +853,9 @@ public class CommonWebViewActivity extends BaseActivity implements ShareFragment
 //                return;
 //            }
 //        }
+        RxBus.get().unregister("share",shareObservable);
         super.onDestroy();
     }
+
+
 }

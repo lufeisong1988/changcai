@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.changcai.buyer.CompatTouchBackActivity;
@@ -40,6 +41,7 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
 
     private String teamId = "";
     private Observable<Boolean> addTeamMemberEvent;
+    private Observable<Boolean> chatMemberEvent;
 
     public static void start(Context context, String teamId) {
         Intent intent = new Intent();
@@ -61,7 +63,21 @@ public class TeamMemberAddActivity extends CompatTouchBackActivity implements Te
                 }
             }
         });
-        teamId = getIntent().getExtras().getString(Extras.EXTRA_TEAM_ID);
+        chatMemberEvent = RxBus.get().register("chatMember",Boolean.class);
+        chatMemberEvent.subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                if(aBoolean){
+                    TeamMemberAddActivity.this.finish();
+                }
+            }
+        });
+        teamId = getIntent().getExtras().getString(Extras.EXTRA_TEAM_ID,"");
+        if(TextUtils.isEmpty(teamId)){
+            titleText.setText(getResources().getString(R.string.search_member));
+        }else{
+            titleText.setText(getResources().getString(R.string.add_group_member));
+        }
         present = new TeamMemberAddPresentImp(this);
         etSearchAccount.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

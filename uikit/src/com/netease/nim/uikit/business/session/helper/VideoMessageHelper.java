@@ -13,6 +13,7 @@ import com.netease.nim.uikit.R;
 import com.netease.nim.uikit.business.session.activity.CaptureVideoActivity;
 import com.netease.nim.uikit.common.ui.dialog.CustomAlertDialog;
 import com.netease.nim.uikit.common.util.C;
+import com.netease.nim.uikit.common.util.UriUtils;
 import com.netease.nim.uikit.common.util.file.AttachmentStore;
 import com.netease.nim.uikit.common.util.file.FileUtil;
 import com.netease.nim.uikit.common.util.storage.StorageType;
@@ -136,7 +137,9 @@ public class VideoMessageHelper {
             return;
         }
 
-        String filePath = filePathFromIntent(data);
+        Uri uri = data.getData();
+        String filePath = UriUtils.getPath(activity,uri);
+//        String filePath = filePathFromIntent(data);
         if (StringUtil.isEmpty(filePath) || !checkVideoFile(filePath)) {
             return;
         }

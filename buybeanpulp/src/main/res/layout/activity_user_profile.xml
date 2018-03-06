@@ -92,22 +92,47 @@
                 android:textColor="@color/font_black"
                 android:textSize="@dimen/txt42" />
 
-            <Button
-                android:gravity="center"
-                android:background="@drawable/btn_call_bg"
-                android:text="联系TA"
-                android:textSize="@dimen/txt30"
-                android:textColor="@color/colorPrimary"
+            <LinearLayout
+                android:id="@+id/ll_btn"
                 android:layout_marginTop="@dimen/dim10"
                 android:layout_below="@+id/tv_user_name"
-                android:id="@+id/btn_call"
-                android:layout_centerHorizontal="true"
-                android:layout_width="@dimen/dim182"
-                android:layout_height="@dimen/dim64" />
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:textAlignment="center"
+                    android:paddingLeft="@dimen/dim28"
+                    android:paddingRight="@dimen/dim28"
+                    android:gravity="center"
+                    android:background="@drawable/btn_call_bg"
+                    android:text="联系TA"
+                    android:textSize="@dimen/txt30"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/btn_call"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="@dimen/dim227"
+                    android:layout_height="@dimen/dim64" />
+                <Button
+                    android:textAlignment="center"
+                    android:paddingLeft="@dimen/dim28"
+                    android:paddingRight="@dimen/dim28"
+                    android:layout_marginLeft="@dimen/dim50"
+                    android:gravity="center"
+                    android:background="@drawable/btn_call_bg"
+                    android:text="发起会话"
+                    android:textSize="@dimen/txt30"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/btn_chat"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="@dimen/dim227"
+                    android:layout_height="@dimen/dim64" />
+            </LinearLayout>
+
             <View
                 android:id="@+id/view_line"
                 android:layout_marginTop="@dimen/dim20"
-                android:layout_below="@+id/btn_call"
+                android:layout_below="@+id/ll_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim10"
                 android:background="@color/color_F9FAFB"/>

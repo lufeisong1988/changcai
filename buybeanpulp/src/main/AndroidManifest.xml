@@ -121,11 +121,13 @@
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}" />
 
-        <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。45c6af3c98409b18a84451215d0bdd6e
+        <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
+            测试:c4a6a3fa335adf3674a3922a7406e123
+            生产:d2f74e86a99861a189a5a80cb13bde12
           如果 SDKOptions 中提供了，取 SDKOptions 中的值。 -->
         <meta-data
             android:name="com.netease.nim.appKey"
-            android:value="d2f74e86a99861a189a5a80cb13bde12" />
+            android:value="c4a6a3fa335adf3674a3922a7406e123" />
 
         <!-- 云信后台服务，请使用独立进程。 -->
         <service

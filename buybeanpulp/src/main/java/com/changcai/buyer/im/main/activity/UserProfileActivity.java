@@ -79,6 +79,10 @@ public class UserProfileActivity extends BaseActivity {
     RotateDotsProgressView newsProgress;
     @BindView(R.id.btn_call)
     Button btnCall;
+    @BindView(R.id.btn_chat)
+    Button btnChat;
+    @BindView(R.id.view_line)
+    View viewLine;
 
     private Drawable defaultDrawable, defaultGradeDrawable;
     private String account;
@@ -139,11 +143,20 @@ public class UserProfileActivity extends BaseActivity {
 
         defaultDrawable = this.getResources().getDrawable(R.drawable.icon_default_head);
         defaultGradeDrawable = ContextCompat.getDrawable(this, R.mipmap.no_network_2);
+
+        Drawable leftCall = getResources().getDrawable(R.drawable.icon_wtdf_phone);
+        leftCall.setBounds(0,0,getResources().getDimensionPixelOffset(R.dimen.dim28),getResources().getDimensionPixelOffset(R.dimen.dim28));
+        btnCall.setCompoundDrawables(leftCall,null,null,null);
+
+        Drawable leftChat = getResources().getDrawable(R.drawable.icon_wtdf_chat);
+        leftChat.setBounds(0,0,getResources().getDimensionPixelOffset(R.dimen.dim28),getResources().getDimensionPixelOffset(R.dimen.dim28));
+        btnChat.setCompoundDrawables(leftChat,null,null,null);
+
         parseIntent();
 
-        if(!TextUtils.isEmpty(teamId) && !DemoCache.getAccount().equals(account)){
+        if (!TextUtils.isEmpty(teamId) && !DemoCache.getAccount().equals(account)) {
             btnAddFriend.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             btnAddFriend.setVisibility(View.INVISIBLE);
         }
 
@@ -160,7 +173,6 @@ public class UserProfileActivity extends BaseActivity {
         if (extMap != null && extMap.containsKey(Extras.EXTRA_TEAM_ID)) {//存在teamid，进入拉群的逻辑
             teamId = (String) extMap.get(Extras.EXTRA_TEAM_ID);
         }
-
 
     }
 
@@ -185,9 +197,9 @@ public class UserProfileActivity extends BaseActivity {
         if (nimUserInfo.getAvatar() != null && !nimUserInfo.getAvatar().equals("")) {
             PicassoImageLoader.getInstance().displayNetImage(UserProfileActivity.this, nimUserInfo.getAvatar(), ivUserHeader, defaultDrawable);
         }
-        if(TextUtils.isEmpty(teamId)){
+        if (TextUtils.isEmpty(teamId)) {
             tvUserName.setText(UserInfoHelper.getUserNameWithHiden(account));
-        }else{
+        } else {
             tvUserName.setText(UserInfoHelper.getUserName(account));
 
         }
@@ -219,7 +231,7 @@ public class UserProfileActivity extends BaseActivity {
         }
         int manager_index = SessionHelper.getMamager().indexOf(account);
 
-        if(manager_index >= 0){
+        if (manager_index >= 0) {
             showGrade = false;
         }
         if (showGrade) {
@@ -270,8 +282,10 @@ public class UserProfileActivity extends BaseActivity {
         //是顾问，并且当前用户页面不是自己
         if (isCounselor && userAccount != null && !userAccount.equals(account)) {
             btnCall.setVisibility(View.VISIBLE);
+            btnChat.setVisibility(View.VISIBLE);
         } else {
             btnCall.setVisibility(View.GONE);
+            btnChat.setVisibility(View.GONE);
         }
     }
 
@@ -287,31 +301,37 @@ public class UserProfileActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.btn_addFriend,R.id.btn_call})
+    @OnClick({R.id.btn_addFriend, R.id.btn_call,R.id.btn_chat})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_addFriend:
 
-                requestTeammember(teamId,account);
+                requestTeammember(teamId, account);
                 break;
             case R.id.btn_call:
                 PermissionGen.needPermission(UserProfileActivity.this, 100,
-                        new String[] {
+                        new String[]{
                                 Manifest.permission.CALL_PHONE,
                         }
                 );
                 break;
+            case R.id.btn_chat:
+                SessionHelper.startP2PSession(this,account);
+                UserProfileActivity.this.finish();
+                RxBus.get().post("chatMember", true);
+                break;
         }
 
     }
+
     @PermissionSuccess(requestCode = 100)
-    public void doSomethingSucceed(){
+    public void doSomethingSucceed() {
         showChooseDialog(account);
 
     }
+
     @PermissionFail(requestCode = 100)
-    public void doSomethingFail(){
+    public void doSomethingFail() {
         Toast.makeText(this, R.string.perssion_for_call, Toast.LENGTH_LONG).show();
     }
 
@@ -359,6 +379,7 @@ public class UserProfileActivity extends BaseActivity {
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
     }
+
     private void callPhone(String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
         startActivity(intent);
@@ -366,17 +387,18 @@ public class UserProfileActivity extends BaseActivity {
 
     /**
      * 请求群成员
+     *
      * @param account
      */
-    private void requestTeammember(final String teamId, final String account){
+    private void requestTeammember(final String teamId, final String account) {
         if (!isFinishing()) {
             showLoading();
         }
-        NIMClient.getService(TeamService.class).queryTeamMember(teamId,account)
+        NIMClient.getService(TeamService.class).queryTeamMember(teamId, account)
                 .setCallback(new RequestCallback<TeamMember>() {
                     @Override
                     public void onSuccess(TeamMember teamMember) {
-                        if(teamMember != null && teamMember.isInTeam()){
+                        if (teamMember != null && teamMember.isInTeam()) {
                             if (!isFinishing()) {
                                 dismissLoading();
                                 ConfirmDialog.createConfirmDialog(UserProfileActivity.this, "该账号已是联盟成员", "提示", "确定", new ConfirmDialog.OnBtnConfirmListener() {
@@ -386,16 +408,16 @@ public class UserProfileActivity extends BaseActivity {
                                     }
                                 });
                             }
-                        }else{
+                        } else {
                             addToTeam(account);
                         }
                     }
 
                     @Override
                     public void onFailed(int i) {
-                        if(i == 404){//该成员不在群内
+                        if (i == 404) {//该成员不在群内
                             addToTeam(account);
-                        }else{
+                        } else {
                             if (!isFinishing()) {
                                 dismissLoading();
                                 ServerErrorCodeDispatch.getInstance().showNetErrorDialog(UserProfileActivity.this, "添加用户失败！请重试 : " + i);
@@ -415,7 +437,7 @@ public class UserProfileActivity extends BaseActivity {
                 });
     }
 
-    private void addToTeam(String account){
+    private void addToTeam(String account) {
         if (!isFinishing()) {
             showLoading();
         }
@@ -430,7 +452,7 @@ public class UserProfileActivity extends BaseActivity {
                         if (!isFinishing()) {
                             dismissLoading();
                             UserProfileActivity.this.finish();
-                            RxBus.get().post("addTeamMember",true);
+                            RxBus.get().post("addTeamMember", true);
                         }
                     }
 

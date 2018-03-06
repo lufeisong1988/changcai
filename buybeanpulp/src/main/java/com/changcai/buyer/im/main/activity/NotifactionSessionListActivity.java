@@ -1,6 +1,8 @@
 package com.changcai.buyer.im.main.activity;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.changcai.buyer.CompatTouchBackUIActivity;
 import com.changcai.buyer.R;
@@ -32,7 +34,7 @@ import java.util.Map;
 
 public class NotifactionSessionListActivity extends CompatTouchBackUIActivity {
     private RecentContactsFragment fragment;
-
+    private ImageView rightImage;
 
     @Override
     public void onBackPressed() {
@@ -42,6 +44,13 @@ public class NotifactionSessionListActivity extends CompatTouchBackUIActivity {
 
     @Override
     protected void injectFragmentView() {
+        rightImage = (ImageView) findViewById(R.id.iv_btn_right);
+        rightImage.setVisibility(View.VISIBLE);
+        ViewGroup.LayoutParams lp = rightImage.getLayoutParams();
+        lp.height = getResources().getDimensionPixelSize(R.dimen.dim36);
+        lp.width = getResources().getDimensionPixelSize(R.dimen.dim36);
+        rightImage.setLayoutParams(lp);
+        rightImage.setImageResource(R.drawable.icon_wtdf_search);
         initData();
         initListener();
         addRecentContactsFragment();
@@ -83,7 +92,12 @@ public class NotifactionSessionListActivity extends CompatTouchBackUIActivity {
     }
 
     private void initListener() {
-
+        rightImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TeamMemberAddActivity.start(NotifactionSessionListActivity.this, "");
+            }
+        });
     }
 
     // 将最近联系人列表fragment动态集成进来。 开发者也可以使用在xml中配置的方式静态集成。
