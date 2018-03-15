@@ -7,6 +7,7 @@ import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.TeamMemberOnlineProviderImp;
+import com.netease.nim.uikit.business.session.TeamOnlineModel;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
@@ -14,7 +15,6 @@ import com.netease.nimlib.sdk.team.constant.TeamMemberType;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -134,11 +134,17 @@ public class TeamMemberPresentImp implements TeamMemberPresent,TeamMemberOnlineP
      * 更新在线人数 回调
      */
     @Override
-    public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
-        if(view != null ){
-            LogUtil.d("NimIM","TeamMember updateOnline :" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()));
-            view.updateOnlineMembers(onLineMap.size(),onLineMap.size() + offLineMap.size());
-            view.updateOnlineMembersAdapter(onLineMap,offLineMap);
+    public void updateOnline(List<TeamOnlineModel> teamOnlineModels) {
+        if(view != null && teamOnlineModels != null){
+            for(TeamOnlineModel teamOnlineModel: teamOnlineModels){
+                if(teamId.equals(teamOnlineModel.getTid())){
+                    LogUtil.d("NimIM","TeamMember updateOnline :" + teamOnlineModel.getOnLineMap().size() + "/" + (teamOnlineModel.getOnLineMap().size() + teamOnlineModel.getOffLineMap().size()));
+                    view.updateOnlineMembers(teamOnlineModel.getOnLineMap().size(),teamOnlineModel.getOnLineMap().size() + teamOnlineModel.getOffLineMap().size());
+                    view.updateOnlineMembersAdapter(teamOnlineModel.getOnLineMap(),teamOnlineModel.getOffLineMap());
+                    break;
+                }
+            }
+
         }
     }
 

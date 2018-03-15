@@ -90,7 +90,9 @@ public class TeamMemberActivity extends CompatTouchBackActivity implements TeamM
                             showDeleteMember(teamMember.getAccount());
                         }
                     } else {
-                        UserProfileActivity.start(TeamMemberActivity.this, teamMember.getAccount(),new HashMap<String, Object>() );
+                        HashMap<String, Object> extMap = new HashMap<String, Object>();
+                        extMap.put(Extras.EXTRA_MYTEAM_ID,teamId);
+                        UserProfileActivity.start(TeamMemberActivity.this, teamMember.getAccount(), extMap);
                     }
                 } else if (position == teamMembers.size()) {//增加按钮
                     adapter.addMember();

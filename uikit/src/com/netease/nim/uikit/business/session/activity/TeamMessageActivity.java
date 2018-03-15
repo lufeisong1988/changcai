@@ -17,6 +17,7 @@ import com.netease.nim.uikit.api.model.session.SessionCustomization;
 import com.netease.nim.uikit.api.model.team.TeamDataChangedObserver;
 import com.netease.nim.uikit.api.model.team.TeamMemberDataChangedObserver;
 import com.netease.nim.uikit.api.model.team.TeamMemberOnlineProvider;
+import com.netease.nim.uikit.business.session.TeamOnlineModel;
 import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.session.fragment.TeamMessageFragment;
@@ -32,7 +33,6 @@ import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -311,9 +311,14 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
     }
 
     @Override
-    public void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap) {
-        if(team != null){
-            tvTitle.setText(team.getName() + "(" + onLineMap.size() + "/" + (onLineMap.size() + offLineMap.size()) + ")");
+    public void updateOnline(List<TeamOnlineModel> teamOnlineModels) {
+        if(team != null && teamOnlineModels != null){
+            for(TeamOnlineModel teamOnlineModel : teamOnlineModels){
+                if(team.getId().equals(teamOnlineModel.getTid())){
+                    tvTitle.setText(team.getName() + "(" + teamOnlineModel.getOnLineMap().size() + "/" + (teamOnlineModel.getOnLineMap().size() + teamOnlineModel.getOffLineMap().size()) + ")");
+                    break;
+                }
+            }
         }
     }
 

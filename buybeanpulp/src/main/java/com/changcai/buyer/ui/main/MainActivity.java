@@ -1,7 +1,6 @@
 package com.changcai.buyer.ui.main;
 
 import android.Manifest;
-import android.animation.AnimatorInflater;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
@@ -11,8 +10,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -31,13 +32,21 @@ import android.widget.Toast;
 
 import com.changcai.buyer.CommonApplication;
 import com.changcai.buyer.R;
+import com.changcai.buyer.bean.GetCounselorsModel;
+import com.changcai.buyer.bean.GetImTeamsBean;
 import com.changcai.buyer.bean.SpaceStatistic;
+import com.changcai.buyer.bean.UserInfo;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
 import com.changcai.buyer.http.HttpListener;
 import com.changcai.buyer.http.VolleyUtil;
 import com.changcai.buyer.im.config.preference.Preferences;
 import com.changcai.buyer.im.login.LogoutHelper;
+import com.changcai.buyer.im.main.fragment.NotifactionListFragment;
+import com.changcai.buyer.im.main.model.NotifactionListModelInterface;
+import com.changcai.buyer.im.main.model.imp.NotifactionListModelImp;
+import com.changcai.buyer.im.provider.LoginProvider;
+import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.permission.RuntimePermission;
 import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.CommonWebViewActivity;
@@ -46,6 +55,7 @@ import com.changcai.buyer.ui.news.AdvanceNewsMainFragment;
 import com.changcai.buyer.ui.news.NewMainFragment;
 import com.changcai.buyer.ui.resource.ResourceMainFragment;
 import com.changcai.buyer.ui.strategy.StrategyFragment;
+import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.AppManager;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.NimSessionHelper;
@@ -57,29 +67,42 @@ import com.changcai.buyer.util.ToastUtil;
 import com.changcai.buyer.util.UserDataUtil;
 import com.changcai.buyer.view.AdvertisementDialog;
 import com.changcai.buyer.view.FragmentTabHost;
-import com.changcai.buyer.view.UpdateFragmentDialog;
+import com.changcai.buyer.view.immersion.ImmersionBar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.netease.nim.uikit.common.util.MsgUtil;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.NimIntent;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.MsgServiceObserve;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.msg.model.RecentContact;
+import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.model.Team;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.umeng.analytics.MobclickAgent;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+
+import static com.changcai.buyer.util.StringUtil.fromHtml;
 
 //import com.changcai.buyer.util.JPushUtil;
 
@@ -91,28 +114,28 @@ import rx.functions.Action1;
  * @description 主界面
  * @date 15-12-5 下午1:14
  */
-public class MainActivity extends FragmentActivity implements AdvanceNewsMainFragment.Hidden,  RuntimePermission.PermissionCallbacks, SwichLayoutInterFace {
+public class MainActivity extends FragmentActivity implements AdvanceNewsMainFragment.Hidden,  RuntimePermission.PermissionCallbacks, SwichLayoutInterFace,NotifactionListModelImp.NotifactionListModelCallback,LoginProvider.LoginCallback {
 
     private FragmentTabHost mTabHost;
     private FrameLayout mainLayout;
     private RelativeLayout rl_guide;
     private String[] mTextviewArray;
     private Class<?> fragmentArray[] = {NewMainFragment.class,StrategyFragment.class, ResourceMainFragment.class,
-//            QuoteMainFragment.class,
+            NotifactionListFragment.class,
             MeFragment.class};
 
     private int mImageViewArray[] = {
             R.drawable.home_bottom_news_bg,
             R.drawable.home_calendar_selector,
             R.drawable.home_bottom_resource_bg,
-//            R.drawable.home_bottom_quote_bg,
+            R.drawable.home_bottom_im,
             R.drawable.home_bottom_me_bg};
 
     private final static int PAGE_NEWS = 0;// 新闻
     private final static int PAGE_STRATEGY = 1;// 策略
     private final static int PAGE_RESOURCE = 2;// 资源报价
-//    private final static int PAGE_QUOTED_PRICE = 3;// 豆粕商城
-    private final static int PAGE_ME = 3;// 我
+    private final static int PAGE_IM = 3;// 产业圈
+    private final static int PAGE_ME = 4;// 我
 
 
     private int currentTabIndex;
@@ -123,6 +146,11 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
     private boolean isCallScaleAnimation;
     private String advertisement;
 
+    private View dotView;
+    private NotifactionListModelInterface model;
+    private List<GetCounselorsModel.InfoBean> counselors = new ArrayList<>();
+
+    protected ImmersionBar immersionBar;
     @Override
     protected void onStart() {
         super.onStart();
@@ -148,13 +176,19 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
 
         }
     };
-
+    protected void initSystemStatusBar(){
+        immersionBar = ImmersionBar.with(this);
+        immersionBar.navigationBarWithKitkatEnable(false).init();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initSystemStatusBar();
         LogUtil.d("TAG","onCreate");
-
+        model = new NotifactionListModelImp(this);
+        LoginProvider.getInstance().addLoginCallback(this);
+        registerRecentContact(true);
         NimSessionHelper.getInstance().registerOnlineStatus(true);
         AppManager.getAppManager().addActivity(this);
         initView();
@@ -187,6 +221,7 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
                                 switchFragment(PAGE_STRATEGY);
                         } else {
                             setRedPotVisibility(View.GONE);
+                            dotView.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -208,17 +243,33 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
                         switchFragment(integer);
                     }
                 });
+
+
         advertisement = SPUtil.getString("advertisement");
         boolean needShow = SPUtil.getBoolean("needShow");
+        long delayTime = 0;
         if (!TextUtils.isEmpty(advertisement) && needShow) {
-            Picasso.with(this).load(advertisement).into(target);
+            delayTime = 1000;
+//            Picasso.with(this).load(advertisement).into(target);
+            advertisementDialog();
         }
+        if (SPUtil.getBoolean(Constants.KEY_NEED_UPDATE)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showNewUpdateVersion(SPUtil.getString(Constants.KEY_UPDATE_LOG));
+                }
+            },delayTime);
 
+        }
         toNews(getIntent());
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(userStatusObserver, true);
     }
 
     private void advertisementDialog() {
+        if (this.isFinishing()) {
+            return;
+        }
         AdvertisementDialog advertisementDialog = new AdvertisementDialog();
         Bundle bundle = new Bundle();
         bundle.putString("advertisement", advertisement);
@@ -304,6 +355,24 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
             }
             switchFragment(PAGE_STRATEGY);
         }
+        if (intent.getExtras() != null && intent.hasExtra(NimIntent.EXTRA_NOTIFY_CONTENT)) {
+            List<IMMessage> messages = (List<IMMessage>)intent.getExtras().getSerializable(NimIntent.EXTRA_NOTIFY_CONTENT);
+            if(messages != null && messages.size() > 0){
+                switchFragment(PAGE_IM);
+                switch (messages.get(0).getSessionType()) {
+                    case P2P:
+//                        SessionHelper.startP2PSession(this, messages.get(0).getSessionId());
+                        break;
+                    case Team:
+                        SessionHelper.startTeamSession(this, messages.get(0).getSessionId());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
     }
 
     @SuppressWarnings("deprecation")
@@ -330,26 +399,91 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
                     });
         }
 
-        if (SPUtil.getBoolean(Constants.KEY_NEED_UPDATE)) {
-            showNewUpdateVersion(SPUtil.getString(Constants.KEY_UPDATE_LOG));
-        }
 
     }
 
-
+    protected Dialog updateDialog;
+    private DialogItemOnClick dialogItemOnClick;
     public void showNewUpdateVersion(String content) {
-
         if (this.isFinishing()) {
             return;
         }
+        Drawable redPot = ContextCompat.getDrawable(this, R.drawable.red_round_shape);
+        View view = getLayoutInflater().inflate(R.layout.update_version, null, false);
+        ImageView cancel = ButterKnife.findById(view, R.id.tv_afterwards);
+        TextView sure = ButterKnife.findById(view, R.id.tv_right_now);
+        TextView log = ButterKnife.findById(view, R.id.tv_update_version_info);
+        TextView title = ButterKnife.findById(view, R.id.tv_update_version_title);
+        title.setText("有新版本发布");
+        log.setText(fromHtml(content));
+        if (null == updateDialog) {
+            updateDialog = new Dialog(this, R.style.whiteFrameWindowStyle);
+        }
+        updateDialog.setContentView(view);
+        Window window = updateDialog.getWindow();
+        window.setWindowAnimations(R.style.choosed_menu_animstyle);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        wl.gravity = Gravity.CENTER;
+        updateDialog.onWindowAttributesChanged(wl);
+        updateDialog.setCanceledOnTouchOutside(true);
+        updateDialog.show();
 
-        UpdateFragmentDialog updateFragmentDialog = new UpdateFragmentDialog();
-        Bundle content2 = new Bundle();
-        content2.putString("content", content);
-        updateFragmentDialog.setArguments(content2);
-        updateFragmentDialog.show(getSupportFragmentManager(), "update");
+        if (null == dialogItemOnClick) {
+            dialogItemOnClick = new DialogItemOnClick();
+        }
+        cancel.setOnClickListener(dialogItemOnClick);
+        sure.setOnClickListener(dialogItemOnClick);
+//        UpdateFragmentDialog updateFragmentDialog = new UpdateFragmentDialog();
+//        Bundle content2 = new Bundle();
+//        content2.putString("content", content);
+//        updateFragmentDialog.setArguments(content2);
+//        updateFragmentDialog.show(getSupportFragmentManager(), "update");
     }
 
+    @Override
+    public void nimLoginSucceed() {
+        getMessageNotifaction();
+    }
+
+    @Override
+    public void nimLoginFail(String failStr) {
+
+    }
+
+    @Override
+    public void nimKicked() {
+        getMessageNotifaction();
+    }
+
+    private class DialogItemOnClick implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            switch (id) {
+                case R.id.tv_afterwards:
+                    if (updateDialog.isShowing())
+                        updateDialog.dismiss();
+                    break;
+                case R.id.tv_right_now:
+                    if (updateDialog.isShowing()) {
+                        updateDialog.dismiss();
+                    }
+                    startAPKDOWNLOAD();
+                    break;
+            }
+        }
+    }
+    private void startAPKDOWNLOAD() {
+        if (updateDialog.isShowing()) {
+            updateDialog.dismiss();
+        }
+        Bundle b = new Bundle();
+        b.putString("url", "http://a.app.qq.com/o/simple.jsp?pkgname=com.changcai.buyer");
+        AndroidUtil.startBrowser(this, b, true);
+    }
     /**
      * 显示拨打电话的dialog
      */
@@ -401,8 +535,7 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
             case PAGE_NEWS:
                 mTabHost.setCurrentTab(target);
                 currentTabIndex = target;
-                NewMainFragment newMainFragment = (NewMainFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[target]);
-                newMainFragment.updateDot();
+//                NewMainFragment newMainFragment = (NewMainFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[target]);
                 break;
 //            case PAGE_SHARE:
 //                mTabHost.setCurrentTab(target);
@@ -412,10 +545,10 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
                 mTabHost.setCurrentTab(target);
                 currentTabIndex = target;
                 break;
-//            case PAGE_QUOTED_PRICE:
-//                mTabHost.setCurrentTab(target);
-//                currentTabIndex = target;
-//                break;
+            case PAGE_IM:
+                mTabHost.setCurrentTab(target);
+                currentTabIndex = target;
+                break;
             case PAGE_ME:
                 mTabHost.setCurrentTab(target);
                 currentTabIndex = target;
@@ -461,11 +594,15 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
         ImageView imageView = (ImageView) view
                 .findViewById(R.id.iv_table_image);
         imageView.setImageResource(mImageViewArray[index]);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            imageView.setStateListAnimator(AnimatorInflater.loadStateListAnimator(this, R.animator.animator_selector));
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            imageView.setStateListAnimator(AnimatorInflater.loadStateListAnimator(this, R.animator.animator_selector));
+//        }
         TextView textView = (TextView) view.findViewById(R.id.tv_table_info);
         textView.setText(mTextviewArray[index]);
+        if(index == 3){
+            dotView = view.findViewById(R.id.iv_red_dot);
+        }
+
         return view;
     }
 
@@ -479,6 +616,7 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
             isCallScaleAnimation = false;
         }
         MobclickAgent.onResume(this);
+        getMessageNotifaction();
     }
 
     @Override
@@ -589,7 +727,220 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
         SwitchLayout.ScaleSmall(this, false, new LinearInterpolator(), 150);
     }
 
+    void  getMessageNotifaction(){
+        if(UserDataUtil.isLogin()){
+            model.getCounselorsModel();
+        }else{
+            dotView.setVisibility(View.GONE);
+        }
+    }
+    @Override
+    public void getCounselorsModelSucceed(List<GetCounselorsModel.InfoBean> counselors) {
+        this.counselors = counselors;
+        initMessageObserave();
+        SessionHelper.setInfo(counselors);
 
+    }
+
+    @Override
+    public void getCounselorsModelFail(String failStr) {
+
+    }
+
+    @Override
+    public void getCounselorsModelError() {
+
+    }
+
+    @Override
+    public void getImTeamsSucceed(GetImTeamsBean getImTeamsBeen) {
+
+    }
+
+    @Override
+    public void getImTeamsFail(String failStr) {
+
+    }
+
+    @Override
+    public void getImTeamsError() {
+
+    }
+    //主动获取未读消息和message
+    private void initMessageObserave() {
+        List<RecentContact> contactsBlock = NIMClient.getService(MsgService.class).queryRecentContactsBlock();
+        updateMessageUI(contactsBlock);
+    }
+
+    //注册获取未读消息和message监听
+    private void registerRecentContact(boolean register) {
+        NIMClient.getService(MsgServiceObserve.class).observeRecentContact(messageObserver, register);
+    }
+
+    Observer<List<RecentContact>> messageObserver = new Observer<List<RecentContact>>() {
+        @Override
+        public void onEvent(List<RecentContact> recentContacts) {
+            updateMessageUI(recentContacts);
+        }
+    };//刷新UI
+    private void updateMessageUI(final List<RecentContact> contactsBlock) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    List<RecentContact> contactsAllBlock = new ArrayList<>();//所有人集合（P2P）
+                    List<RecentContact> contactsConsultantBlock = new ArrayList<>();//顾问集合 (P2P）
+                    List<RecentContact> contactsTeamBlock = new ArrayList<>();//产业联盟集合 (Team）
+
+                    int unReadMsgCount = 0;
+                    int unReadMsgConsultantCount = 0;//顾问未读数目
+                    int unReadMsgTeamCount = 0;//产业联盟未读数目
+                    long unReadMsgTime = 0;
+                    long unReadMsgConsultantTime = 0;//顾问最新一条消息时间
+                    long unReadMsgTeamTime = 0;//产业联盟最新一条消息时间
+                    String unReadMessage = "";
+                    String unReadConsultantMessage = "";//顾问最新一条信息
+                    String unReadTeamMessage = "";//产业联盟最新一条信息
+
+                    if (contactsBlock == null) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dotView.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        return;
+                    }
+                    //遍历所有未读消息数量，最近一条消息
+                    //遍历出所有人集合
+                    //遍历出顾问集合
+                    //遍历出产业联盟集合
+                    for (int i = 0; i < contactsBlock.size(); i++) {//遍历出所有未读消息数目和message
+                        RecentContact recentContact = contactsBlock.get(i);
+                        int position = -1;
+                        LogUtil.d("NimIM", "最近联系 ： 第" + i + "位: contactId = " + recentContact.getContactId() + "; fromAccount = " + recentContact.getFromAccount() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent() + " ext = " + (recentContact.getExtension() == null ? " null" : recentContact.getExtension().toString()) + " ; time = " + recentContact.getTime());
+                        if (recentContact.getSessionType().getValue() == SessionTypeEnum.P2P.getValue()) {//P2P
+                            //遍历出所有人（剔除掉顾问发的初始化信息）
+                            for (int j = 0; j < contactsAllBlock.size(); j++) {
+                                RecentContact contactsAll = contactsAllBlock.get(j);
+                                if (contactsAll.getContactId().equals(recentContact.getContactId())) {
+                                    position = j;
+                                    break;
+                                }
+                            }
+                            if (position != -1) {
+                                if(contactsAllBlock.size() > position && !MsgUtil.fliteMessage(recentContact)){
+                                    contactsAllBlock.set(position, recentContact);
+                                }
+                            } else {
+                                if (!MsgUtil.fliteMessage(recentContact)) {
+                                    contactsAllBlock.add(recentContact);
+                                }
+                            }
+
+                            position = -1;
+                            //遍历出顾问
+                            if (counselors != null) {
+                                for (int j = 0; j < counselors.size(); j++) {
+                                    if (counselors.get(j).getAccid().equals(recentContact.getContactId())) {
+                                        for (int n = 0; n < contactsConsultantBlock.size(); n++) {
+                                            if (contactsConsultantBlock.get(n).getContactId().equals(recentContact.getContactId())) {
+                                                position = n;
+                                                break;
+                                            }
+                                        }
+                                        if (position != -1) {
+                                            if(contactsConsultantBlock.size() > position){
+                                                contactsConsultantBlock.set(position, recentContact);
+                                            }
+                                        } else {
+                                            contactsConsultantBlock.add(recentContact);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            position = -1;
+                        } else if (recentContact.getSessionType().getValue() == SessionTypeEnum.Team.getValue()) {//Team
+                            for (int j = 0; j < contactsTeamBlock.size(); j++) {
+                                if (contactsTeamBlock.get(j).getContactId().equals(recentContact.getContactId())) {
+                                    position = j;
+                                    break;
+                                }
+                            }
+                            Team team = NIMClient.getService(TeamService.class).queryTeamBlock(recentContact.getContactId());
+                            if (team != null) {
+                                if (position != -1 ) {
+                                    if (team.isMyTeam() && contactsTeamBlock.size() > position) {
+                                        contactsTeamBlock.set(position, recentContact);
+                                    }
+                                } else {
+                                    if (team.isMyTeam()) {
+                                        contactsTeamBlock.add(recentContact);
+                                    }
+                                }
+                            }
+
+                            position = -1;
+                        }
+                    }
+                    //遍历所有人未读消息数量，最近一条消息
+                    for (int i = 0; i < contactsAllBlock.size(); i++) {
+                        RecentContact recentContact = contactsAllBlock.get(i);
+                        LogUtil.d("NimIM", "所有人 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                        unReadMsgCount += recentContact.getUnreadCount();
+
+                    }
+                    //遍历顾问未读消息数量，最近一条消息
+                    for (int i = 0; i < contactsConsultantBlock.size(); i++) {
+                        RecentContact recentContact = contactsConsultantBlock.get(i);
+                        LogUtil.d("NimIM", "顾问团 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                        unReadMsgConsultantCount += recentContact.getUnreadCount();
+
+                    }
+                    //遍历产业联盟未读消息数量，最近一条消息
+                    for (int i = 0; i < contactsTeamBlock.size(); i++) {
+                        RecentContact recentContact = contactsTeamBlock.get(i);
+                        LogUtil.d("NimIM", "产业联盟 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
+                        unReadMsgTeamCount += recentContact.getUnreadCount();
+
+                    }
+                    UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
+                    //不是顾问,筛选顾问团未读信息 + 群
+                    if (userInfo != null && userInfo.getServiceLevel() == null && userInfo.getServiceStatus() == null && userInfo.getCounselorStatus() == null) {
+                        final int finalUnReadMsgConsultantCount = unReadMsgConsultantCount + unReadMsgTeamCount;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (finalUnReadMsgConsultantCount > 0) {
+                                    dotView.setVisibility(View.VISIBLE);
+                                } else {
+                                    dotView.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
+
+                    } else {//是顾问,获取所有未读信息 + 群
+                        final int finalUnReadMsgCount = unReadMsgCount + unReadMsgTeamCount;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (finalUnReadMsgCount > 0) {
+                                    dotView.setVisibility(View.VISIBLE);
+                                } else {
+                                    dotView.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                        });
+                    }
+                }catch (Exception e){
+
+                }
+
+            }
+        }).start();
+
+    }
 
     public interface OnKeyBackListener {
         void onKeyBack();
@@ -605,6 +956,11 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
         RxBus.get().unregister(Constants.PUSH_MESSAGE, receiveJpushObservable);
         RxBus.get().unregister("switchTabObservable", switchTabObservable);
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(userStatusObserver, false);
+        registerRecentContact(false);
+        LoginProvider.getInstance().removeLoginCallback(this);
+        if(immersionBar != null){
+            ImmersionBar.with(this).destroy();
+        }
         super.onDestroy();
 
     }
@@ -727,6 +1083,8 @@ public class MainActivity extends FragmentActivity implements AdvanceNewsMainFra
         LogoutHelper.logout();
 
     }
+
+
 
 
 }

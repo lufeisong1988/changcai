@@ -367,6 +367,9 @@ public class CommonApplication extends MultiDexApplication {
 
         NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
         NimUIKit.setTeamMemberOnlineProvider(TeamMemberOnlineProviderImp.getInstance());
+
+        //设置听筒模式
+//        NimUIKit.setEarPhoneModeEnable(false);
     }
 
     private UIKitOptions buildUIKitOptions() {

@@ -17,7 +17,7 @@ public class UserPreferences {
     }
 
     public static boolean isEarPhoneModeEnable() {
-        return getBoolean(KEY_EARPHONE_MODE, true);
+        return getBoolean(KEY_EARPHONE_MODE, false);
     }
 
     private static boolean getBoolean(String key, boolean value) {

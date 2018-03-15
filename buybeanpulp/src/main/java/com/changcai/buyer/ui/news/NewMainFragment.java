@@ -1,7 +1,7 @@
 package com.changcai.buyer.ui.news;
 
+import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,21 +19,13 @@ import android.widget.Toast;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.bean.GetCounselorsModel;
-import com.changcai.buyer.bean.GetImTeamsBean;
-import com.changcai.buyer.bean.UserInfo;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
 import com.changcai.buyer.http.HttpListener;
 import com.changcai.buyer.http.VolleyUtil;
-import com.changcai.buyer.im.main.activity.NotifactionListActivity;
-import com.changcai.buyer.im.main.model.NotifactionListModelInterface;
-import com.changcai.buyer.im.main.model.imp.NotifactionListModelImp;
-import com.changcai.buyer.im.provider.LoginProvider;
-import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseAbstraceFragment;
 import com.changcai.buyer.ui.news.bean.NewsClassify;
-import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
 import com.changcai.buyer.util.UserDataUtil;
@@ -49,15 +41,6 @@ import com.changcai.buyer.view.indicator.commonnavigator.titles.SimplePagerTitle
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.netease.nim.uikit.common.util.MsgUtil;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.Observer;
-import com.netease.nimlib.sdk.msg.MsgService;
-import com.netease.nimlib.sdk.msg.MsgServiceObserve;
-import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
-import com.netease.nimlib.sdk.msg.model.RecentContact;
-import com.netease.nimlib.sdk.team.TeamService;
-import com.netease.nimlib.sdk.team.model.Team;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
@@ -70,6 +53,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import kr.co.namee.permissiongen.PermissionFail;
+import kr.co.namee.permissiongen.PermissionGen;
 import kr.co.namee.permissiongen.PermissionSuccess;
 import rx.Observable;
 import rx.functions.Action1;
@@ -78,7 +62,7 @@ import rx.functions.Action1;
  * Created by lufeisong on 2017/10/12.
  */
 
-public class NewMainFragment extends BaseAbstraceFragment implements View.OnClickListener, NotifactionListModelImp.NotifactionListModelCallback ,LoginProvider.LoginCallback{
+public class NewMainFragment extends BaseAbstraceFragment implements View.OnClickListener{
 
 
     @BindView(R.id.navigation_indicator)
@@ -93,10 +77,11 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     LinearLayout rlReloadRootView;
     @BindView(R.id.iv_resource_phone)
     ImageView ivResourcePhone;
-    @BindView(R.id.iv_dot)
-    ImageView ivDot;
+    @BindView(R.id.line)
+    View line;
 
-    private NotifactionListModelInterface model;
+
+    //    private NotifactionListModelInterface model;
     private List<GetCounselorsModel.InfoBean> info;
 
     //cms 资讯分类目适配器
@@ -116,23 +101,24 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
     }
 
 
-
     @Override
     public void onResume() {
         getCMSData();
-        model.getCounselorsModel();
+//        model.getCounselorsModel();
         super.onResume();
     }
 
     @Override
     public void onDestroy() {
         RxBus.get().unregister("switchPage", switchPageEvent);
-        registerRecentContact(false);
-        LoginProvider.getInstance().removeLoginCallback(this);
         super.onDestroy();
     }
 
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        line.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -157,21 +143,9 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
         immersionBar.statusBarDarkFont(true, 0.2f).statusBarColor(R.color.white).fitsSystemWindows(true).init();
     }
 
-    /**
-     * 刷新消息红点
-     */
-    public void updateDot() {
-        contactsAllBlock.clear();
-        contactsConsultantBlock .clear();
-        contactsTeamBlock.clear();
-        model.getCounselorsModel();
-    }
 
     @Override
     public void initData() {
-        model = new NotifactionListModelImp(this);
-        registerRecentContact(true);
-        LoginProvider.getInstance().addLoginCallback(this);
 
 //        getCMSData();
         switchPageEvent = RxBus.get().register("switchPage", Integer.class);
@@ -217,7 +191,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                     } else {
                         ((NewIndexFragment) fragments.get(0)).checkData();
                     }
-                    if(isAdded()){
+                    if (isAdded()) {
                         ServerErrorCodeDispatch.getInstance().showNetErrorDialog(getContext(), getString(R.string.net_error), errorCode);
                     }
                 }
@@ -232,7 +206,7 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                 } else {
                     ((NewIndexFragment) fragments.get(0)).checkData();
                 }
-                if(isAdded()){
+                if (isAdded()) {
                     ServerErrorCodeDispatch.getInstance().showNetErrorDialog(getContext(), getString(R.string.network_unavailable));
                 }
             }
@@ -393,12 +367,12 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
                 getCMSData();
                 break;
             case R.id.iv_resource_phone:
-//                PermissionGen.needPermission(this, 100,
-//                        new String[] {
-//                                Manifest.permission.CALL_PHONE,
-//                        }
-//                );
-                startActivity(new Intent(getActivity(), NotifactionListActivity.class));
+                PermissionGen.needPermission(this, 100,
+                        new String[]{
+                                Manifest.permission.CALL_PHONE,
+                        }
+                );
+//                startActivity(new Intent(getActivity(), NotifactionListActivity.class));
 
                 break;
         }
@@ -415,59 +389,6 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
         Toast.makeText(getActivity(), R.string.perssion_for_call, Toast.LENGTH_LONG).show();
     }
 
-    /**
-     * 获取顾问列表
-     *
-     * @param info
-     */
-    @Override
-    public void getCounselorsModelSucceed(List<GetCounselorsModel.InfoBean> info) {
-        this.info = info;
-        initMessageObserave();
-        SessionHelper.setInfo(info);
-    }
-
-    @Override
-    public void getCounselorsModelFail(String failStr) {
-        this.info = null;
-        initMessageObserave();
-    }
-
-    @Override
-    public void getCounselorsModelError() {
-        this.info = null;
-        initMessageObserave();
-    }
-
-    @Override
-    public void getImTeamsSucceed(GetImTeamsBean getImTeamsBeen) {
-
-    }
-
-    @Override
-    public void getImTeamsFail(String failStr) {
-
-    }
-
-    @Override
-    public void getImTeamsError() {
-
-    }
-
-    @Override
-    public void nimLoginSucceed() {
-        model.getCounselorsModel();
-    }
-
-    @Override
-    public void nimLoginFail(String failStr) {
-
-    }
-
-    @Override
-    public void nimKicked() {
-        model.getCounselorsModel();
-    }
 
 
     class NewsAdapter extends FragmentStatePagerAdapter {
@@ -487,188 +408,5 @@ public class NewMainFragment extends BaseAbstraceFragment implements View.OnClic
         }
     }
 
-    //主动获取未读消息和message
-    private void initMessageObserave() {
-        List<RecentContact> contactsBlock = NIMClient.getService(MsgService.class).queryRecentContactsBlock();
-        updateUI(contactsBlock);
-    }
 
-    //注册获取未读消息和message监听
-    private void registerRecentContact(boolean register) {
-        NIMClient.getService(MsgServiceObserve.class).observeRecentContact(messageObserver, register);
-    }
-
-    Observer<List<RecentContact>> messageObserver = new Observer<List<RecentContact>>() {
-        @Override
-        public void onEvent(List<RecentContact> recentContacts) {
-            updateUI(recentContacts);
-        }
-    };
-
-    private List<RecentContact> contactsAllBlock = new ArrayList<>();//所有人集合（P2P）
-    private List<RecentContact> contactsConsultantBlock = new ArrayList<>();//顾问集合 (P2P）
-    private List<RecentContact> contactsTeamBlock = new ArrayList<>();//产业联盟集合 (Team）
-    //刷新UI （复杂化了，只要读出有未读消息即可）
-    private void updateUI(final List<RecentContact> contactsBlock) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int unReadMsgCount = 0;
-                int unReadMsgConsultantCount = 0;//顾问未读数目
-                int unReadMsgTeamCount = 0;//产业联盟未读数目
-                long unReadMsgTime = 0;
-                long unReadMsgConsultantTime = 0;//顾问最新一条消息时间
-                long unReadMsgTeamTime = 0;//产业联盟最新一条消息时间
-                String unReadMessage = "";
-                String unReadConsultantMessage = "";//顾问最新一条信息
-                String unReadTeamMessage = "";//产业联盟最新一条信息
-                if (contactsBlock == null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ivDot.setVisibility(View.GONE);
-                        }
-                    });
-                    return;
-                }
-
-                //遍历所有未读消息数量，最近一条消息
-                //遍历出所有人集合
-                //遍历出顾问集合
-                //遍历出产业联盟集合
-                for (int i = 0; i < contactsBlock.size(); i++) {//遍历出所有未读消息数目和message
-                    RecentContact recentContact = contactsBlock.get(i);
-                    int position = -1;
-                    LogUtil.d("NimIM", "最近联系 ： 第" + i + "位: contactId = " + recentContact.getContactId() + "; fromAccount = " + recentContact.getFromAccount() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent() + " ext = "+ (recentContact.getExtension() == null ? " null" :recentContact.getExtension() .toString() ) + " ; time = " + recentContact.getTime());
-                    if(recentContact.getSessionType().getValue() == SessionTypeEnum.P2P.getValue()){//P2P
-
-                        //遍历出所有人（剔除掉顾问发的初始化信息）
-                        for(int j = 0; j < contactsAllBlock.size();j++){
-                            RecentContact contactsAll =  contactsAllBlock.get(j);
-                            if(contactsAll.getContactId().equals(recentContact.getContactId())){
-                                position = j;
-                                break;
-                            }
-                        }
-                        if(position != -1 ){
-                            contactsAllBlock.remove(position);
-                            if(!MsgUtil.fliteMessage(recentContact)){
-                                contactsAllBlock.add(position,recentContact);
-                            }
-                        }else {
-                            if(!MsgUtil.fliteMessage(recentContact)){
-                                contactsAllBlock.add(recentContact);
-                            }
-                        }
-
-                        position = -1;
-                        //遍历出顾问
-                        if (info != null) {
-                            for (int j = 0; j < info.size(); j++) {
-                                if (info.get(j).getAccid().equals(recentContact.getContactId())) {
-                                    for(int n = 0; n < contactsConsultantBlock.size();n++){
-                                        if(contactsConsultantBlock.get(n).getContactId().equals(recentContact.getContactId())){
-                                            position = n;
-                                            break;
-                                        }
-                                    }
-                                    if(position != -1){
-                                        contactsConsultantBlock.remove(position);
-                                        contactsConsultantBlock.add(position,recentContact);
-                                    }else{
-                                        contactsConsultantBlock.add(recentContact);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        position = -1;
-                    }else if(recentContact.getSessionType().getValue() == SessionTypeEnum.Team.getValue()){//Team
-                        for(int j = 0; j < contactsTeamBlock.size();j++){
-                            if(contactsTeamBlock.get(j).getContactId().equals(recentContact.getContactId())){
-                                position = j;
-                                break;
-                            }
-                        }
-                        Team team = NIMClient.getService(TeamService.class).queryTeamBlock(recentContact.getContactId());
-                        LogUtil.d("NimIM","contactId = " + recentContact.getContactId() + " team = " + (team == null ? "null" : team.isMyTeam()));
-                        if(team != null){
-                            if(position != -1){
-                                contactsTeamBlock.remove(position);
-                                if(team.isMyTeam()){
-                                    contactsTeamBlock.add(position,recentContact);
-                                }
-                            }else{
-                                if(team.isMyTeam()){
-                                    contactsTeamBlock.add(recentContact);
-                                }
-                            }
-                        }
-
-                        position = -1;
-                    }
-                }
-                //遍历所有人未读消息数量，最近一条消息
-                for(int i = 0;i < contactsAllBlock.size();i++ ){
-                    RecentContact recentContact = contactsAllBlock.get(i);
-                    LogUtil.d("NimIM", "所有人 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
-                    unReadMsgCount += recentContact.getUnreadCount();
-                    if (i == 0) {
-                        unReadMsgTime = recentContact.getTime();
-                        unReadMessage = recentContact.getContent();
-                    }
-                }
-                //遍历顾问未读消息数量，最近一条消息
-                for (int i = 0; i < contactsConsultantBlock.size(); i++) {
-                    RecentContact recentContact = contactsConsultantBlock.get(i);
-                    LogUtil.d("NimIM", "顾问团 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
-                    unReadMsgConsultantCount += recentContact.getUnreadCount();
-                    if (i == 0) {
-                        unReadConsultantMessage = recentContact.getContent();
-                        unReadMsgConsultantTime = recentContact.getTime();
-                    }
-                }
-                //遍历产业联盟未读消息数量，最近一条消息
-                for (int i = 0; i < contactsTeamBlock.size(); i++) {
-                    RecentContact recentContact = contactsTeamBlock.get(i);
-                    LogUtil.d("NimIM", "产业联盟 ： 第" + i + "位: id = " + recentContact.getContactId() + " ; unreadCount = " + recentContact.getUnreadCount() + " ; message = " + recentContact.getContent());
-                    unReadMsgTeamCount += recentContact.getUnreadCount();
-                    if (i == 0) {
-                        unReadTeamMessage = recentContact.getContent();
-                        unReadMsgTeamTime = recentContact.getTime();
-                    }
-                }
-                UserInfo userInfo = SPUtil.getObjectFromShare(Constants.KEY_USER_INFO);
-                //不是顾问,筛选顾问团未读信息 + 群
-                if (userInfo.getServiceLevel() == null && userInfo.getServiceStatus() == null && userInfo.getCounselorStatus() == null) {
-                    final int finalUnReadMsgConsultantCount = unReadMsgConsultantCount + unReadMsgTeamCount;
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (finalUnReadMsgConsultantCount > 0) {
-                                ivDot.setVisibility(View.VISIBLE);
-                            } else {
-                                ivDot.setVisibility(View.GONE);
-                            }
-                        }
-                    });
-
-                } else {//是顾问,获取所有未读信息 + 群
-                    final int finalUnReadMsgCount = unReadMsgCount + unReadMsgTeamCount;
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (finalUnReadMsgCount > 0) {
-                                ivDot.setVisibility(View.VISIBLE);
-                            } else {
-                                ivDot.setVisibility(View.GONE);
-                            }
-                        }
-                    });
-                }
-
-            }
-        }).start();
-
-    }
 }

@@ -1,8 +1,8 @@
 package com.netease.nim.uikit.api.model.team;
 
+import com.netease.nim.uikit.business.session.TeamOnlineModel;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ public interface TeamMemberOnlineProvider {
     void setTeamMembers(List<TeamMember> members);
     void clear();
     interface TeamMemberOnlineCallback{
-        void updateOnline(HashMap<String,String> onLineMap, HashMap<String,String> offLineMap);
+        void updateOnline(List<TeamOnlineModel> teamOnlineModels);
         void exitTeamByManager();
     }
 }

@@ -65,4 +65,15 @@ public class InitModel implements Serializable, IKeepFromProguard {
     public void setUpdateLog(String updateLog) {
         this.updateLog = updateLog;
     }
+
+    @Override
+    public String toString() {
+        return "InitModel{" +
+                "customerCenter='" + customerCenter + '\'' +
+                ", needUpdate='" + needUpdate + '\'' +
+                ", updateLog='" + updateLog + '\'' +
+                ", h5Resources=" + h5Resources +
+                ", advertisement=" + advertisement +
+                '}';
+    }
 }

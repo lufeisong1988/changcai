@@ -1,5 +1,6 @@
 package com.changcai.buyer.util;
 
+import com.changcai.buyer.bean.TempInfoInputForIdCertify;
 import com.changcai.buyer.bean.UserInfo;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.im.DemoCache;
@@ -9,6 +10,7 @@ import com.changcai.buyer.im.provider.LoginProvider;
 import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.BaseApiModel;
 import com.changcai.buyer.interface_api.InitImMsgService;
+import com.changcai.buyer.rx.RxBus;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -124,6 +126,14 @@ public class NimSessionHelper {
             }else if(code.shouldReLogin()){
                 login();
             }else if(code == StatusCode.KICKOUT || code == StatusCode.KICK_BY_OTHER_CLIENT){
+                UserDataUtil.clearUserData();
+                RxBus.get().post(Constants.REPORT_CLEAR, new Boolean(true));
+                RxBus.get().post("inOrOutAction", new Boolean(true));
+                SPUtil.clearObjectFromShare(Constants.KEY_USER_INFO);
+                SPUtil.saveObjectToShare(Constants.KEY_LOCAL_INFO, new TempInfoInputForIdCertify());
+                SPUtil.saveObjectToShare(Constants.KEY_PERSON_CERTIFY, new TempInfoInputForIdCertify());
+                //退出网易云信
+                loginOut();
                 LoginProvider.getInstance().updateKicked();
             }
             LogUtil.d("NimIM","statusCode = " + code.getValue());

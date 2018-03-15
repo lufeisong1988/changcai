@@ -5,10 +5,15 @@ package com.changcai.buyer.im.main.present;
  */
 
 public interface NotifactionListPresentInterface {
-    void init();
-    void getCounselorsModel(boolean syncAble);
+    void init(String tag);
+    void getCounselorsList();
+    void getTeamList();
+    void getMessageList();
+    void getOnline();
+
     void toVip();
-    void toTeam();
+    void toTeam(int position);
     void toAnswers();
     void onDestory();
+
 }

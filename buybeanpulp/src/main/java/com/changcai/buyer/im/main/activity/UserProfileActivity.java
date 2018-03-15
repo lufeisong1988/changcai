@@ -40,6 +40,7 @@ import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.TeamService;
+import com.netease.nimlib.sdk.team.constant.TeamMemberType;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
@@ -89,6 +90,7 @@ public class UserProfileActivity extends BaseActivity {
     private NimUserInfo nimUserInfo;
     private HashMap<String, Object> extMap;
     private String teamId = "";
+    private String myTeamId = "";
 
     public static void start(Context context, String account, HashMap<String, Object> map) {
         Intent intent = new Intent();
@@ -154,13 +156,13 @@ public class UserProfileActivity extends BaseActivity {
 
         parseIntent();
 
-        if (!TextUtils.isEmpty(teamId) && !DemoCache.getAccount().equals(account)) {
+        if (!TextUtils.isEmpty(teamId) && DemoCache.getAccount() != null && !DemoCache.getAccount().equals(account)) {
             btnAddFriend.setVisibility(View.VISIBLE);
         } else {
             btnAddFriend.setVisibility(View.INVISIBLE);
         }
 
-        if (TextUtils.isEmpty(teamId) && DemoCache.getAccount().equals(account)) {
+        if (TextUtils.isEmpty(teamId) && DemoCache.getAccount() != null && DemoCache.getAccount().equals(account)) {
             tvSetting.setVisibility(View.VISIBLE);
         } else {
             tvSetting.setVisibility(View.GONE);
@@ -172,6 +174,9 @@ public class UserProfileActivity extends BaseActivity {
         extMap = (HashMap<String, Object>) getIntent().getSerializableExtra(Extras.EXTRA_EXT);
         if (extMap != null && extMap.containsKey(Extras.EXTRA_TEAM_ID)) {//存在teamid，进入拉群的逻辑
             teamId = (String) extMap.get(Extras.EXTRA_TEAM_ID);
+        }
+        if(extMap != null && extMap.containsKey(Extras.EXTRA_MYTEAM_ID)){
+            myTeamId = (String) extMap.get(Extras.EXTRA_MYTEAM_ID);
         }
 
     }
@@ -222,18 +227,18 @@ public class UserProfileActivity extends BaseActivity {
             tvUserDetail.setTextColor(getResources().getColor(R.color.font_gray));
         }
 
-        boolean showGrade = true;
+        boolean showGrade = true;//是否展示等级
         for (GetCounselorsModel.InfoBean infoBean : SessionHelper.getInfo()) {
             if (infoBean.getAccid().equals(account)) {
                 showGrade = false;
                 break;
             }
         }
-        int manager_index = SessionHelper.getMamager().indexOf(account);
-
-        if (manager_index >= 0) {
+        TeamMember teamMember = NIMClient.getService(TeamService.class).queryTeamMemberBlock(myTeamId, account);
+        if(teamMember != null && (teamMember.getType().getValue() == TeamMemberType.Manager.getValue() || teamMember.getType().getValue() == TeamMemberType.Owner.getValue()) ){
             showGrade = false;
         }
+
         if (showGrade) {
             ivGrade.setVisibility(View.VISIBLE);
             String grade = UserInfoHelper.getUserExtLevel(account);
@@ -401,7 +406,7 @@ public class UserProfileActivity extends BaseActivity {
                         if (teamMember != null && teamMember.isInTeam()) {
                             if (!isFinishing()) {
                                 dismissLoading();
-                                ConfirmDialog.createConfirmDialog(UserProfileActivity.this, "该账号已是联盟成员", "提示", "确定", new ConfirmDialog.OnBtnConfirmListener() {
+                                ConfirmDialog.createConfirmDialog(UserProfileActivity.this, "该账号已是群成员", "提示", "确定", new ConfirmDialog.OnBtnConfirmListener() {
                                     @Override
                                     public void onConfirmListener() {
 

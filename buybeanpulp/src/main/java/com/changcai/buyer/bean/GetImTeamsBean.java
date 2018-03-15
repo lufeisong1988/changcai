@@ -32,6 +32,26 @@ public class GetImTeamsBean implements Serializable,IKeepFromProguard {
         private String tname;
         private String tid;
         private String taccid;
+        private String ticon;
+
+        private String tintro;
+        private String tdesc;
+
+        public String getTdesc() {
+            return tdesc;
+        }
+
+        public void setTdesc(String tdesc) {
+            this.tdesc = tdesc;
+        }
+
+        public String getTintro() {
+            return tintro;
+        }
+
+        public void setTintro(String tintro) {
+            this.tintro = tintro;
+        }
 
         public String getTname() {
             return tname;
@@ -55,6 +75,14 @@ public class GetImTeamsBean implements Serializable,IKeepFromProguard {
 
         public void setTaccid(String taccid) {
             this.taccid = taccid;
+        }
+
+        public String getTicon() {
+            return ticon;
+        }
+
+        public void setTicon(String ticon) {
+            this.ticon = ticon;
         }
 
         @Override

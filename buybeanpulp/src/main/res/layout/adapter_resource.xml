@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/resource_item_bg"
                 android:gravity="center"
-                android:text="产商品牌"
+                android:text="厂商品牌"
                 android:textSize="8sp" />
 
             <TextView
@@ -103,7 +103,7 @@
             android:layout_width="@dimen/dim96"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="产商品牌"
+            android:text="厂商品牌"
             android:textSize="8sp" />
 
         <View

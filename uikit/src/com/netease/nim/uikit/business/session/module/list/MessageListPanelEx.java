@@ -907,13 +907,13 @@ public class MessageListPanelEx {
                     && item.getAttachStatus() != AttachStatusEnum.transferred)
                 return;
 
-            alertDialog.addItem(container.activity.getString(R.string.voice_to_text), new CustomAlertDialog.onSeparateItemClickListener() {
-
-                @Override
-                public void onClick() {
-                    onVoiceToText(item);
-                }
-            });
+//            alertDialog.addItem(container.activity.getString(R.string.voice_to_text), new CustomAlertDialog.onSeparateItemClickListener() {
+//
+//                @Override
+//                public void onClick() {
+//                    onVoiceToText(item);
+//                }
+//            });
         }
 
         // 语音转文字

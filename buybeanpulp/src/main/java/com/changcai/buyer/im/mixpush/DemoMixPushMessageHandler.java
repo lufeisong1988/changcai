@@ -30,7 +30,7 @@ public class DemoMixPushMessageHandler implements MixPushMessageHandler {
     @Override
     public boolean onNotificationClicked(Context context, Map<String, String> payload) {
 
-        LogUtil.i(DemoMixPushMessageHandler.class.getSimpleName(), "rev pushMessage payload " + payload);
+        LogUtil.i("notifaction", "rev pushMessage payload " + payload);
 
         String sessionId = payload.get("sessionID");
         String type = payload.get("sessionType");
@@ -46,7 +46,6 @@ public class DemoMixPushMessageHandler implements MixPushMessageHandler {
             notifyIntent.setAction(Intent.ACTION_VIEW);
             notifyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // 必须
             notifyIntent.putExtra(NimIntent.EXTRA_NOTIFY_CONTENT, imMessages);
-
             context.startActivity(notifyIntent);
             return true;
         } else {
@@ -59,6 +58,7 @@ public class DemoMixPushMessageHandler implements MixPushMessageHandler {
         StatusBarNotificationConfig config = DemoCache.getNotificationConfig();
 
         Class<? extends Activity> entrance = config.notificationEntrance;
+
         if (entrance == null) {
             launchComponent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName()).getComponent();
         } else {

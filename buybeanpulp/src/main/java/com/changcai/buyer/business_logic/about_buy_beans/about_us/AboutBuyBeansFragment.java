@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -130,11 +131,11 @@ public class AboutBuyBeansFragment extends BaseFragment implements AboutBuyBeans
         Drawable redPot = ContextCompat.getDrawable(activity, R.drawable.red_round_shape);
         tvCheckVersion.setCompoundDrawablesWithIntrinsicBounds(null, null, redPot, null);
         View view = activity.getLayoutInflater().inflate(R.layout.update_version, null, false);
-        TextView cancel = ButterKnife.findById(view, R.id.tv_afterwards);
+        ImageView cancel = ButterKnife.findById(view, R.id.tv_afterwards);
         TextView sure = ButterKnife.findById(view, R.id.tv_right_now);
         TextView log = ButterKnife.findById(view, R.id.tv_update_version_info);
         TextView title = ButterKnife.findById(view, R.id.tv_update_version_title);
-        title.setText("有新版本发布--!");
+        title.setText("有新版本发布");
         log.setText(fromHtml(content));
         if (null == updateDialog) {
             updateDialog = new Dialog(activity, R.style.whiteFrameWindowStyle);

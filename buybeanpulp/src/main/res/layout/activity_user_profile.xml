@@ -149,7 +149,7 @@
                 android:layout_marginRight="@dimen/dim40"
                 android:background="@drawable/confrim_bg"
                 android:gravity="center"
-                android:text="添加为联盟成员"
+                android:text="添加为群成员"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/txt40"
                 android:visibility="gone" />

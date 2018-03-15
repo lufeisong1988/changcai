@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim182"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_consultant"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim182"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dim132"
+            android:id="@+id/rl_icon"
+            android:layout_height="@dimen/dim132"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/dim30"
+            >
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="@dimen/dim122"
+                android:layout_height="@dimen/dim122"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_cyq_hygw"
+              android:layout_centerInParent="true" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/iv_dot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/icon_newtips"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim10"
+            android:layout_marginStart="@dimen/dim30"
+            android:layout_marginTop="@dimen/dim20"
+            android:text="顾问答复"
+            android:textColor="@color/report_font"
+            android:textSize="@dimen/txt32"
+            app:layout_constraintLeft_toRightOf="@+id/rl_icon"
+            app:layout_constraintTop_toTopOf="@+id/rl_icon" />
+
+        <ImageView
+            android:id="@+id/iv_gurad"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dim6"
+            android:layout_marginStart="@dimen/dim6"
+            android:src="@drawable/icon_xzchyys"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@+id/tv_name"
+            app:layout_constraintTop_toTopOf="@+id/rl_icon" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dim22"
+            android:layout_marginLeft="@dimen/dim30"
+            android:layout_marginEnd="@dimen/dim30"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text=""
+            android:textColor="@color/storm_gray"
+            android:textSize="@dimen/txt26"
+            android:layout_marginRight="@dimen/dim30"
+            app:layout_constraintBottom_toBottomOf="@+id/rl_icon"
+            app:layout_constraintLeft_toRightOf="@+id/rl_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="@dimen/dim30" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dim30"
+            android:layout_marginRight="@dimen/dim30"
+            android:layout_marginTop="@dimen/dim54"
+            android:text=""
+            android:textColor="@color/font_gray"
+            android:textSize="@dimen/txt24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

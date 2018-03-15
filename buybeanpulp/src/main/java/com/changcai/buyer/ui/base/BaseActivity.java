@@ -3,10 +3,8 @@ package com.changcai.buyer.ui.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -17,9 +15,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.AppManager;
 import com.changcai.buyer.util.FileUtil;
-import com.changcai.buyer.util.StatusBarUtil;
 import com.changcai.buyer.view.immersion.ImmersionBar;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /**
  * @author zhoujun
@@ -163,5 +159,8 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
+        if(bar != null){
+            ImmersionBar.with(this).destroy();
+        }
     }
 }

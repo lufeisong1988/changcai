@@ -69,6 +69,7 @@ public class SplashActivity extends BaseActivity {
 //            finish();
 //            return;
 //        }
+
         setContentView(R.layout.common_splash_activity);
         viewSplash = findViewById(R.id.ivBg);
         checkNewVersion(readH5ResourceProperties());

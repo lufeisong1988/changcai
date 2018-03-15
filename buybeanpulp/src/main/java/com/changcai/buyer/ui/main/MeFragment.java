@@ -33,6 +33,7 @@ import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
 import com.changcai.buyer.http.HttpListener;
 import com.changcai.buyer.http.VolleyUtil;
+import com.changcai.buyer.im.provider.LoginProvider;
 import com.changcai.buyer.interface_api.ApiCodeErrorException;
 import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.NetworkResultFunc1;
@@ -78,7 +79,7 @@ import rx.schedulers.Schedulers;
  * @description
  * @date 15-12-9 上午11:51
  */
-public class MeFragment extends BaseFragment implements View.OnClickListener {
+public class MeFragment extends BaseFragment implements View.OnClickListener ,LoginProvider.LoginCallback{
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
     @BindView(R.id.username)
@@ -174,6 +175,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LoginProvider.getInstance().addLoginCallback(this);
         backgroundToForegroundEvent = RxBus.get().register("backgroundToForeground", Boolean.class);
         backgroundToForegroundEvent.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Boolean>() {
             @Override
@@ -271,6 +273,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         mSubscription = RxUtil.unsubscribe(mSubscription);
         RxUtil.remove(subscription);
         RxBus.get().unregister("backgroundToForeground", backgroundToForegroundEvent);
+        LoginProvider.getInstance().removeLoginCallback(this);
         super.onDestroy();
     }
 
@@ -661,5 +664,20 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void nimLoginSucceed() {
+
+    }
+
+    @Override
+    public void nimLoginFail(String failStr) {
+
+    }
+
+    @Override
+    public void nimKicked() {
+        refreshUI();
     }
 }

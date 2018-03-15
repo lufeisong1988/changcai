@@ -67,7 +67,6 @@ public class NotifactionListModelImp implements NotifactionListModelInterface {
     @Override
     public void getImTeams() {
         Map<String, String> map = SPUtil.getObjectFromShare(Constants.REQUEST_BASE_PARAMETERS);
-        map.put("tokenId", SPUtil.getString(Constants.KEY_TOKEN_ID));
         GetImTeamsService service = ApiServiceGenerator.createService(GetImTeamsService.class);
         service.getImTeams(map)
                 .subscribeOn(Schedulers.io())

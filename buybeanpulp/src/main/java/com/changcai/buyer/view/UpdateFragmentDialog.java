@@ -2,9 +2,7 @@ package com.changcai.buyer.view;
 
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -16,8 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.changcai.buyer.util.StringUtil.fromHtml;
 
 /**
  * Created by liuxingwei on 2017/7/5.
@@ -60,7 +56,9 @@ public class UpdateFragmentDialog extends BaseBottomDialog {
     public void bindView(View v) {
         unbinder = ButterKnife.bind(this, v);
         tvUpdateVersionTitle.setText("有新版本发布");
-        tvUpdateVersionInfo.setText(fromHtml(getArguments().getString("content","")));
+        Bundle bundle = getArguments();
+        String str = bundle.getString("content");
+        tvUpdateVersionInfo.setText(str);
     }
 
     @Override

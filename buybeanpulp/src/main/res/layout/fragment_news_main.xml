@@ -18,21 +18,13 @@
 
         <ImageView
             android:id="@+id/iv_resource_phone"
-            android:layout_width="@dimen/dim37"
-            android:layout_height="@dimen/dim37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dim25"
-            android:src="@drawable/icon_new" />
-        <ImageView
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/dim20"
-            android:id="@+id/iv_dot"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dim25"
-            android:layout_width="@dimen/dim12"
-            android:layout_height="@dimen/dim12"
-            android:background="@drawable/dot_red"/>
+            android:src="@drawable/icon_nav_call" />
+
     </RelativeLayout>
 
     <View

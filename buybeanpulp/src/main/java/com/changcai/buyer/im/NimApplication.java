@@ -97,6 +97,7 @@ public class NimApplication extends Application {
         NimUIKit.setCustomPushContentProvider(new DemoPushContentProvider());
 
         NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
+
     }
 
     private UIKitOptions buildUIKitOptions() {

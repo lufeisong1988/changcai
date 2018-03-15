@@ -17,6 +17,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.util.PicassoImageLoader;
 import com.changcai.buyer.view.RoundImageView;
+import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.team.constant.TeamMemberType;
@@ -160,7 +161,7 @@ public class TeamMemberItemAdapter extends BaseAdapter {
     private void updateUI(TeamMember teamMember, NimUserInfo nimUserInfo, RoundImageView iv_userIcon, TextView tv_name) {
         if (nimUserInfo != null) {
             PicassoImageLoader.getInstance().displayNetImage((Activity) context, StringUtils.isEmpty(nimUserInfo.getAvatar()) ? "i am not empty" : nimUserInfo.getAvatar(), iv_userIcon, defaultDrawable);
-            tv_name.setText(StringUtils.isEmpty(teamMember.getTeamNick()) ? ((StringUtils.isEmpty(nimUserInfo.getName()) ? (StringUtils.isEmpty(nimUserInfo.getAccount()) ? (StringUtils.isEmpty(nimUserInfo.getMobile()) ? "" : nimUserInfo.getMobile()) : nimUserInfo.getAccount()) : nimUserInfo.getName())) : teamMember.getTeamNick());
+            tv_name.setText(StringUtils.isEmpty(teamMember.getTeamNick()) ? ((StringUtils.isEmpty(nimUserInfo.getName()) ? (StringUtils.isEmpty(nimUserInfo.getAccount()) ? (StringUtils.isEmpty(nimUserInfo.getMobile()) ? "" : (UserInfoHelper.isMobileNO(nimUserInfo.getMobile()) ? UserInfoHelper.setHideNumber(nimUserInfo.getMobile(),3,4) : nimUserInfo.getMobile())) : (UserInfoHelper.isMobileNO(nimUserInfo.getAccount()) ? UserInfoHelper.setHideNumber(nimUserInfo.getAccount(),3,4) : nimUserInfo.getAccount())) : nimUserInfo.getName())) : teamMember.getTeamNick());
         } else {
             PicassoImageLoader.getInstance().displayResourceImageNoResize((Activity) context, R.drawable.icon_default_head, iv_userIcon);
             tv_name.setText(StringUtils.isEmpty(teamMember.getTeamNick()) ? "" : teamMember.getTeamNick());

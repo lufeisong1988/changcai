@@ -7,7 +7,6 @@ import android.text.TextUtils;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.im.config.preference.UserPreferences;
-import com.changcai.buyer.im.main.activity.NotifactionListActivity;
 import com.netease.nim.uikit.api.wrapper.NimUserInfoProvider;
 import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderThumbBase;
 import com.netease.nimlib.sdk.SDKOptions;
@@ -132,7 +131,7 @@ public class NimSDKOptionConfig {
     private static StatusBarNotificationConfig loadStatusBarNotificationConfig() {
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
         // 点击通知需要跳转到的界面
-        config.notificationEntrance = NotifactionListActivity.class;
+        config.notificationEntrance = com.changcai.buyer.ui.main.MainActivity.class;
         config.notificationSmallIconId = R.mipmap.appicon_andr;
         config.notificationColor = DemoCache.getContext().getResources().getColor(R.color.color_blue_3a9efb);
         // 通知铃声的uri字符串

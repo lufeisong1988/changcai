@@ -1,6 +1,8 @@
 package com.changcai.buyer.im.main.viewmodel;
 
 import com.changcai.buyer.bean.GetCounselorsModel;
+import com.changcai.buyer.bean.GroupDetailModel;
+import com.netease.nim.uikit.business.session.TeamOnlineModel;
 
 import java.util.List;
 
@@ -28,16 +30,17 @@ public interface NotifacitonListViewModel {
     void showNOTIFACTION();
 
     void loginNimFail(String failStr);
+    void loginNimSucceed();
 
     void updateConsultantStatus(boolean showDot, String message, long time);
 
     void updateAllStatus(boolean showDot, String message, long time);
 
-    void updateTeamStatus(boolean showDot, String message, long time);
+    void updateTeamStatus(int unReadCount, String teamId, String message, long time);
 
     void joinTeam(String teamId);
 
-    void unJoinTeam();
+    void unJoinTeam(String teamId);
 
     void unExistTeam();
 
@@ -45,7 +48,10 @@ public interface NotifacitonListViewModel {
 
     void joinTeamError();
 
-    void updateOnlineMembers(boolean showAble,int onLineMemberNums,int totalMemberNums);
+    void updateOnlineMembers(boolean showAble,List<TeamOnlineModel> teamOnlineModels);
 
     void exitTeamByManager();
+
+    void kickOut();
+    void refreshGroupList(List<GroupDetailModel> teamList);
 }
