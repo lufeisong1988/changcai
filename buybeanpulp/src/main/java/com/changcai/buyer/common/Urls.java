@@ -12,8 +12,8 @@ public class Urls {
 //    public static final String BASE_URL = "http://192.168.2.17:8080/mobile/";//袁琴本机ip
 //    public static final String BASE_URL = "http://192.168.2.54:8080/mobile/";//长江本机
 //    public static final String BASE_URL = "http://192.168.5.15:8080/mobile/";//测试
-//    public static final String BASE_URL = "http://192.168.5.52:8080/mobile/";//UAT环境
-    public static final String BASE_URL = "http://139.224.219.149:8080/mobile/";//生产环境
+    public static final String BASE_URL = "http://192.168.5.52:8080/mobile/";//UAT环境
+//    public static final String BASE_URL = "http://139.224.219.149:8080/mobile/";//生产环境
 
 
     public static final String BACK_SERVER = "http://139.196.209.147:8080/monitor/initApp.action";

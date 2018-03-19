@@ -8,14 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.netease.nim.uikit.R;
+import com.netease.nim.uikit.business.session.audio.AudioMessagePlayable;
 import com.netease.nim.uikit.business.session.audio.MessageAudioControl;
 import com.netease.nim.uikit.common.media.audioplayer.Playable;
 import com.netease.nim.uikit.common.ui.recyclerview.adapter.BaseMultiItemFetchLoadAdapter;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.common.util.sys.TimeUtil;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.attachment.AudioAttachment;
 import com.netease.nimlib.sdk.msg.constant.AttachStatusEnum;
 import com.netease.nimlib.sdk.msg.constant.MsgDirectionEnum;
@@ -70,7 +75,29 @@ public class MsgViewHolderAudio extends MsgViewHolderBase {
             if (message.getDirect() == MsgDirectionEnum.In && message.getAttachStatus() != AttachStatusEnum.transferred) {
                 return;
             }
+            //先判断文件是否存在，需要在这里重新下载
+            AudioMessagePlayable audioMessagePlayable = new AudioMessagePlayable(message);
+            if (TextUtils.isEmpty(audioMessagePlayable.getPath())){
+                NIMClient.getService(MsgService.class).downloadAttachment(message, true)
+                        .setCallback(new RequestCallback() {
+                            @Override
+                            public void onSuccess(Object o) {
+                                onItemClick();
+                            }
 
+                            @Override
+                            public void onFailed(int i) {
+                                Toast.makeText(context, R.string.download_audio_fail, Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onException(Throwable throwable) {
+                                Toast.makeText(context, R.string.download_audio_fail, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                Toast.makeText(context, R.string.download_audio_start, Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (message.getStatus() != MsgStatusEnum.read) {
                 // 将未读标识去掉,更新数据库
                 unreadIndicator.setVisibility(View.GONE);

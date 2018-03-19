@@ -111,8 +111,8 @@
     <orderEntry type="library" exported="" name="umeng_social_tool" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_Sina_Simplify" level="project" />
     <orderEntry type="library" exported="" name="umeng-onlineconfig_v1.0.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_WeChat_Simplify" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQ_Simplify" level="project" />
   </component>
