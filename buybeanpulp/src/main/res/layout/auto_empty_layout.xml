@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/emptyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/default_img_404" />
+        android:layout_width="@dimen/dim340"
+        android:layout_height="@dimen/dim340"
+        android:src="@drawable/default_img_404_2" />
 
     <TextView
         android:id="@+id/tv_empty_action"

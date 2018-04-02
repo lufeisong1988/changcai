@@ -1,14 +1,7 @@
 package com.changcai.buyer.ui.strategy;
 
-import android.content.Context;
-import android.view.View;
-
 import com.changcai.buyer.BasePresenter;
 import com.changcai.buyer.BaseView;
-import com.changcai.buyer.bean.Articles;
-import com.changcai.buyer.bean.SpotFolderListBean;
-
-import java.util.List;
 
 /**
  * Created by liuxingwei on 2017/8/1.
@@ -17,30 +10,38 @@ import java.util.List;
 public interface PromptGoodsContract {
 
     interface View extends BaseView<PromptGoodsContract.Presenter> {
-        boolean isActive();
 
-        void initIndicator(final List<SpotFolderListBean> folderListBeen);
+        void showLoading();
 
-        void addDataNormal(List<Articles> articlesList);
+        void dismissLoading();
 
-        void addDataWithOnRefresh(List<Articles> articlesList);
 
-        void addDataLoadMore(List<Articles> articlesList);
+        void initStrategyTarget(String[] targetId,String[] dataUrlParam,String[] name,String[] code);
 
-        Context getViewContext();
+        void initStrategyTargetFail();
 
-        void setHeaderText(String headerText);
+        void initStrategyTargetEmpty();
 
-        void setCustomFontTextViewDeclareVisible();
+        void initStrategyTargetData(String[] date,String[] price,String[] point,int minY,int maxY,String currentDate);
 
-        void showLoadProgress();
+        void initStrategyTargetDataFail();
 
-        void dismissLoadProgress();
+        void initStrategyTargetDataEmpty();
+
+
+
+        void initPaper(String content);
+
+        void initPaperEmpty();
+
+        void initPaperFail();
     }
 
     interface Presenter extends BasePresenter {
-        void getSpotStrategy(int pageIndex, String folderId);
+        void getStrategyTarget(String date,String folderId);
 
-        void getSpotStrategyOnRefresh(String folderId);
+        void getStrategyTargetData(String targetId,String folderId,String code,String dataUrlParam,String data);
+
+        void getSpotPaper(String folderId, String data);
     }
 }

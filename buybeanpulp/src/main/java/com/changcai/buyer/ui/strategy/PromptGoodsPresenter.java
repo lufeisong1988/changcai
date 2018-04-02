@@ -1,22 +1,15 @@
 package com.changcai.buyer.ui.strategy;
 
-import com.changcai.buyer.R;
-import com.changcai.buyer.bean.PromptGoodsModel;
-import com.changcai.buyer.interface_api.ApiCodeErrorException;
-import com.changcai.buyer.interface_api.ApiServiceGenerator;
-import com.changcai.buyer.interface_api.ErrorCode;
-import com.changcai.buyer.interface_api.NetworkResultFunc1;
-import com.changcai.buyer.interface_api.ThrowableFiltrateFunc;
-import com.changcai.buyer.util.LogUtil;
-import com.changcai.buyer.util.RxUtil;
+import android.text.TextUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.changcai.buyer.bean.StrategyPaperModel;
+import com.changcai.buyer.bean.StrategyTargetDataModel;
+import com.changcai.buyer.bean.StrategyTargetModel;
+import com.changcai.buyer.interface_api.service_model.StratgyServiceInterface;
+import com.changcai.buyer.interface_api.service_model.base.ServiceRequestCallback;
+import com.changcai.buyer.interface_api.service_model.imp.StratgyServiceImp;
 
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.List;
 
 /**
  * Created by liuxingwei on 2017/8/1.
@@ -24,13 +17,15 @@ import rx.schedulers.Schedulers;
 
 public class PromptGoodsPresenter implements PromptGoodsContract.Presenter {
 
-    PromptGoodsContract.View view;
+    PromptGoodsContract.View  view;
 
-    Subscription subscription;
+    StratgyServiceInterface service;
+
 
     public PromptGoodsPresenter(PromptGoodsContract.View view) {
         this.view = view;
         view.setPresenter(this);
+        service = new StratgyServiceImp();
     }
 
     @Override
@@ -41,113 +36,157 @@ public class PromptGoodsPresenter implements PromptGoodsContract.Presenter {
     @Override
     public void detach() {
         view = null;
-        RxUtil.remove(subscription);
     }
 
 
-    @Override
-    public void getSpotStrategy(final int pageIndex, String folderId) {
-        if (pageIndex==0){
-            view.showLoadProgress();
+    void showLoading(){
+        if(view != null){
+            view.showLoading();
         }
-        Map<String, String> params = new HashMap<>(2);
-        params.put("currentPage", String.valueOf(pageIndex));
-        params.put("folderId", folderId);
-        SpotStrategy strategyInitService = ApiServiceGenerator.createService(SpotStrategy.class);
-        subscription = strategyInitService
-                .getArbitrageStrategy(params)
-                .map(new NetworkResultFunc1<PromptGoodsModel>())
-                .onErrorResumeNext(new ThrowableFiltrateFunc<PromptGoodsModel>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PromptGoodsModel>() {
-                    @Override
-                    public void onCompleted() {
-                        view.setCustomFontTextViewDeclareVisible();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof ApiCodeErrorException && ((ApiCodeErrorException) e).getError() !=null) {
-                            if (((ApiCodeErrorException) e).getError().getCode().equals(ErrorCode.NET_ERROR.getCode())) {
-                                if(view != null)
-                                    view.showErrorDialog(view.getViewContext().getString(R.string.net_work_exception));
-                            }
-                        } else {
-                            if(view != null)
-                                view.showErrorDialog(view.getViewContext().getString(R.string.net_error));
-                        }
-                        if (pageIndex == 0) {
-                            if(view != null){
-                                view.dismissLoadProgress();
-                                view.addDataNormal(null);
-                            }
-                        } else {
-                            if(view != null)
-                                view.addDataLoadMore(null);
-                        }
-                    }
-
-                    @Override
-                    public void onNext(PromptGoodsModel strategyInitModel) {
-                        if (pageIndex == 0) {
-                            if(view != null){
-                                view.dismissLoadProgress();
-                                view.addDataNormal(strategyInitModel.getArticles());
-                            }
-                        } else {
-                            if(view != null)
-                                view.addDataLoadMore(strategyInitModel.getArticles());
-                        }
-//                        if(view != null)
-//                            view.setHeaderText(strategyInitModel.getLastUpdateTime());
-                    }
-                });
-
+    }
+    void dismissLoading(){
+        if(view != null){
+            view.dismissLoading();
+        }
     }
 
     @Override
-    public void getSpotStrategyOnRefresh(String folderId) {
-        Map<String, String> params = new HashMap<>(2);
-        params.put("currentPage", String.valueOf(0));
-        params.put("folderId", String.valueOf(folderId));
-        SpotStrategy strategyInitService = ApiServiceGenerator.createService(SpotStrategy.class);
-        subscription = strategyInitService
-                .getArbitrageStrategy(params)
-                .map(new NetworkResultFunc1<PromptGoodsModel>())
-                .onErrorResumeNext(new ThrowableFiltrateFunc<PromptGoodsModel>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PromptGoodsModel>() {
-                    @Override
-                    public void onCompleted() {
-                        view.setCustomFontTextViewDeclareVisible();
+    public void getStrategyTarget(String date, String folderId) {
+        final String mFolerId = folderId;
+        showLoading();
+        service.getStrategyTarget(date, mFolerId, new ServiceRequestCallback<StrategyTargetModel>() {
+            @Override
+            public void onSucceed(StrategyTargetModel strategyTargetModel) {
+                dismissLoading();
+                if(strategyTargetModel != null && strategyTargetModel.getDate() != null && strategyTargetModel.getTargets() != null && strategyTargetModel.getTargets().size() > 0){
+                    List<StrategyTargetModel.TargetsBean> targets = strategyTargetModel.getTargets();
+                    String[] targetId = new String[targets.size()];
+                    String[] dataUrlParam = new String[targets.size()];
+                    String[] name = new String[targets.size()];
+                    String[] code = new String[targets.size()];
+                    for(int i = 0;i < targets.size();i++){
+                        targetId[i] = targets.get(i).getTargetId();
+                        dataUrlParam[i] = targets.get(i).getDataUrlParam();
+                        name[i] = targets.get(i).getName();
+                        code[i] = targets.get(i).getCode();
                     }
+                    if(view != null){
+                        view.initStrategyTarget(targetId,dataUrlParam,name,code);
+                    }
+                    StrategyTargetModel.TargetsBean targetsBean = strategyTargetModel.getTargets().get(0);
+                    getStrategyTargetData(targetsBean.getTargetId(),mFolerId,targetsBean.getCode(),targetsBean.getDataUrlParam(),strategyTargetModel.getDate());
 
-                    @Override
-                    public void onError(Throwable e) {
-                        LogUtil.d("netOnError",e.toString());
-                        if (e instanceof ApiCodeErrorException && ((ApiCodeErrorException) e).getError() !=null) {
-                            if (((ApiCodeErrorException) e).getError().getCode().equals(ErrorCode.NET_ERROR.getCode())) {
-                                if(view != null)
-                                    view.showErrorDialog(view.getViewContext().getString(R.string.net_work_exception));
+                }else{
+                    if(view != null){
+                        view.initStrategyTargetEmpty();
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                dismissLoading();
+                if(view != null){
+                    view.initStrategyTargetFail();
+                }
+            }
+
+            @Override
+            public void onError() {
+                dismissLoading();
+                if(view != null){
+                    view.initStrategyTargetFail();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getStrategyTargetData(String targetId, String folderId, String code, String dataUrlParam, String date) {
+        final String tmpDate = date;
+        showLoading();
+        service.getStrategyTargetDatas(targetId, folderId, code, dataUrlParam, date, new ServiceRequestCallback<StrategyTargetDataModel>() {
+            @Override
+            public void onSucceed(StrategyTargetDataModel strategyTargetDataModel) {
+                dismissLoading();
+                if(view != null){
+                    if(strategyTargetDataModel != null && strategyTargetDataModel.getView() != null){
+                        List<StrategyTargetDataModel.ViewBean> items = strategyTargetDataModel.getView();
+                        String[] date = new String[items.size()];
+                        String[] price = new String[items.size()];
+                        String[] point = new String[items.size()];
+                        float minY = 0;
+                        float maxY = 0;
+                        for(int i = 0; i < items.size();i++){
+                            StrategyTargetDataModel.ViewBean item = items.get(i);
+                            date[i] = item.getDate();
+                            price[i] = item.getPrice();
+                            point[i] = item.getPoint();
+                            float priceF = Float.parseFloat(item.getPrice());
+                            if(priceF < minY){
+                                minY = priceF;
                             }
-                        } else {
-                            if(view != null)
-                                view.showErrorDialog(view.getViewContext().getString(R.string.net_error));
+                            if(priceF > maxY){
+                                maxY = priceF;
+                            }
                         }
-                        if(view != null)
-                            view.addDataWithOnRefresh(null);
+                        view.initStrategyTargetData(date,price,point,Math.round(minY),Math.round(maxY),tmpDate);
+                    }else{
+                        view.initStrategyTargetDataEmpty();
                     }
 
-                    @Override
-                    public void onNext(PromptGoodsModel strategyInitModel) {
-                        if(view != null){
-                            view.addDataWithOnRefresh(strategyInitModel.getArticles());
-//                            view.setHeaderText(strategyInitModel.getLastUpdateTime());
-                        }
-                    }
-                });
+                }
+            }
 
+            @Override
+            public void onFail(String error) {
+                dismissLoading();
+                if(view != null){
+                    view.initStrategyTargetDataFail();
+                }
+            }
+
+            @Override
+            public void onError() {
+                dismissLoading();
+                if(view != null){
+                    view.initStrategyTargetDataFail();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getSpotPaper(String folderId, String data) {
+        showLoading();
+        service.getStrategyPaper(folderId, data, new ServiceRequestCallback<StrategyPaperModel>() {
+            @Override
+            public void onSucceed(StrategyPaperModel strategyPaperModel) {
+                dismissLoading();
+                if(view != null){
+                    if(strategyPaperModel.getArticle() != null && !TextUtils.isEmpty(strategyPaperModel.getArticle())){
+                        view.initPaper(strategyPaperModel.getArticle());
+                    }else{
+                        view.initPaperEmpty();
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                dismissLoading();
+                if(view != null){
+                    view.initPaperFail();
+                }
+            }
+
+            @Override
+            public void onError() {
+                dismissLoading();
+                if(view != null){
+                    view.initPaperFail();
+                }
+            }
+        });
     }
 }

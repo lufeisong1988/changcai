@@ -145,7 +145,7 @@ public class BaseFragment extends Fragment {
         dialog.setContentView(view);
 
         TextView tvPhone = (TextView) view.findViewById(R.id.phone);
-        tvPhone.setText("拨打交易热线" + phone);
+        tvPhone.setText("拨打客服热线" + phone);
         tvPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -12,21 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.bean.AuthsBean;
 import com.changcai.buyer.bean.StrategyInitModel;
 import com.changcai.buyer.common.Constants;
-import com.changcai.buyer.interface_api.ApiCodeErrorException;
-import com.changcai.buyer.interface_api.ApiServiceGenerator;
-import com.changcai.buyer.interface_api.ErrorCode;
-import com.changcai.buyer.interface_api.NetworkResultFunc1;
-import com.changcai.buyer.interface_api.ThrowableFiltrateFunc;
+import com.changcai.buyer.interface_api.service_model.StratgyServiceInterface;
+import com.changcai.buyer.interface_api.service_model.base.ServiceRequestCallback;
+import com.changcai.buyer.interface_api.service_model.imp.StratgyServiceImp;
 import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseFragment;
-import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.RxUtil;
+import com.changcai.buyer.view.CustomViewPager;
 import com.changcai.buyer.view.FontCache;
 import com.changcai.buyer.view.MyAlertDialog;
 import com.changcai.buyer.view.RotateDotsProgressView;
@@ -40,18 +38,15 @@ import com.changcai.buyer.view.indicator.commonnavigator.indicators.LinePagerInd
 import com.changcai.buyer.view.indicator.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by liuxingwei on 2017/7/26.
@@ -64,7 +59,7 @@ public class StrategyFragment extends BaseFragment {
     @BindView(R.id.navigation_indicator)
     MagicIndicator navigationIndicator;
     @BindView(R.id.mViewPager)
-    ViewPager mViewPager;
+    CustomViewPager mViewPager;
     @BindView(R.id.progress)
     RotateDotsProgressView progress;
 
@@ -74,19 +69,20 @@ public class StrategyFragment extends BaseFragment {
     private PromptGoodsFragment promptgoodsFragment;
     private StraddleFragment straddleFragment;
     private CashReportFragment cashReportFragment;
-    private PromptGoodsPresenter promptGoodsPresenter;
-    private StraddlePresenter straddlePresenter;
     private Unbinder baseUnbinder;
-    private int mStatusBarHeight;
     protected List<Fragment> fragments;
     private Subscription subscription;
     private int lastPage = 0;
-
+    public static int viewPagerCurrentItem = 0;//当前页卡位置
 
     private Observable<Boolean> recallObserable;
     private Observable<Boolean> rxBusReprotClear;
+    private Observable<Void> rxBusStrategyRefresh;
+    private Observable<Boolean> logOrOutObservableEvent;
 
-    public static int viewPagerCurrentItem = 0;//当前页卡位置
+    private StratgyServiceInterface service;
+    boolean requestAble = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -106,11 +102,11 @@ public class StrategyFragment extends BaseFragment {
                 }
             }
         });
-        rxBusReprotClear = RxBus.get().register(Constants.REPORT_CLEAR,Boolean.class);
+        rxBusReprotClear = RxBus.get().register(Constants.REPORT_CLEAR, Boolean.class);
         rxBusReprotClear.subscribe(new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
-                if(aBoolean){
+                if (aBoolean) {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
@@ -121,6 +117,21 @@ public class StrategyFragment extends BaseFragment {
                 }
             }
         });
+        rxBusStrategyRefresh = RxBus.get().register(Constants.STRATEGY_REFRESH,Void.class);
+        rxBusStrategyRefresh.subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                verifyPermission();
+            }
+        });
+        logOrOutObservableEvent = RxBus.get().register("inOrOutAction", Boolean.class);
+        logOrOutObservableEvent.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        verifyPermission();
+                    }
+                });
         return view;
     }
 
@@ -131,19 +142,20 @@ public class StrategyFragment extends BaseFragment {
         initFragments();
         initViewPager();
         initIndicator();
+        initData();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        verifyPermission(false);
+        verifyPermission();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden) {
-            verifyPermission(false);
+        if (!hidden && requestAble) {
+            verifyPermission();
         }
     }
 
@@ -154,16 +166,14 @@ public class StrategyFragment extends BaseFragment {
         bundle.putInt("icon", R.drawable.icon_alt_fail);
         alertDialog.setArguments(bundle);
         alertDialog.show(getChildFragmentManager(), "alert");
-        promptgoodsFragment.setAuthenticationFail();
-        straddleFragment.setAuthenticationFail();
     }
 
     private void initFragments() {
         fragments = new ArrayList<>(3);
         promptgoodsFragment = new PromptGoodsFragment();
-        promptGoodsPresenter = new PromptGoodsPresenter(promptgoodsFragment);
+        new PromptGoodsPresenter(promptgoodsFragment);
         straddleFragment = new StraddleFragment();
-        straddlePresenter = new StraddlePresenter(straddleFragment);
+        new PromptGoodsPresenter(straddleFragment);
         cashReportFragment = new CashReportFragment();
         fragments.add(promptgoodsFragment);
         fragments.add(straddleFragment);
@@ -171,9 +181,7 @@ public class StrategyFragment extends BaseFragment {
     }
 
     private void initIndicator() {
-        mStatusBarHeight = immersionBar.getStatusBarHeight(getActivity());
         tabCommonNavigator = new CommonNavigator(getContext());
-
         tabCommonNavigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -187,14 +195,14 @@ public class StrategyFragment extends BaseFragment {
                 simplePagerTitleView.setNormalTypeface();
                 simplePagerTitleView.setSelectedTypeface(FontCache.getTypeface("ping_fang_light.ttf", getActivity()));
                 simplePagerTitleView.setText(getTabItemArrays()[index]);
-                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 23);
-                simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.white));
-                simplePagerTitleView.setNormalColor(getResources().getColor(R.color.gray_chateau));
+                simplePagerTitleView.setPadding(getResources().getDimensionPixelSize(R.dimen.dim15));
+                simplePagerTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                simplePagerTitleView.setSelectedColor(getResources().getColor(R.color.black));
+                simplePagerTitleView.setNormalColor(getResources().getColor(R.color.storm_gray));
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mViewPager.setCurrentItem(index);
-//
                     }
                 });
                 return simplePagerTitleView;
@@ -209,13 +217,12 @@ public class StrategyFragment extends BaseFragment {
                 linePagerIndicator.setLineHeight(getResources().getDimension(R.dimen.dim5));
                 linePagerIndicator.setStartInterpolator(new AccelerateInterpolator(2.5f));
                 linePagerIndicator.setEndInterpolator(new DecelerateInterpolator(2.5f));
-                linePagerIndicator.setColors(getResources().getColor(R.color.white));
+                linePagerIndicator.setColors(getResources().getColor(R.color.color_26272A));
                 return linePagerIndicator;
             }
         };
 
-        FrameLayout.LayoutParams navigationIndicatorLayoutParams = (FrameLayout.LayoutParams) navigationIndicator.getLayoutParams();
-        navigationIndicatorLayoutParams.topMargin += mStatusBarHeight;
+        RelativeLayout.LayoutParams navigationIndicatorLayoutParams = (RelativeLayout.LayoutParams) navigationIndicator.getLayoutParams();
         navigationIndicator.setLayoutParams(navigationIndicatorLayoutParams);
         tabCommonNavigator.setAdapter(tabCommonNavigatorAdapter);
         navigationIndicator.setNavigator(tabCommonNavigator);
@@ -224,8 +231,8 @@ public class StrategyFragment extends BaseFragment {
 
 
     private void initViewPager() {
-        FrameLayout.LayoutParams mViewPagerLayoutParams = (FrameLayout.LayoutParams) mViewPager.getLayoutParams();
-        mViewPagerLayoutParams.topMargin += mStatusBarHeight;
+        RelativeLayout.LayoutParams mViewPagerLayoutParams = (RelativeLayout.LayoutParams) mViewPager.getLayoutParams();
+        mViewPager.setScanScroll(false);
         mViewPager.setLayoutParams(mViewPagerLayoutParams);
         mViewPager.setAdapter(new StrategyViewPagerAdapter(getChildFragmentManager(), getContext(), fragments));
         mViewPager.setCurrentItem(0);
@@ -252,10 +259,14 @@ public class StrategyFragment extends BaseFragment {
         });
     }
 
+    private void initData() {
+        service = new StratgyServiceImp();
+    }
+
     @Override
     protected void initSystemStatusBar() {
         super.initSystemStatusBar();
-        immersionBar.statusBarColorTransformEnable(false).fitsSystemWindows(false).init();
+        immersionBar.statusBarDarkFont(true, 0.2f).statusBarColor(R.color.white).fitsSystemWindows(true).init();
     }
 
     private String[] getTabItemArrays() {
@@ -265,67 +276,62 @@ public class StrategyFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        LogUtil.d("TAG","头寸报表 ondestory");
         super.onDestroy();
         activity = null;
         baseUnbinder.unbind();
         RxUtil.remove(subscription);
         RxBus.get().unregister("recall", recallObserable);
-        RxBus.get().unregister(Constants.REPORT_CLEAR,rxBusReprotClear);
+        RxBus.get().unregister(Constants.REPORT_CLEAR, rxBusReprotClear);
+        RxBus.get().unregister(Constants.STRATEGY_REFRESH, rxBusStrategyRefresh);
+        RxBus.get().unregister("inOrOutAction", logOrOutObservableEvent);
     }
 
     public void setCurrentPage(int index) {
         if (index < 0 || index > getTabItemArrays().length - 1) return;
         mViewPager.setCurrentItem(index);
-        verifyPermission(true);
+        verifyPermission();
 
     }
-    public void clearCache(){
+
+    public void clearCache() {
 
     }
-    protected void verifyPermission(final boolean force) {
-        StrategyInitService strategyInitService = ApiServiceGenerator.createService(StrategyInitService.class);
-        subscription = strategyInitService
-                .createOrder(new HashMap<String, String>())
-                .map(new NetworkResultFunc1<StrategyInitModel>())
-                .onErrorResumeNext(new ThrowableFiltrateFunc<StrategyInitModel>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<StrategyInitModel>() {
-                    @Override
-                    public void onCompleted() {
 
+    private void verifyPermission() {
+        service.strategyInit(new ServiceRequestCallback<StrategyInitModel>() {
+            @Override
+            public void onSucceed(StrategyInitModel strategyInitModel) {
+                requestAble = false;
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("StrategyInitModel", strategyInitModel);
+                promptgoodsFragment.setAuthenticationBundle(bundle);
+                straddleFragment.setAuthenticationBundle(bundle);
+                for (AuthsBean authsBean : strategyInitModel.getAuths()) {
+                    if (authsBean.getMenu().equalsIgnoreCase("spot")) {
+                        promptgoodsFragment.requestPermissionFromServer(authsBean.isAuthority());
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                        if (e instanceof ApiCodeErrorException && ((ApiCodeErrorException) e).getError() != null) {
-                            if (((ApiCodeErrorException) e).getError().getCode().equals(ErrorCode.NET_ERROR.getCode())) {
-                                showErrorDialog(getString(R.string.net_work_exception));
-                            }
-                        } else {
-                            showErrorDialog(getString(R.string.net_error));
-                        }
+                    if (authsBean.getMenu().equalsIgnoreCase("arbitrage")) {
+                        straddleFragment.requestPermissionFromServer(authsBean.isAuthority());
                     }
+                }
+            }
 
-                    @Override
-                    public void onNext(StrategyInitModel strategyInitModel) {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("StrategyInitModel", strategyInitModel);
-                        promptgoodsFragment.setAuthenticationBundle(bundle);
-                        straddleFragment.setAuthenticationBundle(bundle);
-                        for (AuthsBean authsBean : strategyInitModel.getAuths()) {
-                            if (authsBean.getMenu().equalsIgnoreCase("spot")) {
-                                promptgoodsFragment.requestPermissionFromServer(authsBean.isAuthority(), force ? true : false);
-                            }
-                            if (authsBean.getMenu().equalsIgnoreCase("arbitrage")) {
-                                straddleFragment.requestPermissionFromServer(authsBean.isAuthority(), force ? true : false);
-                            }
-                        }
-                    }
-                });
+            @Override
+            public void onFail(String error) {
+                requestAble = true;
+                showErrorDialog(getString(R.string.net_error));
+                promptgoodsFragment.requestNetError();
+                straddleFragment.requestNetError();
+            }
 
+            @Override
+            public void onError() {
+                requestAble = true;
+                showErrorDialog(getString(R.string.net_error));
+                promptgoodsFragment.requestNetError();
+                straddleFragment.requestNetError();
+            }
+        });
     }
 }
 

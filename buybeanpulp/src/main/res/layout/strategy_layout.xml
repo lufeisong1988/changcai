@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/report_bg"
-    android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim310"
-        android:src="@drawable/bg_navbar_celue"
-        android:scaleType="centerCrop"
-        />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
 
     <com.changcai.buyer.view.indicator.MagicIndicator
+        android:id="@+id/navigation_indicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim80"
         android:layout_marginLeft="@dimen/dim20"
-        android:layout_marginRight="@dimen/dim20"
-        android:id="@+id/navigation_indicator"
-        android:layout_marginTop="@dimen/dim23"
-        />
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/dim240"
+         />
 
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim1"
+        android:layout_below="@+id/navigation_indicator"
+        android:background="@color/color_E7E7E7"></View>
+
+    <com.changcai.buyer.view.CustomViewPager
         android:id="@+id/mViewPager"
-        android:layout_marginTop="@dimen/dim183"
-        android:layout_marginLeft="@dimen/dim5"
-        android:layout_marginRight="@dimen/dim5"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:background="@android:color/darker_gray" />
 
     <com.changcai.buyer.view.RotateDotsProgressView
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dim141"
         android:layout_marginLeft="@dimen/dim15"
         android:layout_marginRight="@dimen/dim15"
         android:background="@color/white"
-        android:layout_marginBottom="@dimen/dim141"
-        />
-</FrameLayout>
+        android:visibility="gone" />
+
+</RelativeLayout>

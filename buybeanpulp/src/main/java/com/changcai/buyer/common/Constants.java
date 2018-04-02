@@ -200,6 +200,7 @@ public class Constants {
 
 
     public static final String REPORT_CLEAR = "reprot_clear";//清空头寸报表的个人信息
+    public static final String STRATEGY_REFRESH = "strategy_refresh";//刷新策略
 
 
     public static final int RESPONSE_SUCCEED = 0;

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title></title>
+	<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+
+			});
+		</script>
+	<script src="../common/js/jquery-1.10.2.min.js"></script>
+	<script src="../common/dist/echarts.min.js"></script>
+	<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			#main {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+
+			#bg_color {
+				width: 100%;
+				background: linear-gradient(#E4EDF5, #CCDEEF);
+				height: 100%;
+				position: absolute;
+				border-radius: 4px;
+			}
+
+			#bg {
+				background-image: url(img/watermark.png);
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: 165px 94px;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				border-radius: 4px;
+			}
+
+			#spot-desc {
+				position: absolute;
+				width: 110px;
+				height: 21px;
+				right:0px;
+				margin-top: 10px;
+				background-color: #B7C5D3;
+				border-radius: 6px 0 0 6px;
+				opacity: 0.5;
+				text-align: center;
+				line-height: 21px;
+				font-size: 12px;
+			}
+			#spot-items{
+				top: 7px;
+				background-color: #000000;
+				opacity: 0.8;
+				position: absolute;
+				width: 0px;
+				height: 164px;
+				right: 0px;
+				color: #000000;
+				overflow: scroll;
+				border-radius: 4px;
+			}
+
+			#spot-ul {
+				width: 100%;
+				height: 164px;
+				color: crimson;
+			}
+			.li_bg{
+				color: #000000;
+				border-bottom:solid;
+				border-bottom-color: #595959;
+				border-bottom-width: 1px;
+			}
+			.p_select {
+				color: #ffffff;
+				font-size: 13px;
+				text-align: left;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				padding-left: 10px;
+
+			}
+			.p_un_select {
+				color: #9FA4AB;
+				font-size: 13px;
+				text-align: left;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				padding-left: 10px;
+			}
+			.hidden{
+				visibility: hidden;
+			}
+			.show{
+				visibility: visible;
+			}
+		</style>
+</head>
+
+<body>
+<div style="width: 100%;height: 178px;text-align: right ;border-radius: 20px;">
+	<div id="bg_color"></div>
+	<div id="bg" ></div>
+	<div id="main"></div>
+	<p id="spot-desc" onclick="showSpotView(true)"></p>
+
+	<div id="spot-items" >
+		<ul id="spot-ul">
+
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+			var myChart = echarts.init(document.getElementById('main'));
+			var xAxisData = [];//x轴的数据，包含了textStyle
+			var mDate = [];//X轴纯粹的单一数据
+			var mPrice = [];
+			var mPriceNormal = [];
+			var mPriceEmpty = [];
+			var mPoint = [];
+			var mMarkPoint = [];
+			var mMarkPointNormal = [];
+			var mMarkPointEmpty = [];
+			var minY = 0;
+			var minYNormal = 0;
+			var minYEmpty = 0;
+			var maxY = 0;
+			var maxYNormal = 10;
+			var maxYEmpty = 10;
+			var mSpotName = [];
+			var mSpotNameSelectIndex = 0;
+			var mXSelectIndex = 0;
+			var showSpotViewAble = false;
+			var option = {
+				tooltip :{
+					show:true,
+					trigger:'axis',
+					formatter:'{b0}' + '<br/>' +'{c0}',
+				},
+				dataZoom: [{
+						id: 'dataZoomX',
+						type: 'inside',
+						xAxisIndex: [0],
+						startValue: 0,
+						endValue: 364
+					},
+					{
+						id: 'dataZoomY',
+						type: 'inside',
+						yAxisIndex: [0],
+						startValue: 0,
+						endValue: 100,
+						disabled: true //设置Y轴不会发生改变
+					}
+				],
+				grid: {
+					top:'10%',
+					left: '0%',
+					right: '0%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					data: xAxisData,
+					axisTick: {
+						alignWithLabel: true,
+						show: false
+					},
+					triggerEvent: true,
+					axisLabel: {
+						fontSize:10,
+						inside: false,
+						color:'#929FB1',
+						formatter:function(value,index){
+							var str = '';
+							if(value != null){
+								str = value.replace('-','\n');
+							}
+							return str;
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#929FB1',
+							width:0.5
+						}
+					},
+					splitLine: { //纵向的分割线
+						show: false,
+						lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+							color: ['red'],
+							width: 1,
+							type: 'solid'
+						}
+					},
+				},
+				yAxis: {
+					type: 'value',
+					disable: false,
+					axisTick: {
+						show: false
+					},
+					axisLine: {
+						show: false
+					},
+					axisLabel: {
+						fontSize:10,
+						inside: true,
+						textStyle:{
+							color:'#929FB1',
+						}
+					},
+					splitLine: { //横向的分割线
+						show: false,
+						lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+							color: ['red'],
+							width: 1,
+							type: 'solid'
+						}
+					},
+
+				},
+				series: [{
+					name: '销量--',
+					type: 'line',
+					data: mPrice,
+					smooth: true,
+					symbol:'emptyCircle',
+					symbolSize:0,//设置为0，为了当前指示的坐标线tooltip不显示出点
+					showAllSymbol:true,
+					showSymbol: false,//不显示
+					lineStyel:{
+						normal:{
+							width:5
+						}
+					},
+					itemStyle: {
+						normal: {
+							lineStyle: {
+								width:2,
+								color: {
+									type: 'linear',
+									x: 0,
+									y: 0,
+									x2: 0,
+									y2: 1,
+									colorStops: [{
+										offset: 0,
+										color: '#41ACED' // 0% 处的颜色
+									}, {
+										offset: 1,
+										color: '#3C86F9' // 100% 处的颜色
+									}],
+									globalCoord: false // 缺省为 false
+								}
+							}
+						}
+					},
+					markPoint: {
+						symbol: 'circle',
+						symbolSize: 10,
+						symbolOffset: [0, 0],
+						label: {
+							normal: {
+								show: false,
+								formatter:function(){
+									return "";
+								},
+
+							}
+						},
+
+					}
+				}]
+			};
+
+			myChart.setOption(option);
+			myChart.on('click', function(params) {
+				option = myChart.getOption();
+				if(params.componentType === "xAxis") {
+					initData(params.value,false);
+				} else if(params.componentType === "series") {
+					<!--initData(xAxisData, mPrice);-->
+				} else if(params.componentType === "markPoint"){
+					initData(params.data.coord[0], false);
+				}
+			});
+
+			function initData(currentDate,zoomAble) {
+				var index = mDate.indexOf(currentDate);
+				if(index == mXSelectIndex){
+					return;
+				}
+				<!-- -1：不存在文章，0:不存在指标，存在文章，1：不包含此指标，存在文章2：包含此指标，存在文章	-->
+				var pointValue = mPoint[index];
+				console.log("pointValue = " + pointValue);
+				mPrice = mPriceNormal;
+				minY = minYNormal;
+				maxY = maxYNormal;
+				mMarkPoint = mMarkPointNormal;
+				if(pointValue == -1){
+					StrategyModel.spotPaperEmpty();
+					return;
+				}else if(pointValue == 0){
+					$("#spot-items").attr("class","hidden");
+					$("#spot-desc").attr("class","hidden");
+					mPrice = mPriceEmpty;
+					minY = minYEmpty;
+					maxY = maxYEmpty;
+					mMarkPoint = [];
+					StrategyModel.spotTargetUnexistAndPaperExist(currentDate);
+				}else if(pointValue == 1){
+					$("#spot-items").attr("class","hidden");
+					$("#spot-desc").attr("class","hidden");
+					StrategyModel.spotTargetExistUnChooseAndPaperExist(currentDate);
+				}else if(pointValue == 2){
+					$("#spot-items").attr("class","show");
+					$("#spot-desc").attr("class","show");
+					StrategyModel.spotTargetChooseAndPaperExist(currentDate);
+				}else{
+					$("#spot-items").attr("class","hidden");
+					$("#spot-desc").attr("class","hidden");
+					StrategyModel.spotPaperEmpty();
+				}
+				option = myChart.getOption();
+				option.xAxis[0].data = xAxisData;
+				option.series[0].data = mPrice;
+				option.series[0].markPoint.data = mMarkPoint;
+				var dataZooms = option.dataZoom;
+
+				console.log("index = " + index);
+				if(index == -1){
+					index = xAxisData.length - 1;
+				}
+				if(zoomAble) {
+					for(var i = 0; i < dataZooms.length; i++) {
+						if(dataZooms[i].id === "dataZoomX") {
+							dataZooms[i].start = null;
+							dataZooms[i].end = null;
+							dataZooms[i].startValue = 0;
+							dataZooms[i].endValue = xAxisData.length - 1;
+						} else if(dataZooms[i].id === "dataZoomY") {
+							dataZooms[i].start = null;
+							dataZooms[i].end = null;
+							dataZooms[i].startValue = minY;
+							dataZooms[i].endValue = maxY;
+						}
+					}
+				}
+				var mXSelectDate = xAxisData[mXSelectIndex].value;
+				option.xAxis[0].data[index] = {
+					value: currentDate,
+					textStyle: {
+						fontSize:10,
+						color: '#408AFF'
+					}
+				};
+				option.xAxis[0].data[mXSelectIndex] = {
+					value: mXSelectDate,
+					textStyle: {
+						fontSize:10,
+						color: '#929FB1'
+					}
+				};
+				var count = 0;
+				for(var i = 0; i < option.series[0].markPoint.data.length; i++) {
+					if(option.series[0].markPoint.data[i].coord[0] == currentDate) {
+						count++;
+						option.series[0].markPoint.data[i].symbol = "image://img/icon_fucdot_fuc.png";
+						option.series[0].markPoint.data[i].symbolSize = 26;
+
+					}
+					if(option.series[0].markPoint.data[i].coord[0] == mXSelectDate) {
+						count++;
+						option.series[0].markPoint.data[i].symbol = "image://img/icon_fucdot.png";
+						option.series[0].markPoint.data[i].symbolSize = 26;
+
+					}
+					if(count == 2) {
+						break;
+					}
+				}
+				mXSelectIndex = index;
+				console.log('mDate = ' + mDate);
+				console.log('mPrice = ' + mPrice);
+				console.log('minY = ' + minY);
+				console.log('maxY = ' + maxY);
+
+				myChart.setOption(option);
+				if(zoomAble) {
+					var dataZooms = option.dataZoom;
+					for(var i = 0; i < dataZooms.length; i++) {
+						if(dataZooms[i].id === "dataZoomX") {
+							dataZooms[i].start = null;
+							dataZooms[i].end = null;
+							dataZooms[i].startValue = xAxisData.length - 7 >= 0 ? xAxisData.length - 7 : 0;
+							dataZooms[i].endValue = xAxisData.length - 1;
+						} else if(dataZooms[i].id === "dataZoomY") {
+							dataZooms[i].start = null;
+							dataZooms[i].end = null;
+							dataZooms[i].startValue = minY;
+							dataZooms[i].endValue = maxY;
+						}
+					}
+					myChart.setOption(option);
+				}
+
+			};
+			function updateSpotDate(date,price,point,minY,maxY,currentDate){
+				minYNormal = minY;
+				maxYNormal = maxY;
+				var tmpDate = date.replace(/\s+/g,"");
+				var tmpPrice = price.replace(/\s+/g,"");
+				var tmpPoint = point.replace(/\s+/g,"");
+				tmpDate = tmpDate.split(",");
+				tmpPrice = tmpPrice.split(",");
+				tmpPoint = tmpPoint.split(",");
+				mXSelectIndex = 0;
+				mDate = tmpDate;
+				mPriceNormal = tmpPrice;
+				mPoint = tmpPoint;
+				xAxisData = [];//清空
+				mPriceEmpty = [];//清空
+				for(var i = 0;i < tmpDate.length;i++){
+					var tmpMap = {};
+					tmpMap['value'] = tmpDate[i];
+					var textStyle = {fontSize: 10,color: '#929FB1'};
+					tmpMap['textStyle'] = textStyle;
+					xAxisData.push(tmpMap);
+
+					<!--借助tmpDate的长度，给mPriceEmpty设置默认空值-->
+					mPriceEmpty.push(0);
+				}
+				mMarkPointNormal = [];//清空
+				for(var i = 0;i < mPoint.length;i++){
+					if(mPoint[i] == "2"){
+						var tmpMap = {};
+						tmpMap["coord"] = [xAxisData[i].value,mPriceNormal[i]];
+						tmpMap["symbol"] = "image://img/icon_fucdot.png";
+						tmpMap["symbolSize"] = 26;
+						mMarkPointNormal.push(tmpMap);
+					}
+				}
+				initData(currentDate,true);
+			};
+			function updateSpotTarget(name){
+				console.log('updateSpotTarget name = ' + name);
+				var tmpName = name.replace(/\s+/g,"");
+				mSpotName = tmpName.split(",");
+				mSpotNameSelectIndex = 0;
+				initSpotName();
+			};
+			function showSpotView(showAble){
+				showSpotViewAble = showAble;
+				var tmpItems = $("#spot-items");
+				if(showAble) {
+					tmpItems.animate({
+					width: '120px',
+					right: '10px',
+				}, 200);
+				} else {
+					tmpItems.animate({
+					width: '0px',
+					right: '0px',
+				}, 200);
+				}
+			};
+			function initSpotName(){
+				$("#spot-ul").empty();
+				for(var i = 0; i < mSpotName.length; i++){
+					if(mSpotNameSelectIndex == i){
+						addLi(mSpotName[i],true);
+					}else{
+						addLi(mSpotName[i],false);
+					}
+
+				}
+			};
+			function addLi(tmpName,tmpSelectAble){
+				var li = document.createElement("li");
+				li.setAttribute("class","li_bg");
+				li.onclick = function(){
+					showSpotView(false);
+					var tmpSelectIndex = $(this).index();
+					if(mSpotNameSelectIndex != tmpSelectIndex){
+						mSpotNameSelectIndex = tmpSelectIndex;
+						initSpotName();
+						StrategyModel.updateSpotTargetData(mSpotNameSelectIndex);
+					}
+				};
+				addP(li,tmpName,tmpSelectAble);
+				document.getElementById("spot-ul").appendChild(li);
+			};
+			function addP(li,tmpName,tmpSelectAble){
+				var p = document.createElement("p");
+				p.innerHTML = tmpName;
+				if(tmpSelectAble){
+					p.setAttribute("class","p_select");
+					$("#spot-desc").text(tmpName);
+				}else{
+					p.setAttribute("class","p_un_select");
+
+				}
+				li.appendChild(p);
+			};
+			window.onload=function(){
+				document.getElementById('main').addEventListener('touchstart',function(event){
+					if(showSpotViewAble){
+						showSpotViewAble = false;
+						showSpotView(showSpotViewAble);
+					}
+				},false);
+			};
+		</script>
+</body>
+
+</html>

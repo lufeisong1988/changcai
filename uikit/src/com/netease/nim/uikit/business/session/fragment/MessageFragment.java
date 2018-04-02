@@ -373,7 +373,9 @@ public class MessageFragment extends TFragment implements ModuleProxy {
             NimRobotInfo robot = NimUIKitImpl.getRobotInfoProvider().getRobotByAccount(attachment.getFromRobotAccount());
             aitManager.insertAitRobot(robot.getAccount(), robot.getName(), inputPanel.getEditSelectionStart());
         }
+
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

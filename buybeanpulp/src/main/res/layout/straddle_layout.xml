@@ -1,62 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/main_bg_color"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_strategy" />
-
     <LinearLayout
+        android:layout_marginTop="@dimen/dim20"
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dim100"
         android:gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/dim10"
-        android:layout_marginTop="@dimen/dim15"
-        android:layout_marginRight="@dimen/dim15"
-        android:layout_marginBottom="@dimen/dim50"
         android:orientation="vertical">
 
-        <com.changcai.buyer.view.XListView
-            android:id="@+id/mListView"
+
+        <WebView
+            android:id="@+id/wb_strategy_data"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim0"
-            android:divider="@null"
-            android:layout_marginBottom="@dimen/dim70"
-            android:layout_weight="1" />
+            android:layout_height="@dimen/dim357"
+            android:layout_marginLeft="@dimen/dim20"
+            android:layout_marginRight="@dimen/dim20"></WebView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_watermark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@drawable/watermark" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dim50">
+
+                <TextView
+                    android:id="@+id/tv_strategy_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dim40"
+                    android:layout_marginRight="@dimen/dim40"
+                    android:textColor="@color/resource_font"
+                    android:lineSpacingExtra="@dimen/dim10"
+                    android:textSize="@dimen/txt34" />
+
+            </ScrollView>
+
+            <com.changcai.buyer.view.AutoEmptyView
+                android:id="@+id/paperAutoEmptyView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"></com.changcai.buyer.view.AutoEmptyView>
+        </RelativeLayout>
 
     </LinearLayout>
 
     <com.changcai.buyer.view.RotateDotsProgressView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/dim15"
-        android:id="@+id/progressView"
-        tools:visibility="visible"
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@color/white"
-        android:layout_marginLeft="@dimen/dim10"
-        android:layout_marginTop="@dimen/dim15"
-        android:layout_marginBottom="@dimen/dim120"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+
 
     <com.changcai.buyer.view.CustomFontTextView
+        android:id="@+id/tv_declare"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dim90"
+        android:layout_height="@dimen/dim70"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dim15"
         android:drawableRight="@drawable/maidoupo_logl"
         android:gravity="center"
         android:paddingRight="@dimen/dim40"
-        android:id="@+id/tv_explain"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/dim30"
         android:text="本预测仅供参考，不为任何投资行为负责。"
         android:textColor="@color/gray_chateau"
         android:textSize="@dimen/txt24" />
 
+    <com.changcai.buyer.ui.strategy.LevelJudgementView
+        android:id="@+id/levelJudgementView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"></com.changcai.buyer.ui.strategy.LevelJudgementView>
+
+    <com.changcai.buyer.view.AutoEmptyView
+        android:id="@+id/autoEmptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"></com.changcai.buyer.view.AutoEmptyView>
 </FrameLayout>

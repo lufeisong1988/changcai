@@ -454,6 +454,8 @@
     <string name="no_ping_an_ongoing_text">"您提交的“%1$s”资料将在1个工作日内审核完成，请耐心等待。有疑问请联系：021-54180258"</string>
     <string name="listview_footer_hint_no_more_cms">没有更多资讯了</string>
     <string name="no_more_conten">没有更多内容了</string>
+    <string name="strategy_paper_empty">该分类下当日没有策略文章</string>
+
 
 
 

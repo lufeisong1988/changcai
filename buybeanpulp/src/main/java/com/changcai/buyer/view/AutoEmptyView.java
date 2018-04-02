@@ -8,7 +8,6 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,7 +63,7 @@ public class AutoEmptyView extends LinearLayout {
     }
 
     public void setErrorStatus(){
-        setEmptyImage(R.drawable.default_img_404);
+        setEmptyImage(R.drawable.default_img_404_2);
         setEmptyMessage("加载失败，请点击刷新");
     }
 
