@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.changcai.buyer.R;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;

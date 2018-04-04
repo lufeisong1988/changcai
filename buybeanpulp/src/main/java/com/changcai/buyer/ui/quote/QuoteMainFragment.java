@@ -37,7 +37,6 @@ import com.changcai.buyer.interface_api.BaseApiModel;
 import com.changcai.buyer.interface_api.GetMoreFiltrateService;
 import com.changcai.buyer.interface_api.ThrowableFiltrateFunc;
 import com.changcai.buyer.listener.CustomParentWithChildListener;
-import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseFragment;
 import com.changcai.buyer.ui.quote.bean.Condition;
 import com.changcai.buyer.ui.quote.bean.ConditionValue;
@@ -53,6 +52,7 @@ import com.changcai.buyer.view.XListView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.juggist.commonlibrary.rx.RxBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;

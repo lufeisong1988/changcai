@@ -10,7 +10,7 @@ import com.changcai.buyer.im.provider.LoginProvider;
 import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.BaseApiModel;
 import com.changcai.buyer.interface_api.InitImMsgService;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;

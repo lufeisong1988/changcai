@@ -23,7 +23,7 @@ import com.changcai.buyer.business_logic.about_buy_beans.recharge.RechargeActivi
 import com.changcai.buyer.business_logic.about_buy_beans.reset_paypassword.ResetPayPasswordActivity;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.interface_api.BaseApiModel;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.order.bean.OrderInfo;
 import com.changcai.buyer.ui.quote.ComputerOperationActivity;
 import com.changcai.buyer.util.DateUtil;

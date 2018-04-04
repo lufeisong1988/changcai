@@ -48,7 +48,7 @@ import com.changcai.buyer.im.main.model.imp.NotifactionListModelImp;
 import com.changcai.buyer.im.provider.LoginProvider;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.permission.RuntimePermission;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.CommonWebViewActivity;
 import com.changcai.buyer.ui.login.LoginActivity;
 import com.changcai.buyer.ui.news.AdvanceNewsMainFragment;

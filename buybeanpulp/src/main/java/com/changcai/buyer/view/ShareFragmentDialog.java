@@ -13,7 +13,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.changcai.buyer.R;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.RxUtil;
 import com.umeng.socialize.ShareAction;

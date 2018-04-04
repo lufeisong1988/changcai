@@ -1,18 +1,17 @@
-package com.changcai.buyer.rx;
+package com.juggist.commonlibrary.rx;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
 /**
- * Created by liuxingwei on 2016/12/1.
+ * 登录状态
  */
-
-public class BackEvent {
+public class LoginState {
 
     /**
      * 静态、单例、不可实例化
      */
-    private BackEvent() {
+    private LoginState() {
     }
 
     /**

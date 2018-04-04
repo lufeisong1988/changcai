@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.view.View;
 
 import com.changcai.buyer.R;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.AndroidUtil;
 
 /**

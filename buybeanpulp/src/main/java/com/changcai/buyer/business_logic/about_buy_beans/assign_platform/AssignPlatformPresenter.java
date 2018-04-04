@@ -7,8 +7,8 @@ import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
 import com.changcai.buyer.http.HttpListener;
 import com.changcai.buyer.http.VolleyUtil;
-import com.changcai.buyer.rx.RefreshOrderEvent;
 import com.google.gson.JsonObject;
+import com.juggist.commonlibrary.rx.RefreshOrderEvent;
 
 import java.util.HashMap;
 import java.util.Map;

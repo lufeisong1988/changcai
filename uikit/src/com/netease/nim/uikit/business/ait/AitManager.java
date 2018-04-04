@@ -89,6 +89,9 @@ public class AitManager implements TextWatcher {
             insertAitMemberInner(account, name, type, curPos, false);
         }
     }
+    public void insertAitTeamMemberInner(String account ,String name){
+        insertAitMemberInner(account, name, AitContactType.TEAM_MEMBER, curPos, true);
+    }
 
     // 群昵称 > 用户昵称 > 账号
     private static String getAitTeamMemberName(TeamMember member) {

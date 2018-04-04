@@ -19,7 +19,6 @@ import com.changcai.buyer.interface_api.ApiCodeErrorException;
 import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.BaseApiModel;
 import com.changcai.buyer.interface_api.OrderService;
-import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.AppManager;
 import com.changcai.buyer.util.JsonFormat;
@@ -36,6 +35,7 @@ import com.changcai.buyer.view.RotateDotsProgressView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jakewharton.rxbinding.view.RxView;
+import com.juggist.commonlibrary.rx.RxBus;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

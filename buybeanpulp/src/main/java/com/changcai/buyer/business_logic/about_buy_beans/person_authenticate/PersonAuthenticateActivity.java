@@ -1,7 +1,6 @@
 package com.changcai.buyer.business_logic.about_buy_beans.person_authenticate;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -13,10 +12,9 @@ import com.changcai.buyer.CompatTouchBackActivity;
 import com.changcai.buyer.R;
 import com.changcai.buyer.interface_api.MyService;
 import com.changcai.buyer.permission.RuntimePermission;
-import com.changcai.buyer.rx.BackEvent;
 import com.changcai.buyer.util.ActivityInjectUtils;
 import com.changcai.buyer.util.LogUtil;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.juggist.commonlibrary.rx.BackEvent;
 
 import java.util.List;
 

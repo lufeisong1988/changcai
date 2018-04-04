@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.juggist.commonlibrary.rx.RxBus;
 import com.netease.nim.uikit.R;
 import com.netease.nim.uikit.api.UIKitOptions;
 import com.netease.nim.uikit.api.model.main.CustomPushContentProvider;
@@ -47,6 +48,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
 /**
  * 聊天界面基类
  * <p/>
@@ -70,10 +75,20 @@ public class MessageFragment extends TFragment implements ModuleProxy {
     protected MessageListPanelEx messageListPanel;
 
     protected AitManager aitManager;
-
+    private Observable<Boolean> foregroundToBackgroundEvent;//从后台回到前台
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        foregroundToBackgroundEvent = RxBus.get().register("foregroundToBackground", Boolean.class);
+        foregroundToBackgroundEvent.observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                LogUtil.i("CommonApplication","event = " + aBoolean);
+                if(aBoolean && messageListPanel != null){
+                    messageListPanel.onPause();
+                }
+            }
+        });
         parseIntent();
     }
 
@@ -94,7 +109,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
         NIMClient.getService(MsgService.class).setChattingAccount(MsgService.MSG_CHATTING_ACCOUNT_NONE,
                 SessionTypeEnum.None);
         inputPanel.onPause();
-        messageListPanel.onPause();
+//        messageListPanel.onPause();
     }
 
     @Override
@@ -116,6 +131,7 @@ public class MessageFragment extends TFragment implements ModuleProxy {
         if (aitManager != null) {
             aitManager.reset();
         }
+        RxBus.get().unregister("foregroundToBackground",foregroundToBackgroundEvent);
     }
 
     public boolean onBackPressed() {
@@ -412,5 +428,9 @@ public class MessageFragment extends TFragment implements ModuleProxy {
      */
     public void receiveReceipt() {
         messageListPanel.receiveReceipt();
+    }
+
+    public void insertAitTeamMemberInner(String account,String name){
+        aitManager.insertAitTeamMemberInner(account,name);
     }
 }

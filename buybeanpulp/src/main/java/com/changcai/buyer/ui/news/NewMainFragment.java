@@ -23,7 +23,7 @@ import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
 import com.changcai.buyer.http.HttpListener;
 import com.changcai.buyer.http.VolleyUtil;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseAbstraceFragment;
 import com.changcai.buyer.ui.news.bean.NewsClassify;
 import com.changcai.buyer.util.SPUtil;

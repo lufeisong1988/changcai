@@ -8,7 +8,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.business_logic.about_buy_beans.full_pay.FullPayActivity;
 import com.changcai.buyer.business_logic.about_buy_beans.pay_result.PayResultActivity;
 import com.changcai.buyer.business_logic.about_buy_beans.sign_contract.SignContractActivity;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.quote.OrderActivity;
 import com.changcai.buyer.ui.quote.QuoteDetailActivity;
 import com.changcai.buyer.util.ActivityInjectUtils;

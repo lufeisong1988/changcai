@@ -3,13 +3,9 @@ package com.changcai.buyer.interface_api;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 
-import com.changcai.buyer.rx.DownloadInstance;
-import com.changcai.buyer.util.FileUtil;
-import com.changcai.buyer.util.LogUtil;
-import com.changcai.buyer.util.asop.commons.FileUtils;
+import com.juggist.commonlibrary.rx.DownloadInstance;
 
 import java.io.File;
 

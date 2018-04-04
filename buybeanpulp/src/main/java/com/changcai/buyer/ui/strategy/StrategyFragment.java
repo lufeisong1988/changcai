@@ -21,7 +21,7 @@ import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.interface_api.service_model.StratgyServiceInterface;
 import com.changcai.buyer.interface_api.service_model.base.ServiceRequestCallback;
 import com.changcai.buyer.interface_api.service_model.imp.StratgyServiceImp;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseFragment;
 import com.changcai.buyer.util.RxUtil;
 import com.changcai.buyer.view.CustomViewPager;
@@ -82,6 +82,7 @@ public class StrategyFragment extends BaseFragment {
 
     private StratgyServiceInterface service;
     boolean requestAble = false;
+
 
     @Nullable
     @Override
@@ -249,6 +250,11 @@ public class StrategyFragment extends BaseFragment {
                 if (position == 2) {
                     cashReportFragment.initData();
                 } else {
+                    if(position == 0){
+                        promptgoodsFragment.requestPermissionFromServer();
+                    }else if(position == 1){
+                        straddleFragment.requestPermissionFromServer();
+                    }
                     lastPage = position;
                 }
             }

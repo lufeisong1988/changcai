@@ -11,10 +11,10 @@ import com.changcai.buyer.interface_api.GetIdentityDetailsService;
 import com.changcai.buyer.interface_api.NetworkResultFunc1;
 import com.changcai.buyer.interface_api.ResetPayPassService;
 import com.changcai.buyer.interface_api.SendSmsResetPayPassService;
-import com.changcai.buyer.rx.RefreshOrderEvent;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.RxUtil;
 import com.changcai.buyer.util.SPUtil;
+import com.juggist.commonlibrary.rx.RefreshOrderEvent;
 
 import java.util.HashMap;
 import java.util.Map;

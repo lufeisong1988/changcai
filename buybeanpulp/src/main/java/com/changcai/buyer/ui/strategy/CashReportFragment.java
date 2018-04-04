@@ -21,7 +21,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.BaseApiModel;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.strategy.api.StrategyService;
 import com.changcai.buyer.ui.strategy.bean.IsExistBean;
 import com.changcai.buyer.ui.strategy.bean.SalesAmountBean;

@@ -1,16 +1,14 @@
 package com.changcai.buyer.business_logic.about_buy_beans.company_authenticate;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.changcai.buyer.BaseCompatActivity;
 import com.changcai.buyer.R;
 import com.changcai.buyer.permission.RuntimePermission;
-import com.changcai.buyer.rx.BackEvent;
 import com.changcai.buyer.util.ActivityInjectUtils;
 import com.changcai.buyer.util.LogUtil;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.juggist.commonlibrary.rx.BackEvent;
 
 import java.util.List;
 

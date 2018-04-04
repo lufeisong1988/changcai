@@ -141,12 +141,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     compile 'com.android.support:support-v4:26.+'
-    compile project(':rxdownload')
+//    compile project(':rxdownload')
     compile project(':umeng')
     compile project(':pickerview')
     //    compile files( "libs/libammsdk.jar")
-    compile 'io.reactivex:rxandroid:1.2.0'
-    compile 'io.reactivex:rxjava:1.2.0'
+
     compile 'com.android.support:percent:26.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'

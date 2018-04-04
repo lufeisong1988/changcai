@@ -20,7 +20,7 @@ import com.changcai.buyer.bean.GetQuotePriceBean;
 import com.changcai.buyer.bean.NoticeBean;
 import com.changcai.buyer.bean.RecommendListBean;
 import com.changcai.buyer.listener.PicassoPauseOnScrollListener;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseAbstraceFragment;
 import com.changcai.buyer.ui.login.LoginActivity;
 import com.changcai.buyer.ui.main.MainActivity;

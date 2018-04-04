@@ -24,7 +24,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.bean.SpotFolderListBean;
 import com.changcai.buyer.bean.StrategyInitModel;
 import com.changcai.buyer.common.Constants;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.LogBlockUtil;
 import com.changcai.buyer.util.LogUtil;
@@ -162,6 +162,7 @@ public class PromptGoodsFragment extends BaseFragment implements PromptGoodsCont
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        LogUtil.i("onHiddenChanged","hidden 01 = " + hidden);
         if(!hidden && authenticationBundle != null){
             requestPermissionFromServer(isAuth);
         }
@@ -198,6 +199,11 @@ public class PromptGoodsFragment extends BaseFragment implements PromptGoodsCont
         authenticationBundle = bundle;
     }
 
+    public void requestPermissionFromServer(){
+        if (authenticationBundle != null) {
+            requestPermissionFromServer(isAuth);
+        }
+    }
     /**
      * 是否授权访问
      *
@@ -322,6 +328,8 @@ public class PromptGoodsFragment extends BaseFragment implements PromptGoodsCont
                 clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(pageIndex == index)
+                            return;
                         pageIndex = index;
                         containerHelper.handlePageSelected(index);
                         final StrategyInitModel strategyInitModel = parseStrategyInitModel();

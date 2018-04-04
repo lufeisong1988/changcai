@@ -25,7 +25,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.bean.GetCounselorsModel;
 import com.changcai.buyer.im.DemoCache;
 import com.changcai.buyer.im.session.SessionHelper;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.PicassoImageLoader;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;

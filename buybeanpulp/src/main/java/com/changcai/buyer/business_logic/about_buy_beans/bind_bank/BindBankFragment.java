@@ -25,10 +25,10 @@ import com.changcai.buyer.BaseFragment;
 import com.changcai.buyer.R;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.http.VolleyUtil;
-import com.changcai.buyer.rx.RefreshOrderEvent;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.view.ConfirmDialog;
 import com.changcai.buyer.view.GeneralWebView;
+import com.juggist.commonlibrary.rx.RefreshOrderEvent;
 
 import java.io.File;
 

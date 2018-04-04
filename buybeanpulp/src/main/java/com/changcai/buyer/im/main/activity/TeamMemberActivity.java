@@ -13,7 +13,7 @@ import com.changcai.buyer.im.main.adapter.TeamMemberItemAdapter;
 import com.changcai.buyer.im.main.present.TeamMemberPresent;
 import com.changcai.buyer.im.main.present.imp.TeamMemberPresentImp;
 import com.changcai.buyer.im.main.viewmodel.TeamMemberViewModel;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.ServerErrorCodeDispatch;
 import com.changcai.buyer.view.ConfirmDialog;

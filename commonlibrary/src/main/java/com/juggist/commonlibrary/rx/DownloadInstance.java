@@ -1,9 +1,5 @@
-package com.changcai.buyer.rx;
+package com.juggist.commonlibrary.rx;
 
-import android.content.Context;
-
-import rx.Observable;
-import rx.subjects.PublishSubject;
 import zlc.season.rxdownload.RxDownload;
 
 /**

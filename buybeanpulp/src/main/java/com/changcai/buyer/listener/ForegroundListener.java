@@ -1,11 +1,14 @@
 package com.changcai.buyer.listener;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
+import com.changcai.buyer.CommonApplication;
 import com.changcai.buyer.util.LogUtil;
 
 import java.util.List;
@@ -32,6 +35,7 @@ public class ForegroundListener implements Application.ActivityLifecycleCallback
         public void onBecameForeground();
 
         public void onBecameBackground();
+
 
     }
 
@@ -119,6 +123,7 @@ public class ForegroundListener implements Application.ActivityLifecycleCallback
         } else {
             LogUtil.i(TAG, "still foreground");
         }
+
     }
 
     @Override
@@ -145,6 +150,7 @@ public class ForegroundListener implements Application.ActivityLifecycleCallback
                 }
             }
         }, CHECK_DELAY);
+
     }
 
     @Override
@@ -160,5 +166,20 @@ public class ForegroundListener implements Application.ActivityLifecycleCallback
     @Override
     public void onActivityDestroyed(Activity activity) {
 
+    }
+    public boolean isAppRunningForeground() {
+        ActivityManager activityManager = (ActivityManager) CommonApplication.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcessInfos = activityManager.getRunningAppProcesses();
+        // 枚举进程
+        for (ActivityManager.RunningAppProcessInfo appProcessInfo : appProcessInfos) {
+            if (appProcessInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                if (appProcessInfo.processName.equals( CommonApplication.getInstance().getApplicationInfo().processName)) {
+                    Log.d("testApp","EntryActivity isRunningForeGround");
+                    return true;
+                }
+            }
+        }
+        Log.d("testApp", "EntryActivity isRunningBackGround");
+        return false;
     }
 }

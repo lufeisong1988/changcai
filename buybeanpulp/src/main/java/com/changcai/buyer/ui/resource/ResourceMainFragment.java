@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.changcai.buyer.R;
 import com.changcai.buyer.common.Constants;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseFragment;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.SPUtil;

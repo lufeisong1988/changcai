@@ -337,4 +337,7 @@ public class TeamMessageActivity extends BaseMessageActivity implements TeamMemb
         DataCacheManager.fetchUsers(accounts);
     }
 
+    public void insertAitTeamMemberInner(String account,String name){
+        fragment.insertAitTeamMemberInner(account,name);
+    }
 }

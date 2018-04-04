@@ -18,7 +18,7 @@ import com.changcai.buyer.business_logic.about_buy_beans.deposit_and_pay.Deposit
 import com.changcai.buyer.business_logic.about_buy_beans.recharge.RechargeActivity;
 import com.changcai.buyer.business_logic.about_buy_beans.reset_paypassword.ResetPayPasswordActivity;
 import com.changcai.buyer.common.Constants;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.StringUtil;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;

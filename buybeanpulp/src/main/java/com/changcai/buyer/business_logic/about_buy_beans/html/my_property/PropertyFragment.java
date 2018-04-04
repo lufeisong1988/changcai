@@ -26,7 +26,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.business_logic.about_buy_beans.recharge.RechargeActivity;
 import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.http.VolleyUtil;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.RxUtil;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.view.ConfirmDialog;

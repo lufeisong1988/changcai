@@ -6,16 +6,14 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.changcai.buyer.CommonApplication;
 import com.changcai.buyer.bean.H5Resources;
 import com.changcai.buyer.common.Constants;
-import com.changcai.buyer.rx.DownloadInstance;
 import com.changcai.buyer.util.FileUtil;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.RxUtil;
 import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.asop.ZipUtil;
-
+import com.juggist.commonlibrary.rx.DownloadInstance;
 
 import java.io.File;
 import java.util.ArrayList;

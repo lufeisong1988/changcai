@@ -21,7 +21,7 @@ import com.changcai.buyer.R;
 import com.changcai.buyer.bean.SpotFolderListBean;
 import com.changcai.buyer.bean.StrategyInitModel;
 import com.changcai.buyer.common.Constants;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.LogBlockUtil;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.ToastUtil;
@@ -109,6 +109,7 @@ public class StraddleFragment extends BaseFragment implements PromptGoodsContrac
     }
     @Override
     public void onHiddenChanged(boolean hidden) {
+        LogUtil.i("onHiddenChanged","hidden 02 = " + hidden);
         super.onHiddenChanged(hidden);
         if(!hidden && authenticationBundle != null){
             requestPermissionFromServer(isAuth);
@@ -142,6 +143,11 @@ public class StraddleFragment extends BaseFragment implements PromptGoodsContrac
         authenticationBundle = bundle;
     }
 
+    public void requestPermissionFromServer(){
+        if (authenticationBundle != null) {
+            requestPermissionFromServer(isAuth);
+        }
+    }
     /**
      * 是否授权访问
      *

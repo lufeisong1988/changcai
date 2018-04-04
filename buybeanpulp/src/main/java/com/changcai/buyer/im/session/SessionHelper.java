@@ -38,6 +38,7 @@ import com.changcai.buyer.im.session.viewholder.MsgViewHolderSnapChat;
 import com.changcai.buyer.im.session.viewholder.MsgViewHolderSticker;
 import com.changcai.buyer.im.session.viewholder.MsgViewHolderTip;
 import com.changcai.buyer.im.team.TeamAVChatHelper;
+import com.changcai.buyer.util.LogUtil;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.recent.RecentCustomization;
 import com.netease.nim.uikit.api.model.session.SessionCustomization;
@@ -45,10 +46,12 @@ import com.netease.nim.uikit.api.model.session.SessionEventListener;
 import com.netease.nim.uikit.api.wrapper.NimMessageRevokeObserver;
 import com.netease.nim.uikit.business.contact.selector.activity.ContactSelectActivity;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
+import com.netease.nim.uikit.business.session.activity.TeamMessageActivity;
 import com.netease.nim.uikit.business.session.helper.MessageListPanelHelper;
 import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
 import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
 import com.netease.nim.uikit.business.session.viewholder.MsgViewHolderUnknown;
+import com.netease.nim.uikit.business.team.helper.TeamHelper;
 import com.netease.nim.uikit.business.team.model.TeamExtras;
 import com.netease.nim.uikit.business.team.model.TeamRequestCode;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
@@ -76,6 +79,8 @@ import com.netease.nimlib.sdk.team.model.Team;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * UIKit自定义消息界面用法展示类
@@ -249,7 +254,7 @@ public class SessionHelper {
                 // 由于需要Activity Result， 所以重载该函数。
                 @Override
                 public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-                    if (requestCode == TeamRequestCode.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+                    if (requestCode == TeamRequestCode.REQUEST_CODE && resultCode == RESULT_OK) {
                         String result = data.getStringExtra(TeamExtras.RESULT_EXTRA_REASON);
                         if (result == null) {
                             return;
@@ -410,7 +415,7 @@ public class SessionHelper {
                 @Override
                 public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
                     if (requestCode == TeamRequestCode.REQUEST_CODE) {
-                        if (resultCode == Activity.RESULT_OK) {
+                        if (resultCode == RESULT_OK) {
                             String reason = data.getStringExtra(TeamExtras.RESULT_EXTRA_REASON);
                             boolean finish = reason != null && (reason.equals(TeamExtras
                                     .RESULT_EXTRA_REASON_DISMISS) || reason.equals(TeamExtras.RESULT_EXTRA_REASON_QUIT));
@@ -419,7 +424,7 @@ public class SessionHelper {
                             }
                         }
                     } else if (requestCode == TeamRequestCode.REQUEST_TEAM_VIDEO) {
-                        if (resultCode == Activity.RESULT_OK) {
+                        if (resultCode == RESULT_OK) {
                             ArrayList<String> selectedAccounts = data.getStringArrayListExtra(ContactSelectActivity.RESULT_DATA);
                             avChatAction.onSelectedAccountsResult(selectedAccounts);
                         } else {
@@ -510,14 +515,10 @@ public class SessionHelper {
             @Override
             public void onAvatarLongClicked(Context context, IMMessage message) {
                 // 一般用于群组@功能，或者弹出菜单，做拉黑，加好友等功能
-//                CustomAlertDialog alertDialog = new CustomAlertDialog(CommonApplication.getInstance());
-//                String title = "@" + UserInfoHelper.getUserNameWithHiden(message.getFromAccount());
-//                alertDialog.addItem(title, new CustomAlertDialog.onSeparateItemClickListener() {
-//                    @Override
-//                    public void onClick() {
-//
-//                    }
-//                });
+                if(context instanceof TeamMessageActivity){
+                    ((TeamMessageActivity) context).insertAitTeamMemberInner(message.getFromAccount(), TeamHelper.getTeamMemberDisplayName(message.getSessionId(), message.getFromAccount()));
+                }
+                LogUtil.i("onAvatarLongClicked"," class name = " + context.getClass().getSimpleName());
             }
         };
 

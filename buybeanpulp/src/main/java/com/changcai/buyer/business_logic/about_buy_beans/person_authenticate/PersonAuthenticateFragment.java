@@ -32,7 +32,6 @@ import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.okhttp.ProgressRequestListener;
 import com.changcai.buyer.permission.AfterPermissionGranted;
 import com.changcai.buyer.permission.RuntimePermission;
-import com.changcai.buyer.rx.BackEvent;
 import com.changcai.buyer.util.CameraUtil;
 import com.changcai.buyer.util.IDCardUtil;
 import com.changcai.buyer.util.LogUtil;
@@ -42,6 +41,7 @@ import com.changcai.buyer.util.SPUtil;
 import com.changcai.buyer.util.StringUtil;
 import com.changcai.buyer.view.ConfirmDialog;
 import com.changcai.buyer.view.SectorProgressView;
+import com.juggist.commonlibrary.rx.BackEvent;
 
 import java.util.ArrayList;
 import java.util.List;

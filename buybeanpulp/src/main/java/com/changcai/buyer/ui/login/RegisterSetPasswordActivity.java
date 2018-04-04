@@ -18,7 +18,7 @@ import com.changcai.buyer.common.Constants;
 import com.changcai.buyer.common.Urls;
 import com.changcai.buyer.http.HttpListener;
 import com.changcai.buyer.http.VolleyUtil;
-import com.changcai.buyer.rx.LoginState;
+import com.juggist.commonlibrary.rx.LoginState;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.util.NetUtil;
 import com.changcai.buyer.util.SPUtil;

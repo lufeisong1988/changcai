@@ -37,7 +37,7 @@ import com.changcai.buyer.interface_api.NetworkResultFunc1;
 import com.changcai.buyer.interface_api.TradeTimeService;
 import com.changcai.buyer.listener.CustomListener;
 import com.changcai.buyer.listener.PicassoPauseOnScrollListener;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseFragment;
 import com.changcai.buyer.ui.login.LoginActivity;
 import com.changcai.buyer.ui.main.MainActivity;

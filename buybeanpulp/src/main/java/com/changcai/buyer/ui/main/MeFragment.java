@@ -39,8 +39,6 @@ import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.NetworkResultFunc1;
 import com.changcai.buyer.interface_api.RefreshUserInfoService;
 import com.changcai.buyer.interface_api.ThrowableFiltrateFunc;
-import com.changcai.buyer.rx.LoginState;
-import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseFragment;
 import com.changcai.buyer.ui.consultant.ConsultantSettingActivity;
 import com.changcai.buyer.ui.introduction.MemberShipIntroductionActivity;
@@ -60,6 +58,8 @@ import com.changcai.buyer.view.MyScrollView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.juggist.commonlibrary.rx.LoginState;
+import com.juggist.commonlibrary.rx.RxBus;
 
 import java.util.HashMap;
 import java.util.Map;

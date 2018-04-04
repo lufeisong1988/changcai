@@ -34,7 +34,6 @@ import com.changcai.buyer.http.VolleyUtil;
 import com.changcai.buyer.interface_api.ApiServiceGenerator;
 import com.changcai.buyer.interface_api.DirectPayService;
 import com.changcai.buyer.interface_api.NetworkResultFunc1;
-import com.changcai.buyer.rx.RxBus;
 import com.changcai.buyer.ui.base.BaseActivity;
 import com.changcai.buyer.ui.order.bean.Buttons;
 import com.changcai.buyer.ui.order.bean.DeliveryInfo;
@@ -53,6 +52,7 @@ import com.changcai.buyer.view.ConfirmDialog;
 import com.changcai.buyer.view.countdowntextview.CountDownTextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.juggist.commonlibrary.rx.RxBus;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.changcai.buyer.rx;
+package com.juggist.commonlibrary.rx;
 
 import android.support.annotation.NonNull;
 

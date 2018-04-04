@@ -16,9 +16,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.changcai.buyer.rx.BackEvent;
 import com.changcai.buyer.util.AppManager;
 import com.changcai.buyer.view.immersion.ImmersionBar;
+import com.juggist.commonlibrary.rx.BackEvent;
 
 import butterknife.ButterKnife;
 

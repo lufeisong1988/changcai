@@ -1,2 +1,2 @@
-include ':umeng', ':buybeanpulp', ':rxdownload', ":pickerview", ':pullToRefreshlibrary', ':IMuikit'
+include ':umeng', ':buybeanpulp', ':rxdownload', ':commonlibrary', ":pickerview", ':pullToRefreshlibrary', ':IMuikit'
 project(':IMuikit').projectDir = new File('uikit')

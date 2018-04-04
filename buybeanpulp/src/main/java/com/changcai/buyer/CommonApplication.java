@@ -23,7 +23,7 @@ import com.changcai.buyer.im.redpacket.NIMRedPacketClient;
 import com.changcai.buyer.im.session.NimDemoLocationProvider;
 import com.changcai.buyer.im.session.SessionHelper;
 import com.changcai.buyer.listener.ForegroundListener;
-import com.changcai.buyer.rx.RxBus;
+import com.juggist.commonlibrary.rx.RxBus;
 import com.changcai.buyer.util.AndroidUtil;
 import com.changcai.buyer.util.AppInfo;
 import com.changcai.buyer.util.LogUtil;
@@ -222,7 +222,10 @@ public class CommonApplication extends MultiDexApplication {
             @Override
             public void onBecameBackground() {
                 LogUtil.d("CommonApplication", "从前台回到后台");
+                RxBus.get().post("foregroundToBackground", new Boolean(true));
             }
+
+
         });
         getArticleId();
         initInternalStorage(getFilesDir().getPath() + Constants.internal_storage_h5);

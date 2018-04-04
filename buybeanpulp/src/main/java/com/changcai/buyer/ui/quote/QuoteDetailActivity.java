@@ -45,7 +45,6 @@ import com.changcai.buyer.interface_api.BaseApiModel;
 import com.changcai.buyer.interface_api.NetThrowableFiltrateFunc;
 import com.changcai.buyer.interface_api.OrderService;
 import com.changcai.buyer.permission.RuntimePermission;
-import com.changcai.buyer.rx.LoginState;
 import com.changcai.buyer.ui.base.BaseTouchBackActivity;
 import com.changcai.buyer.ui.login.LoginActivity;
 import com.changcai.buyer.util.DateUtil;
@@ -62,6 +61,7 @@ import com.changcai.buyer.view.TimeTextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jakewharton.rxbinding.view.RxView;
+import com.juggist.commonlibrary.rx.LoginState;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

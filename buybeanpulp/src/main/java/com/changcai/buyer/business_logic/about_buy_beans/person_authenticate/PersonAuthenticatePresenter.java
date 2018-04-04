@@ -14,13 +14,13 @@ import com.changcai.buyer.interface_api.GetIdentityDetailsService;
 import com.changcai.buyer.interface_api.NetworkResultFunc1;
 import com.changcai.buyer.interface_api.UploadFileService;
 import com.changcai.buyer.okhttp.ProgressRequestListener;
-import com.changcai.buyer.rx.RefreshOrderEvent;
 import com.changcai.buyer.util.DesUtil;
 import com.changcai.buyer.util.ImageUtil;
 import com.changcai.buyer.util.LogUtil;
 import com.changcai.buyer.util.RxUtil;
 import com.changcai.buyer.util.SPUtil;
 import com.google.gson.Gson;
+import com.juggist.commonlibrary.rx.RefreshOrderEvent;
 
 import java.io.File;
 import java.util.HashMap;
